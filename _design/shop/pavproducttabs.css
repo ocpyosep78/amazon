@@ -1,0 +1,17 @@
+.producttabs{
+	position: relative;
+}
+.producttabs .carousel-controls{
+	top: -55px;
+	right: 0;
+	position: absolute;
+}
+.producttabs .carousel-control.left{
+	right: 25px;
+	left: auto;
+}
+.producttabs li a{	
+	background: transparent;
+	margin:0;
+	border:0;
+}
