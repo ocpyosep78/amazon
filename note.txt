@@ -1,0 +1,67 @@
+----------------------------------------------------------------------
+Panel
+----------------------------------------------------------------------
+Category & Sub Category
+- punya field tambahan : tag, description
+
+Scrape
+- Hasil Scrape dimasukkan ke sub category
+- misal handphone akan dimasukkan sub category elektronik
+- Link #1 : http://www.amazon.com/cell-phones-and-service-plans/b/ref=sv_cps_1?ie=UTF8&node=2407747011
+- Title, Price, Price Discount, Brand, Store, Desc, Gambar, In Stock
+
+Scrape Brand
+- link : http://www.amazon.com/gp/product/B00EP2BYHW/ref=s9_psimh_gw_p107_d0_i2?pf_rd_m=ATVPDKIKX0DER&pf_rd_s=center-2&pf_rd_r=1E4GMR25JPNFKMB654RG&pf_rd_t=101&pf_rd_p=1630083502&pf_rd_i=507846
+- brand : motorola ini ikut diambil disimpan sebagai brand untuk tujuan sorting nanti
+- store : amazon
+
+Admin Subscribe
+- fitur stop / delete subscriber
+- tambah 1 widget dibagian footer subscriber seperti : "to stop receive from this web, please send to ridwanamirsene@yahoo.com with blank email" (bisa di edit)
+
+User Type
+- user type ada 2 (Editor & Administrator)
+- Editor : terbatas
+- Administrator : full
+
+Post
+- Multiple Title & Desc seperti di dunia db
+- Hasil Scrape statusnya Under Review
+- Status Post : Incomplete | Review | Approve | Unpublish
+----------------------------------------------------------------------
+Website
+----------------------------------------------------------------------
+Link Out
+- Tambah 1 page sebagai link out seperti : https://www.shopermarket.com/url?q=http://www.amazon.com/c/product/891221-REG/ASUS_X202E_DH31T_VivoBook_X202E_DH31T_11_6_Multi_Touch.html/kw/ASX202EDH31T&sa=U&ei=w416Uq7DOYPTrQe9-oCgAw&ved=0CBoQ2yk&usg=AFQjCNGuHhWnQ
+
+Website - Single Link
+- link : http://shoperindo.com/shopermarket/single.htm
+- reviewnya disitu.. jika mau lihat more review yang entry, url jadi namaproduk/review
+- statistik : total view dan total link out
+- image bisa slider
+
+Website - RSS
+- ada RSS nya
+
+Report crash link out
+- ini laporan dari pengunjung jika ada link crash = kasih buton aja dan sampaikan ke admin
+
+Website - Search
+- shopermarket.com/kategory/subkategory/judul
+- pencarian dengan url seperti parapekerja lalu
+
+Website - Sub Menu
+- untuk sub menu pake yang model : kategory Vehicle, GPS & Navigation
+
+Website - Common
+- link : shoperindo.com/shopermarket/
+- ada rate nya (star / rating)
+----------------------------------------------------------------------
+Hold
+----------------------------------------------------------------------
+Ridwan Amir: tadi tang add field tab itu : di pasang di bagian tab di http://shoperindo.com/shopermarket/single.htm ,
+Ridwan Amir: pasang di sebelahnya review
+Ridwan Amir: tab review
+Ridwan Amir: contoh kalo add field tab : custom block tab, ya jadinya seperti itu
+Ridwan Amir: isi conten custom block tab di bagian bawahnya..
+herry: oh ok, ini saya note dulu mas
