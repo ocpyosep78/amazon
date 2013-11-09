@@ -107,16 +107,26 @@ class User_model extends CI_Model {
 	function get_menu() {
 		$menu = array(
 			array(
+				'Title' => 'Product Management',
+				'Child' => array(
+					array( 'Title' => 'Item', 'Link' => base_url('panel/product/item') )
+				)
+			),
+			array(
 				'Title' => 'User Management',
 				'Child' => array(
 					array( 'Title' => 'User', 'Link' => base_url('panel/user/user') )
+					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe') )
 				)
 			),
 			array(
 				'Title' => 'Master',
 				'Child' => array(
 					array( 'Title' => 'Page Static', 'Link' => base_url('panel/master/page_static') ),
-					array( 'Title' => 'Category', 'Link' => base_url('panel/master/category') )
+					array( 'Title' => 'Configuration', 'Link' => base_url('panel/master/configuration') ),
+					array( 'Title' => 'Category', 'Link' => base_url('panel/master/category') ),
+					array( 'Title' => 'Sub Category', 'Link' => base_url('panel/master/category_sub') ),
+					array( 'Title' => 'Scrape', 'Link' => base_url('panel/master/scrape') ),
 				)
 			)
 		);

@@ -24,7 +24,7 @@ User Type
 - Editor : terbatas
 - Administrator : full
 
-Post
+Post / Item
 - Multiple Title & Desc seperti di dunia db
 - Hasil Scrape statusnya Under Review
 - Status Post : Incomplete | Review | Approve | Unpublish
