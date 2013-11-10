@@ -1724,7 +1724,7 @@ ul.contact-us li a {
   padding: 0 0 0 40px;
 }
 .sidebar ul > li .collapsed {
-  background: url(../image/icon-minus.png) no-repeat 0 0;
+/*  background: url(../image/icon-minus.png) no-repeat 0 0;	*/
 }
 .sidebar ul > li .subcart {
   display: block;
@@ -1734,7 +1734,7 @@ ul.contact-us li a {
   position: absolute;
   top: 16px;
   right: 10px;
-  background: url(../image/icon-minus.png) no-repeat 0 0;
+/*  background: url(../image/icon-minus.png) no-repeat 0 0;	*/
 }
 .sidebar ul > li .subcart.collapsed {
   width: 5px;
