@@ -8,7 +8,7 @@ Ext.onReady(function() {
 	var main_store = Ext.create('Ext.data.Store', {
 		autoLoad: true, pageSize: 25, remoteSort: true,
         sorters: [{ property: 'name', direction: 'ASC' }],
-		fields: [ 'id', 'alias', 'name' ],
+		fields: [ 'id', 'alias', 'name', 'desc', 'tag' ],
 		proxy: {
 			type: 'ajax',
 			url : URLS.base + 'panel/master/category/grid', actionMethods: { read: 'POST' },
@@ -20,8 +20,10 @@ Ext.onReady(function() {
 		viewConfig: { forceFit: true }, store: main_store, height: 335, renderTo: 'grid-member',
 		features: [{ ftype: 'filters', encode: true, local: false }],
 		columns: [ {
-					header: 'Name', dataIndex: 'name', sortable: true, filter: true, width: 200, flex: 1
+					header: 'Name', dataIndex: 'name', sortable: true, filter: true, width: 200
 			}, {	header: 'Alias', dataIndex: 'alias', sortable: true, filter: true, width: 200
+			}, {	header: 'Description', dataIndex: 'desc', sortable: true, filter: true, width: 200, flex: 1
+			}, {	header: 'Tag', dataIndex: 'tag', sortable: true, filter: true, width: 200
 		} ],
 		tbar: [ {
 				text: 'Tambah', iconCls: 'addIcon', tooltip: 'Tambah', handler: function() { main_win({ id: 0 }); }
@@ -105,7 +107,7 @@ Ext.onReady(function() {
 	
 	function main_win(param) {
 		var win = new Ext.Window({
-			layout: 'fit', width: 390, height: 130,
+			layout: 'fit', width: 390, height: 220,
 			closeAction: 'hide', plain: true, modal: true,
 			buttons: [ {
 						text: 'Save', handler: function() { win.save(); }
@@ -134,11 +136,15 @@ Ext.onReady(function() {
 								}
 							});
 							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 225, readOnly: true });
+							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 225, height: 60 });
+							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
 							
 							// Populate Record
 							if (param.id > 0) {
 								win.name.setValue(param.name);
 								win.alias.setValue(param.alias);
+								win.desc.setValue(param.desc);
+								win.tag.setValue(param.tag);
 							}
 						}
 					});
@@ -154,6 +160,8 @@ Ext.onReady(function() {
 				ajax.id = win.id;
 				ajax.name = win.name.getValue();
 				ajax.alias = win.alias.getValue();
+				ajax.desc = win.desc.getValue();
+				ajax.tag = win.tag.getValue();
 				
 				// Validation
 				var is_valid = true;

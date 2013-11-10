@@ -1,5 +1,5 @@
 <?php
-	$array_js[] = base_url('static/panel/master/scrape.js');
+	$array_js[] = base_url('static/panel/master/configuration.js');
 ?>
 
 <?php $this->load->view( 'panel/common/meta' ); ?>

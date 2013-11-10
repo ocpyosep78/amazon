@@ -55,8 +55,8 @@ var Func = {
 		// Func.SetValue({ Action : 'City', ForceID: Param.city_id, Combo: WinGateway.city });
 
 		Ext.Ajax.request({
-			url: Web.HOST + '/index.php/combo',
-			params: { Action : Param.Action, ForceID: Param.ForceID },
+			url: URLS.base + 'panel/combo',
+			params: { action : Param.action, ForceID: Param.ForceID },
 			success: function(Result) {
 				Param.Combo.store.loadData(eval(Result.responseText));
 				Param.Combo.setValue(Param.ForceID);
@@ -208,30 +208,6 @@ var Template = {
 }
 
 var Store = {
-	AdsenseOwner: function() {
-		var Store = new Ext.create('Ext.data.Store', {
-			fields: ['id', 'name', 'priority'],
-			autoLoad: true, proxy: {
-				type: 'ajax', extraParams: { action: 'adsense_owner' },
-				url: URLS.base + 'panel/combo',
-				reader: { type: 'json', root: 'res' },
-				actionMethods: { read: 'POST' }
-			}
-		});
-		return Store;
-	},
-	AdsenseType: function() {
-		var Store = new Ext.create('Ext.data.Store', {
-			fields: ['id', 'name', 'alias'],
-			autoLoad: true, proxy: {
-				type: 'ajax', extraParams: { action: 'adsense_type' },
-				url: URLS.base + 'panel/combo',
-				reader: { type: 'json', root: 'res' },
-				actionMethods: { read: 'POST' }
-			}
-		});
-		return Store;
-	},
 	Category: function() {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
@@ -244,15 +220,11 @@ var Store = {
 		});
 		return Store;
 	},
-	CommentStatus: function() {
-		var Store = ['Cancel', 'Ongoing', 'Done'];
-		return Store;
-	},
-	LinkShort: function() {
+	CategorySub: function() {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
-			autoLoad: true, proxy: {
-				type: 'ajax', extraParams: { action: 'link_short' },
+			autoLoad: false, proxy: {
+				type: 'ajax', extraParams: { action: 'category_sub' },
 				url: URLS.base + 'panel/combo',
 				reader: { type: 'json', root: 'res' },
 				actionMethods: { read: 'POST' }
@@ -291,6 +263,15 @@ var Combo = {
 		Category: function(Param) {
 			var p = {
 				xtype: 'combo', store: Store.Category(), minChars: 1, selectOnFocus: true,
+				valueField: 'id', displayField: 'name', readonly: true, editable: false
+			}
+			p = Func.SyncComboParam(p, Param);
+			
+			return p;
+		},
+		CategorySub: function(Param) {
+			var p = {
+				xtype: 'combo', store: Store.CategorySub(), minChars: 1, selectOnFocus: true,
 				valueField: 'id', displayField: 'name', readonly: true, editable: false
 			}
 			p = Func.SyncComboParam(p, Param);
@@ -340,12 +321,8 @@ Combo.Class = {
 		var c = new Ext.form.ComboBox(Combo.Param.Category(Param));
 		return c;
 	},
-	CommentStatus: function(Param) {
-		var c = new Ext.form.ComboBox(Combo.Param.CommentStatus(Param));
-		return c;
-	},
-	LinkShort: function(Param) {
-		var c = new Ext.form.ComboBox(Combo.Param.LinkShort(Param));
+	CategorySub: function(Param) {
+		var c = new Ext.form.ComboBox(Combo.Param.CategorySub(Param));
 		return c;
 	},
 	PostType: function(Param) {

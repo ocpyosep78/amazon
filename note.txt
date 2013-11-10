@@ -1,8 +1,8 @@
 ----------------------------------------------------------------------
 Panel
 ----------------------------------------------------------------------
-Category & Sub Category
-- punya field tambahan : tag, description
+ok => Category & Sub Category
+ok => - punya field tambahan : tag, description
 
 Scrape
 - Hasil Scrape dimasukkan ke sub category

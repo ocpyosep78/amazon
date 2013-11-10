@@ -15,35 +15,13 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHA_SECRET',							'OraNgerti');
-define('CATEGORY_ANIME',						3);
-define('CATEGORY_CARTOON',						4);
-define('CATEGORY_FILM',							1);
-define('CATEGORY_TV_SERIAL',					2);
-define('POST_TYPE_DRAFT',						1);
-define('POST_TYPE_SINGLE_LINK',					2);
-define('POST_TYPE_MULTI_LINK',					3);
-define('USER_TYPE_ADMINISTRATOR',				1);
-define('USER_TYPE_MEMBER',						2);
 
-// ADSENSE
-define('ADSENSE_300_x_250',						'300-x-250');
-
-define('ADSENSE_HTML',							'adsense_html');
-define('ADSENSE_OWNER',							'adsense_owner');
-define('ADSENSE_TYPE',							'adsense_type');
+define('CONFIGURATION',							'configuration');
 define('CATEGORY',								'category');
-define('COMMENT',								'comment');
-define('CONTACT',								'contact');
-define('LINK_SHORT',							'link_short');
+define('CATEGORY_SUB',							'category_sub');
 define('PAGE_STATIC',							'page_static');
-define('POST',									'post');
-define('POST_TAG',								'post_tag');
-define('POST_TYPE',								'post_type');
-define('REQUEST',								'request');
-define('SCRAPE_CONTENT',						'scrape_content');
-define('SCRAPE_MASTER',							'scrape_master');
-define('SHOUT_CONTENT',							'shout_content');
-define('SHOUT_MASTER',							'shout_master');
+define('SCRAPE',								'scrape');
+define('SUBSCRIBE',								'subscribe');
 define('TAG',									'tag');
 define('USER',									'user');
 define('USER_TYPE',								'user_type');

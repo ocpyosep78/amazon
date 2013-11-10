@@ -21,10 +21,12 @@ class user extends XX_Controller {
 		
 		$result = array();
 		if ($action == 'update') {
-			if (isset($_POST['passwd']) && empty($_POST['passwd'])) {
-				unset($_POST['passwd']);
-			} else {
-				$_POST['passwd'] = EncriptPassword($_POST['passwd']);
+			if (isset($_POST['passwd'])) {
+				if (empty($_POST['passwd'])) {
+					unset($_POST['passwd']);
+				} else {
+					$_POST['passwd'] = EncriptPassword($_POST['passwd']);
+				}
 			}
 			
 			$result = $this->User_model->update($_POST);

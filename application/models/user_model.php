@@ -115,7 +115,7 @@ class User_model extends CI_Model {
 			array(
 				'Title' => 'User Management',
 				'Child' => array(
-					array( 'Title' => 'User', 'Link' => base_url('panel/user/user') )
+					array( 'Title' => 'User', 'Link' => base_url('panel/user/user') ),
 					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe') )
 				)
 			),
