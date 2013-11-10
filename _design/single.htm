@@ -306,15 +306,9 @@
 		 
 			
 						<div class="review">
-				<div><img src="shop/stars-0.png" alt="0 reviews">&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">0 reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a></div>
+				<div><a onclick="$('a[href=\'#tab-review\']').trigger('click');">0 reviews</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a></div>
 			</div>
 				
-			<div class="share">
-				<!-- AddThis Button BEGIN -->
-				<div class="addthis_default_style"><a href="#" class="addthis_button_compact at300m"><span class="at16nc at300bs at15nc at15t_compact at16t_compact"><span class="at_a11y">More Sharing Services</span></span>Share</a> <a href="#" title="Email" target="_blank" class="addthis_button_email at300b"><span class="at16nc at300bs at15nc at15t_email at16t_email"><span class="at_a11y">Share on email</span></span></a><a href="#" title="Print" class="addthis_button_print at300b"><span class="at16nc at300bs at15nc at15t_print at16t_print"><span class="at_a11y">Share on print</span></span></a> <a href="#" title="Facebook" class="addthis_button_facebook at300b"><span class="at16nc at300bs at15nc at15t_facebook at16t_facebook"><span class="at_a11y">Share on facebook</span></span></a> <a href="#" title="Tweet" class="addthis_button_twitter at300b"><span class="at16nc at300bs at15nc at15t_twitter at16t_twitter"><span class="at_a11y">Share on twitter</span></span></a></div>
-				<script type="text/javascript" src="shop/addthis_widget.js"></script><div id="_atssh" style="visibility: hidden; height: 1px; width: 1px; position: absolute; z-index: 100000;"><iframe src="shop/sh140.htm" style="height: 1px; width: 1px; position: absolute; z-index: 100000; border: 0px none; left: 0px; top: 0px;" title="AddThis utility frame" id="_atssh93"></iframe></div><script src="shop/core107.js" type="text/javascript"></script> 
-				<!-- AddThis Button END --> 
-			</div>
 		
 		
 						<div class="tags">
@@ -404,7 +398,6 @@ numquam!</p>
 				<span>Good</span>
 			</p> 
 			<p> <strong>Enter the code in the box below:</strong> </p>
-			<p> <img src="shop/index.jpg" alt="" id="captcha"> </p>
 			<p> <input name="captcha" type="text"> </p>
 		</div>
 		
@@ -447,23 +440,13 @@ explicabo.</p>
 	
 	</div>
 
-<script type="text/javascript" src="shop/elevatezoom-min.js"></script>
+
 <script type="text/javascript">
-			$("#image").elevateZoom({gallery:'image-additional', cursor: 'pointer', galleryActiveClass: 'active'}); 
+			
 		 
 </script>
 
-<script type="text/javascript">
-<!--
-$(document).ready(function() {
-  $('.colorbox').colorbox({
-    overlayClose: true,
-    opacity: 0.5,
-    rel: "colorbox"
-  });
-});
-//-->
-</script> 
+
 
  <script type="text/javascript">
  <!--
@@ -535,7 +518,7 @@ $('#review .pagination a').live('click', function() {
   return false;
 });     
 
-$('#review').load('index.php?route=product/product/review&product_id=53');
+
 
 $('#button-review').bind('click', function() {
   $.ajax({
@@ -577,7 +560,7 @@ $('#tabs a').tabs();
 //-->
 </script> 
 
-<script type="text/javascript" src="shop/jquery-ui-timepicker-addon.js"></script> 
+
 <script type="text/javascript">
 <!--
 $(document).ready(function() {
@@ -586,11 +569,6 @@ $(document).ready(function() {
   }
 
   $('.date').datepicker({dateFormat: 'yy-mm-dd'});
-  $('.datetime').datetimepicker({
-    dateFormat: 'yy-mm-dd',
-    timeFormat: 'h:m'
-  });
-  $('.time').timepicker({timeFormat: 'h:m'});
 });
 //-->
 </script> 
@@ -665,7 +643,6 @@ $(document).ready(function() {
 													<div class="image">
 												
 								<span class="product-label-special"><span>text_sale</span></span>
-																<a href="http://#/opencart/index.php?route=product/product&amp;product_id=59"><img src="shop/product_10-95x100.jpg" alt="Vintage sofas" class="img-responsive"></a>
 								<div class="img-overlay"></div>
 							</div>
 												
@@ -712,7 +689,7 @@ $(document).ready(function() {
 				<div class="col-lg-3 col-sm-3 col-xs-12">
 					<div class="product-block">
 													<div class="image">
-																<a href="http://#/opencart/index.php?route=product/product&amp;product_id=40"><img src="shop/product_08-95x100.jpg" alt="iPhone" class="img-responsive"></a>
+																
 								<div class="img-overlay"></div>
 							</div>
 												
@@ -746,22 +723,14 @@ $(document).ready(function() {
 	
 </div>
 			<div id="banner0" class="box banner">
-      <div style="display: block;"><img src="shop/banner-macbook-270x220.jpg" alt="Macbook Pro" title="Macbook Pro"></div>
+      
     </div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#banner0 div:first-child').css('display', 'block');
 });
 
-var banner = function() {
-	$('#banner0').cycle({
-		before: function(current, next) {
-			$(next).parent().height($(next).outerHeight());
-		}
-	});
-}
 
-setTimeout(banner, 2000);
 //--></script>	</div></aside>
 
 </div></div>
