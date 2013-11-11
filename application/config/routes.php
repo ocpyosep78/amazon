@@ -18,14 +18,11 @@ if (count($array_arg) >= 1) {
 }
 
 if ($is_website) {
-	$route['(anime|film|tv-serial|cartoon)'] = "website/category";
-	$route['(anime|film|tv-serial|cartoon)/(:any)'] = "website/category";
-	$route['(:num)/(:num)/(:any)'] = "website/detail";
+	// common page
 	$route['tag'] = "website/tag";
 	$route['tag/(:any)'] = "website/tag";
 	$route['ajax'] = "website/ajax";
 	$route['ajax/(:any)'] = "website/ajax";
-	$route['widget/(:any)'] = "website/widget";
 	$route['logout'] = "website/logout";
 	
 	// list post
@@ -33,19 +30,12 @@ if ($is_website) {
 	$route['rss/(:any)'] = "website/rss";
 	$route['search'] = "website/search";
 	$route['search/(:any)'] = "website/search";
-	$route['sitemap'] = "website/sitemap";
-	$route['sitemap/(:any)'] = "website/sitemap";
 	
 	// form
-	$route['submit'] = "website/submit";
-	$route['submit/(:any)'] = "website/submit";
-	$route['request'] = "website/request";
-	$route['request/(:any)'] = "website/request";
-	$route['contact'] = "website/contact";
 	$route['contact/(:any)'] = "website/contact";
 	
-	// comment
-	$route['comment'] = "comment/comment";
+	// last option
+	$route['(:any)/(:any)/(:any)'] = "website/common";
 }
 
 if ($is_other_page) {
