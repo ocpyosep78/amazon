@@ -7,5 +7,5 @@ $autoload['config'] = array();
 $autoload['language'] = array();
 $autoload['model'] = array(
 	'User_model', 'User_Type_model', 'Category_model', 'Category_Sub_model', 'Page_Static_model', 'Subscribe_model', 'Configuration_model',
-	'Scrape_model', 'Brand_model', 'Item_model'
+	'Scrape_model', 'Brand_model', 'Item_model', 'Scrape_Page_model'
 );

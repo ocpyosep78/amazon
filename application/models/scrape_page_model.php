@@ -1,26 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Item_model extends CI_Model {
+class Scrape_Page_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array(
-			'id', 'brand_id', 'category_sub_id', 'alias', 'name', 'code', 'desc', 'link_source', 'price_old', 'price_show', 'status_stock', 'date_update'
-		);
+        $this->field = array( 'id', 'scrape_id', 'link', 'is_finish' );
     }
 
     function update($param) {
         $result = array();
        
         if (empty($param['id'])) {
-            $insert_query  = GenerateInsertQuery($this->field, $param, ITEM);
+            $insert_query  = GenerateInsertQuery($this->field, $param, SCRAPE_PAGE);
             $insert_result = mysql_query($insert_query) or die(mysql_error());
            
             $result['id'] = mysql_insert_id();
             $result['status'] = '1';
             $result['message'] = 'Data berhasil disimpan.';
         } else {
-            $update_query  = GenerateUpdateQuery($this->field, $param, ITEM);
+            $update_query  = GenerateUpdateQuery($this->field, $param, SCRAPE_PAGE);
             $update_result = mysql_query($update_query) or die(mysql_error());
            
             $result['id'] = $param['id'];
@@ -35,11 +33,9 @@ class Item_model extends CI_Model {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".ITEM." WHERE id = '".$param['id']."' LIMIT 1";
-        } else if (isset($param['alias'])) {
-            $select_query  = "SELECT * FROM ".ITEM." WHERE alias = '".$param['alias']."' LIMIT 1";
-        } else if (isset($param['link_source'])) {
-            $select_query  = "SELECT * FROM ".ITEM." WHERE link_source = '".$param['link_source']."' LIMIT 1";
+            $select_query  = "SELECT * FROM ".SCRAPE_PAGE." WHERE id = '".$param['id']."' LIMIT 1";
+        } else if (isset($param['link'])) {
+            $select_query  = "SELECT * FROM ".SCRAPE_PAGE." WHERE link = '".$param['link']."' LIMIT 1";
         } 
        
         $select_result = mysql_query($select_query) or die(mysql_error());
@@ -53,21 +49,14 @@ class Item_model extends CI_Model {
     function get_array($param = array()) {
         $array = array();
 		
-		$string_namelike = (!empty($param['namelike'])) ? "AND Item.name LIKE '%".$param['namelike']."%'" : '';
+		$string_namelike = (!empty($param['namelike'])) ? "AND ScrapePage.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT
-				SQL_CALC_FOUND_ROWS Item.*,
-				Brand.id brand_id, Brand.name brand_name,
-				CategorySub.id category_sub_id, CategorySub.name category_sub_name,
-				Category.id category_id, Category.name category_name
-			FROM ".ITEM." Item
-			LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
-			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
-			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+			SELECT SQL_CALC_FOUND_ROWS ScrapePage.*
+			FROM ".SCRAPE_PAGE." ScrapePage
 			WHERE 1 $string_namelike $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
@@ -90,7 +79,7 @@ class Item_model extends CI_Model {
     }
 	
     function delete($param) {
-		$delete_query  = "DELETE FROM ".ITEM." WHERE id = '".$param['id']."' LIMIT 1";
+		$delete_query  = "DELETE FROM ".SCRAPE_PAGE." WHERE id = '".$param['id']."' LIMIT 1";
 		$delete_result = mysql_query($delete_query) or die(mysql_error());
 		
 		$result['status'] = '1';

@@ -23,6 +23,7 @@ define('CATEGORY_SUB',							'category_sub');
 define('ITEM',									'item');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');
+define('SCRAPE_PAGE',							'scrape_page');
 define('SUBSCRIBE',								'subscribe');
 define('TAG',									'tag');
 define('USER',									'user');

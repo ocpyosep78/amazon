@@ -56,9 +56,56 @@ class item extends XX_Controller {
 		else {
 			$this->load->library('scrape/'.$scrape['library']);
 			$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $scrape['link'] ));
-			print_r($scrape['link']); exit;
+			
+			// set message
+			$message = '';
+			
+			// insert page
+			if (count($scrape_result['array_page']) > 0) {
+				foreach ($scrape_result['array_page'] as $link) {
+					// check
+					$record = $this->Scrape_Page_model->get_by_id(array( 'link' => $link ));
+					if (count($record) > 0) {
+						continue;
+					}
+					
+					// insert
+					$param_scrape_page = array( 'scrape_id' => $scrape['id'], 'link' => $link );
+					$this->Scrape_Page_model->update($param_scrape_page);
+					
+					// message
+					$page_count = (isset($page_count)) ? $page_count + 1 : 1;
+				}
+				
+				if (!empty($page_count)) {
+					$message .= "<div>$page_count Link Halaman ditemukan</div>";
+				}
+			}
+			
+			// insert item
+			if (count($scrape_result['array_item']) > 0) {
+				foreach ($scrape_result['array_item'] as $link_source) {
+					// check
+					$record = $this->Item_model->get_by_id(array( 'link_source' => $link_source ));
+					if (count($record) > 0) {
+						continue;
+					}
+					
+					// insert
+					$param_item = array( 'scrape_id' => $scrape['id'], 'link_source' => $link_source );
+					$this->Item_model->update($param_item);
+					
+					// message
+					$item_count = (isset($item_count)) ? $item_count + 1 : 1;
+				}
+				
+				if (!empty($item_count)) {
+					$message .= "<div>$item_count Item Halaman ditemukan</div>";
+				}
+			}
 		}
 		
 		// show view status
+		$this->load->view( 'panel/product/scrape_info', array( 'message' => $message ) );
 	}
 }
