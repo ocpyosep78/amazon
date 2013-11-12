@@ -1,0 +1,64 @@
+<?php
+class item extends XX_Controller {
+    function __construct() {
+        parent::__construct();
+    }
+    
+    function index() {
+		$this->load->view( 'panel/product/item' );
+    }
+	
+	function grid() {
+		$result['rows'] = $this->Item_model->get_array($_POST);
+		$result['count'] = $this->Item_model->get_count();
+		
+		echo json_encode($result);
+	}
+	
+	function action() {
+		$action = (isset($_POST['action'])) ? $_POST['action'] : '';
+		unset($_POST['action']);
+		
+		$result = array();
+		if ($action == 'update') {
+			$result = $this->Item_model->update($_POST);
+		} else if ($action == 'get_by_id') {
+			$result = $this->Item_model->get_by_id(array( 'id' => $_POST['id'] ));
+		} else if ($action == 'delete') {
+			$result = $this->Item_model->delete($_POST);
+		}
+		
+		echo json_encode($result);
+	}
+	
+	function view() {
+		$this->load->view( 'panel/product/popup/item' );
+	}
+	
+	function do_scrape() {
+		$scrape_id = (isset($_GET['scrape_id'])) ? $_GET['scrape_id'] : 0;
+		if (empty($scrape_id)) {
+			exit;
+		}
+		
+		// scrape info
+		$scrape = $this->Scrape_model->get_by_id(array( 'id' => $scrape_id ));
+		
+		// get item with incomplete data
+		if (false) {
+		}
+		
+		// get link page from scrape page with status incomplete
+		if (false) {
+		}
+		
+		// get link from link main scrape
+		else {
+			$this->load->library('scrape/'.$scrape['library']);
+			$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $scrape['link'] ));
+			print_r($scrape['link']); exit;
+		}
+		
+		// show view status
+	}
+}
