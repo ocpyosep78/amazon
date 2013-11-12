@@ -16,9 +16,11 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHA_SECRET',							'OraNgerti');
 
+define('BRAND',									'brand');
 define('CONFIGURATION',							'configuration');
 define('CATEGORY',								'category');
 define('CATEGORY_SUB',							'category_sub');
+define('ITEM',									'item');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');
 define('SUBSCRIBE',								'subscribe');
