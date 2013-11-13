@@ -46,7 +46,7 @@ class Brand_model extends CI_Model {
             $array = $this->sync($row);
         }
 		
-		if (count($array) == 0 && isset($param['is_force']) && $param['is_force']) {
+		if (count($array) == 0 && isset($param['is_force']) && $param['is_force'] && !empty($param['name'])) {
 			$insert_param['name'] = $param['name'];
 			$insert_param['alias'] = get_name($param['name']);
 			$result = $this->update($insert_param);

@@ -59,7 +59,7 @@ class item extends XX_Controller {
 			// item
 			$item_param = $scrape_result;
 			$item_param['id'] = $item_incomplete['id'];
-			$item_param['brand_id'] = $brand['id'];
+			$item_param['brand_id'] = @$brand['id'];
 			$item_param['category_sub_id'] = $scrape['category_sub_id'];
 			$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
 			$item_param['store'] = $scrape['store'];
