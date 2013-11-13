@@ -5,7 +5,8 @@ class Item_model extends CI_Model {
         parent::__construct();
 		
         $this->field = array(
-			'id', 'brand_id', 'category_sub_id', 'alias', 'name', 'code', 'desc', 'link_source', 'price_old', 'price_show', 'status_stock', 'date_update'
+			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'price_old', 'price_show', 'price_range',
+			'status_stock', 'date_update', 'image'
 		);
     }
 
@@ -39,8 +40,10 @@ class Item_model extends CI_Model {
         } else if (isset($param['alias'])) {
             $select_query  = "SELECT * FROM ".ITEM." WHERE alias = '".$param['alias']."' LIMIT 1";
         } else if (isset($param['link_source'])) {
-            $select_query  = "SELECT * FROM ".ITEM." WHERE link_source = '".$param['link_source']."' LIMIT 1";
-        } 
+			// fix link source before quesy
+			$link_source = preg_replace('/\/ref=.+$/i', '', $param['link_source']);
+            $select_query  = "SELECT * FROM ".ITEM." WHERE link_source LIKE '".$link_source."%' LIMIT 1";
+        }
        
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {
@@ -101,7 +104,48 @@ class Item_model extends CI_Model {
 	
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
+		$row['item_link'] = base_url($row['alias']);
 		
 		return $row;
+	}
+	
+	function get_item_incomplete($param = array()) {
+        $array = array();
+		
+        if (isset($param['scrape_id'])) {
+            $select_query  = "SELECT * FROM ".ITEM." WHERE scrape_id = '".$param['scrape_id']."' AND date_update = '0000-00-00' LIMIT 1";
+        } 
+       
+        $select_result = mysql_query($select_query) or die(mysql_error());
+        if (false !== $row = mysql_fetch_assoc($select_result)) {
+            $array = $this->sync($row);
+        }
+		
+        return $array;
+	}
+	
+	function get_name($post_name) {
+		$post_name = get_name($post_name);
+		
+		$result = '';
+		for ($i = 0; $i <= 10; $i++) {
+			if (empty($i)) {
+				$name_check = $post_name;
+			} else {
+				$name_check = $post_name.'-'.$i;
+			}
+			
+			$post = $this->get_by_id(array( 'alias' => $name_check ));
+			if (count($post) == 0) {
+				$result = $name_check;
+				break;
+			}
+		}
+		
+		if (empty($result)) {
+			$result = $post_name.'-'.time();
+		}
+		
+		return $result;
 	}
 }

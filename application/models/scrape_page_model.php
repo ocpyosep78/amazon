@@ -93,4 +93,19 @@ class Scrape_Page_model extends CI_Model {
 		
 		return $row;
 	}
+	
+	function get_page_incomplete($param = array()) {
+        $array = array();
+		
+        if (isset($param['scrape_id'])) {
+            $select_query  = "SELECT * FROM ".SCRAPE_PAGE." WHERE scrape_id = '".$param['scrape_id']."' AND is_finish = '0' LIMIT 1";
+        }
+       
+        $select_result = mysql_query($select_query) or die(mysql_error());
+        if (false !== $row = mysql_fetch_assoc($select_result)) {
+            $array = $this->sync($row);
+        }
+		
+        return $array;
+	}
 }

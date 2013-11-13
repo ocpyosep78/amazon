@@ -29,13 +29,16 @@ Ext.onReady(function() {
 		tbar: [ {
 				text: 'Scrape :', margin: '0 5 0 5', xtype: 'label'
 			},	Combo.Class.Scrape({ width: 225, id: 'scrape' }), {
+				id: 'scrape_page', xtype: 'textfield', tooltip: 'Scrape Page', emptyText: 'Scrape Page'
+			}, {
 				text: 'Start Scrape', iconCls: 'addIcon', tooltip: 'Start Scrape', handler: function() {
 					var scrape_id = Ext.getCmp('scrape').getValue();
-					if (scrape_id == null) {
+					var scrape_page = Ext.getCmp('scrape_page').getValue();
+					if (scrape_id == null || scrape_page == '') {
 						return false;
 					}
 					
-					var link_scrape = URLS.base + 'panel/product/item/do_scrape?scrape_id=' + scrape_id;
+					var link_scrape = URLS.base + 'panel/product/item/do_scrape?scrape_id=' + scrape_id + '&scrape_page=' + escape(scrape_page);
 					window.open(link_scrape);
 				}
 			}, '-', {

@@ -43,19 +43,43 @@ class item extends XX_Controller {
 		
 		// scrape info
 		$scrape = $this->Scrape_model->get_by_id(array( 'id' => $scrape_id ));
+		$this->load->library('scrape/'.$scrape['library']);
+		
+		// get data
+		$item_incomplete = $this->Item_model->get_item_incomplete(array( 'scrape_id' => $scrape_id ));
+		$page_incomplete = $this->Scrape_Page_model->get_page_incomplete(array( 'scrape_id' => $scrape_id ));
 		
 		// get item with incomplete data
-		if (false) {
+		if (count($item_incomplete) > 0) {
+			$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_incomplete['link_source'] ));
+			
+			// data
+			$brand = $this->Brand_model->get_by_id(array( 'name' => $scrape_result['brand_name'], 'is_force' => true ));
+			
+			// item
+			$item_param = $scrape_result;
+			$item_param['id'] = $item_incomplete['id'];
+			$item_param['brand_id'] = $brand['id'];
+			$item_param['category_sub_id'] = $scrape['category_sub_id'];
+			$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
+			$item_param['store'] = $scrape['store'];
+			$item_param['date_update'] = $this->config->item('current_date');
+			$result = $this->Item_model->update($item_param);
+			$item = $this->Item_model->get_by_id($result);
+			
+			$message  = "<div>1 Halaman Item berhasil diperbaharui.</div>";
+			$message .= '<div><a href="'.$item['item_link'].'">'.$item['name'].'</a></div>';
 		}
 		
-		// get link page from scrape page with status incomplete
-		if (false) {
-		}
-		
-		// get link from link main scrape
+		// get link from link page scrape
 		else {
-			$this->load->library('scrape/'.$scrape['library']);
-			$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $scrape['link'] ));
+			if (!empty($_GET['scrape_page'])) {
+				$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $_GET['scrape_page'] ));
+			} else if (count($page_incomplete) > 0) {
+				$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $page_incomplete['link'] ));
+			} else {
+				$scrape_result = $this->$scrape['library']->scrape_page(array( 'link' => $scrape['link'] ));
+			}
 			
 			// set message
 			$message = '';
@@ -102,6 +126,13 @@ class item extends XX_Controller {
 				if (!empty($item_count)) {
 					$message .= "<div>$item_count Item Halaman ditemukan</div>";
 				}
+			}
+			
+			// update page incomplete
+			if (count($page_incomplete) > 0) {
+				$param_update['id'] = $page_incomplete['id'];
+				$param_update['is_finish'] = 1;
+				$this->Scrape_Page_model->update($param_update);
 			}
 		}
 		

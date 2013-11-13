@@ -36,12 +36,23 @@ class Brand_model extends CI_Model {
             $select_query  = "SELECT * FROM ".BRAND." WHERE id = '".$param['id']."' LIMIT 1";
         } else if (isset($param['alias'])) {
             $select_query  = "SELECT * FROM ".BRAND." WHERE alias = '".$param['alias']."' LIMIT 1";
+        } else if (isset($param['name'])) {
+			$param['name'] = trim($param['name']);
+            $select_query  = "SELECT * FROM ".BRAND." WHERE name = '".$param['name']."' LIMIT 1";
         } 
        
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {
             $array = $this->sync($row);
         }
+		
+		if (count($array) == 0 && isset($param['is_force']) && $param['is_force']) {
+			$insert_param['name'] = $param['name'];
+			$insert_param['alias'] = get_name($param['name']);
+			$result = $this->update($insert_param);
+			
+			$array = $this->get_by_id(array( 'id' => $result['id'] ));
+		}
        
         return $array;
     }
