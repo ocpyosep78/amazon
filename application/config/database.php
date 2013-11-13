@@ -8,6 +8,11 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = '';
 	$db['default']['database'] = 'amazon_db';
+} else {
+	$db['default']['hostname'] = 'localhost';
+	$db['default']['username'] = 'shoperin_toko';
+	$db['default']['password'] = '!tok0p4ss!';
+	$db['default']['database'] = 'shoperin_market';
 }
 
 $db['default']['dbdriver'] = 'mysql';

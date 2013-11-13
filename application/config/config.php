@@ -4,8 +4,8 @@ if ($_SERVER['SERVER_NAME'] == 'localhost') {
 	$config['base_url']			= 'http://localhost/amazon/trunk';
 	$config['base_path']		= realpath(dirname(__FILE__) . '/../..');
 } else {
-	echo 'Please set up config.';
-	exit;
+	$config['base_url']			= 'http://shoperindo.com/shopermarket/demo';
+	$config['base_path']		= realpath(dirname(__FILE__) . '/../..');
 }
 
 $config['current_date'] = date("Y-m-d");
