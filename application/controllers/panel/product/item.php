@@ -21,7 +21,7 @@ class item extends XX_Controller {
 		
 		$result = array();
 		if ($action == 'update') {
-			$result = $this->Item_model->update($_POST);
+			$result = $this->Item_model->update_complex($_POST);
 		} else if ($action == 'get_by_id') {
 			$result = $this->Item_model->get_by_id(array( 'id' => $_POST['id'] ));
 		} else if ($action == 'delete') {
@@ -46,25 +46,34 @@ class item extends XX_Controller {
 		$this->load->library('scrape/'.$scrape['library']);
 		
 		// get data
+		$is_refresh = true;
 		$item_incomplete = $this->Item_model->get_item_incomplete(array( 'scrape_id' => $scrape_id ));
 		$page_incomplete = $this->Scrape_Page_model->get_page_incomplete(array( 'scrape_id' => $scrape_id ));
+		$item_request_rescrape = (isset($_GET['item_request_rescrape'])) ? $this->Item_model->get_by_id(array( 'id' => $_GET['item_request_rescrape'] )) : array();
 		
 		// get item with incomplete data
-		if (count($item_incomplete) > 0) {
-			$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_incomplete['link_source'] ));
+		if (count($item_request_rescrape) > 0 || count($item_incomplete) > 0) {
+			if (count($item_request_rescrape) > 0) {
+				$is_refresh = false;
+				$item_id = $item_request_rescrape['id'];
+				$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_request_rescrape['link_source'] ));
+			} else {
+				$item_id = $item_incomplete['id'];
+				$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_incomplete['link_source'] ));
+			}
 			
 			// data
 			$brand = $this->Brand_model->get_by_id(array( 'name' => $scrape_result['brand_name'], 'is_force' => true ));
 			
 			// item
 			$item_param = $scrape_result;
-			$item_param['id'] = $item_incomplete['id'];
+			$item_param['id'] = $item_id;
 			$item_param['brand_id'] = @$brand['id'];
 			$item_param['category_sub_id'] = $scrape['category_sub_id'];
 			$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
 			$item_param['store'] = $scrape['store'];
 			$item_param['date_update'] = $this->config->item('current_date');
-			$result = $this->Item_model->update($item_param);
+			$result = $this->Item_model->update_complex($item_param);
 			$item = $this->Item_model->get_by_id($result);
 			
 			$message  = "<div>1 Halaman Item berhasil diperbaharui.</div>";
@@ -117,7 +126,7 @@ class item extends XX_Controller {
 					
 					// insert
 					$param_item = array( 'scrape_id' => $scrape['id'], 'link_source' => $link_source );
-					$this->Item_model->update($param_item);
+					$this->Item_model->update_complex($param_item);
 					
 					// message
 					$item_count = (isset($item_count)) ? $item_count + 1 : 1;
@@ -137,6 +146,6 @@ class item extends XX_Controller {
 		}
 		
 		// show view status
-		$this->load->view( 'panel/product/scrape_info', array( 'message' => $message ) );
+		$this->load->view( 'panel/product/scrape_info', array( 'message' => $message, 'is_refresh' => $is_refresh ) );
 	}
 }

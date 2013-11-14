@@ -9,7 +9,9 @@ class combo extends CI_Controller {
 		$action = (!empty($_POST['action'])) ? $_POST['action'] : '';
 		
 		$array = array();
-		if ($action == 'category') {
+		if ($action == 'brand') {
+			$array = $this->Brand_model->get_array(array( ));
+		} else if ($action == 'category') {
 			$array = $this->Category_model->get_array(array( ));
 		} else if ($action == 'category_sub') {
 			$array = $this->Category_Sub_model->get_array($_POST);

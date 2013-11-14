@@ -8,7 +8,7 @@ Ext.onReady(function() {
 	var main_store = Ext.create('Ext.data.Store', {
 		autoLoad: true, pageSize: 25, remoteSort: true,
         sorters: [{ property: 'name', direction: 'ASC' }],
-		fields: [ 'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name' ],
+		fields: [ 'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name', 'scrape_id' ],
 		proxy: {
 			type: 'ajax',
 			url : URLS.base + 'panel/product/item/grid', actionMethods: { read: 'POST' },
@@ -23,8 +23,17 @@ Ext.onReady(function() {
 					header: 'Name', dataIndex: 'name', sortable: true, filter: true, width: 200
 			}, {	header: 'Category', dataIndex: 'category_name', sortable: true, filter: true, width: 200
 			}, {	header: 'Sub Category', dataIndex: 'category_sub_name', sortable: true, filter: true, width: 200, flex: 1
+			}, {	header: 'Code', dataIndex: 'code', sortable: true, filter: true, width: 200
 			}, {	header: 'Brand', dataIndex: 'brand_name', sortable: true, filter: true, width: 200
 			}, {	header: 'Price', dataIndex: 'price_show', sortable: true, filter: true, width: 200
+			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
+					items: [ {
+							iconCls: 'refreshIcon', tooltip: 'Re Scrape', handler: function(grid, rowIndex, colIndex) {
+								var row = grid.store.getAt(rowIndex).data;
+								var link_scrape = URLS.base + 'panel/product/item/do_scrape?scrape_id=' + row.scrape_id + '&item_request_rescrape=' + row.id;
+								window.open(link_scrape);
+							}
+					} ]
 		} ],
 		tbar: [ {
 				text: 'Scrape :', margin: '0 5 0 5', xtype: 'label'
@@ -123,7 +132,7 @@ Ext.onReady(function() {
 	
 	function main_win(param) {
 		var win = new Ext.Window({
-			layout: 'fit', width: 390, height: 220,
+			layout: 'fit', width: 1070, height: 535,
 			closeAction: 'hide', plain: true, modal: true,
 			buttons: [ {
 						text: 'Save', handler: function() { win.save(); }
@@ -142,9 +151,8 @@ Ext.onReady(function() {
 							w.body.dom.innerHTML = Result.responseText;
 							
 							win.id = param.id;
-							/*
 							win.name = new Ext.form.TextField({
-								renderTo: 'nameED', width: 225, allowBlank: false, blankText: 'Masukkan Judul',
+								renderTo: 'nameED', width: 575, allowBlank: false, blankText: 'Masukkan Judul',
 								enableKeyEvents: true, listeners: {
 									keyup: function(me) {
 										var alias = Func.GetName(me.getValue());
@@ -152,18 +160,59 @@ Ext.onReady(function() {
 									}
 								}
 							});
-							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 225, readOnly: true });
-							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 225, height: 60 });
+							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 575, readOnly: true });
+							win.desc = new Ext.form.HtmlEditor({ renderTo: 'descED', width: 575, height: 345, enableFont: false });
+							win.link_source = new Ext.form.TextField({ renderTo: 'link_sourceED', width: 575 });
+							win.status_stock = new Ext.form.TextField({ renderTo: 'status_stockED', width: 575 });
+							win.brand = Combo.Class.Brand({ renderTo: 'brandED', width: 225, allowBlank: false, blankText: 'Masukkan Brand' });
+							win.category = Combo.Class.Category({
+								renderTo: 'categoryED', width: 225, listeners: {
+									select: function(cb, record) {
+										win.category_sub.reset();
+									}
+								}
+							});
+							win.category_sub = Combo.Class.CategorySub({
+								renderTo: 'category_subED', width: 225, allowBlank: false, blankText: 'Masukkan Sub Category', listeners: {
+									beforequery: function(queryEvent, eOpts) {
+										queryEvent.combo.store.proxy.extraParams.category_id = win.category.getValue();
+										queryEvent.combo.store.load();
+									}
+								}
+							});
+							win.code = new Ext.form.TextField({ renderTo: 'codeED', width: 225 });
+							win.store = new Ext.form.TextField({ renderTo: 'storeED', width: 225 });
 							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
+							win.is_publish = new Ext.form.Checkbox({ renderTo: 'is_publishED' });
+							win.price_old = new Ext.form.TextField({ renderTo: 'price_oldED', width: 225 });
+							win.price_show = new Ext.form.TextField({ renderTo: 'price_showED', width: 225 });
+							win.price_range = new Ext.form.TextField({ renderTo: 'price_rangeED', width: 225 });
+							win.image = new Ext.form.TextField({ renderTo: 'imageED', width: 225, readOnly: true });
+							win.image_button = new Ext.Button({ renderTo: 'btn_imageED', text: 'Browse', width: 75, handler: function(btn) {
+								window.iframe_image.browse();
+							} });
+							item_image = function(p) { win.image.setValue(p.file_name); }
 							
 							// Populate Record
 							if (param.id > 0) {
 								win.name.setValue(param.name);
 								win.alias.setValue(param.alias);
 								win.desc.setValue(param.desc);
-								win.tag.setValue(param.tag);
+								win.link_source.setValue(param.link_source);
+								win.status_stock.setValue(param.status_stock);
+								win.code.setValue(param.code);
+								win.store.setValue(param.store);
+								win.tag.setValue(param.tag_implode);
+								win.price_old.setValue(param.price_old);
+								win.price_show.setValue(param.price_show);
+								win.price_range.setValue(param.price_range);
+								win.image.setValue(param.image);
+								win.is_publish.setValue((param.is_publish == 1));
+								
+								win.brand.setValue(param.brand_id);
+								win.category.setValue(param.category_id);
+								Func.SetValue({ action : 'category_sub', ForceID: param.category_sub_id, Combo: win.category_sub });
 							}
-							/*	*/
 						}
 					});
 				},
@@ -173,18 +222,35 @@ Ext.onReady(function() {
 				}
 			},
 			save: function() {
-				/*
 				var ajax = new Object();
 				ajax.action = 'update';
 				ajax.id = win.id;
 				ajax.name = win.name.getValue();
 				ajax.alias = win.alias.getValue();
 				ajax.desc = win.desc.getValue();
+				ajax.link_source = win.link_source.getValue();
+				ajax.status_stock = win.status_stock.getValue();
+				ajax.code = win.code.getValue();
+				ajax.store = win.store.getValue();
 				ajax.tag = win.tag.getValue();
+				ajax.price_old = win.price_old.getValue();
+				ajax.price_show = win.price_show.getValue();
+				ajax.price_range = win.price_range.getValue();
+				ajax.image = win.image.getValue();
+				ajax.is_publish = (win.is_publish.getValue()) ? 1 : 0;
+				ajax.brand_id = win.brand.getValue();
+				ajax.category_id = win.category.getValue();
+				ajax.category_sub_id = win.category_sub.getValue();
 				
 				// Validation
 				var is_valid = true;
 				if (! win.name.validate()) {
+					is_valid = false;
+				}
+				if (! win.brand.validate()) {
+					is_valid = false;
+				}
+				if (! win.category_sub.validate()) {
 					is_valid = false;
 				}
 				if (! is_valid) {
@@ -198,7 +264,6 @@ Ext.onReady(function() {
 						win.hide();
 					}
 				} });
-				/*	*/
 			}
 		});
 		win.show();

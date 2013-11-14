@@ -81,6 +81,7 @@ class amazon_phone {
 		$page = ($this->use_curl) ? $curl->get($param['link']) : file_get_contents($param['link']);
 		$page_clean = $this->clean_item($page);
 		
+		$result['code'] = $this->get_code_item($param['link']);
 		$result['name'] = $this->get_name_item($page_clean);
 		$result['brand_name'] = $this->get_brand_item($page_clean);
 		$result['desc'] = $this->get_desc_item($page_clean);
@@ -108,6 +109,13 @@ class amazon_phone {
 		return $content;
 	}
 	
+	function get_code_item($link) {
+		preg_match('/dp\/([a-z0-9]+)\/ref/i', $link, $match);
+		$result = (isset($match[1])) ? $match[1] : '';
+		
+		return $result;
+	}
+	
 	function get_name_item($content) {
 		preg_match('/parseasinTitle ">\s*<span id="btAsinTitle" +>([^<]+)<\/span>/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
@@ -118,6 +126,11 @@ class amazon_phone {
 	function get_brand_item($content) {
 		preg_match('/<span id="amsPopoverTrigger"><a href="[^"]+">([^<]+)<\/a>/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
+		
+		if (empty($result)) {
+			preg_match('/"btAsinTitle" +>[^<]+<\/span>\s*<\/h1>\s*<span >\s*by[^<]+<a href="[^\"]+">([^<]+)</i', $content, $match);
+			$result = (isset($match[1])) ? $match[1] : $result;
+		}
 		
 		return $result;
 	}

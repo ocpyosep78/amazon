@@ -6,7 +6,7 @@ class Item_model extends CI_Model {
 		
         $this->field = array(
 			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'price_old', 'price_show', 'price_range',
-			'status_stock', 'date_update', 'image'
+			'status_stock', 'date_update', 'image', 'is_publish'
 		);
     }
 
@@ -32,11 +32,26 @@ class Item_model extends CI_Model {
         return $result;
     }
 
+	function update_complex($param) {
+		return $this->update($param);
+	}
+	
     function get_by_id($param) {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".ITEM." WHERE id = '".$param['id']."' LIMIT 1";
+            $select_query  = "
+				SELECT Item.*,
+					Brand.id brand_id, Brand.name brand_name,
+					CategorySub.id category_sub_id, CategorySub.name category_sub_name,
+					Category.id category_id, Category.name category_name
+				FROM ".ITEM." Item
+				LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
+				LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+				LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+				WHERE Item.id = '".$param['id']."'
+				LIMIT 1
+			";
         } else if (isset($param['alias'])) {
             $select_query  = "SELECT * FROM ".ITEM." WHERE alias = '".$param['alias']."' LIMIT 1";
         } else if (isset($param['link_source'])) {

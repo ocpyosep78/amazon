@@ -208,6 +208,18 @@ var Template = {
 }
 
 var Store = {
+	Brand: function() {
+		var Store = new Ext.create('Ext.data.Store', {
+			fields: ['id', 'name'],
+			autoLoad: true, proxy: {
+				type: 'ajax', extraParams: { action: 'brand' },
+				url: URLS.base + 'panel/combo',
+				reader: { type: 'json', root: 'res' },
+				actionMethods: { read: 'POST' }
+			}
+		});
+		return Store;
+	},
 	Category: function() {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
@@ -272,6 +284,15 @@ var Store = {
 
 var Combo = {
 	Param: {
+		Brand: function(Param) {
+			var p = {
+				xtype: 'combo', store: Store.Brand(), minChars: 1, selectOnFocus: true,
+				valueField: 'id', displayField: 'name', readonly: true, editable: false
+			}
+			p = Func.SyncComboParam(p, Param);
+			
+			return p;
+		},
 		Category: function(Param) {
 			var p = {
 				xtype: 'combo', store: Store.Category(), minChars: 1, selectOnFocus: true,
@@ -338,6 +359,10 @@ var Combo = {
 }
 
 Combo.Class = {
+	Brand: function(Param) {
+		var c = new Ext.form.ComboBox(Combo.Param.Brand(Param));
+		return c;
+	},
 	Category: function(Param) {
 		var c = new Ext.form.ComboBox(Combo.Param.Category(Param));
 		return c;

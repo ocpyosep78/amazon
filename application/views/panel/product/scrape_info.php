@@ -3,7 +3,7 @@
 ?>
 <html>
 <head>
-	<?php if (!empty($message)) { ?>
+	<?php if ($is_refresh && !empty($message)) { ?>
 	<meta http-equiv="refresh" content="5">
 	<?php } ?>
 </head>
