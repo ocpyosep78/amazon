@@ -58,7 +58,7 @@ class Category_Sub_model extends CI_Model {
 		$select_query = "
 			SELECT
 				SQL_CALC_FOUND_ROWS CategorySub.*,
-				Category.id category_id, Category.name category_name
+				Category.id category_id, Category.alias category_alias, Category.name category_name
 			FROM ".CATEGORY_SUB." CategorySub
 			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
 			WHERE 1 $string_namelike $string_category $string_filter
@@ -94,6 +94,11 @@ class Category_Sub_model extends CI_Model {
 	
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
+		
+		// link
+		if (isset($row['category_alias'])) {
+			$row['link'] = base_url($row['category_alias'].'/'.$row['alias']);
+		}
 		
 		return $row;
 	}

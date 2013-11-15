@@ -28,8 +28,8 @@
 						<div class="product-filter clearfix">
 							<div class="display">
 								<span style="float: left;">Display:</span>
-								<a class="list active">List</a>
-								<a class="grid" onclick="display('grid');">Grid</a>
+								<a class="list active" onclick="display_item('list');">List</a>
+								<a class="grid" onclick="display_item('grid');">Grid</a>
 							</div>
 							
 							<div class="sort">
@@ -198,42 +198,10 @@
 							<div class="results">Showing 1 to 12 of 15 (2 Pages)</div>
 						</div>
 					</div>
-<script type="text/javascript">
-function display(view) {
-	if (view == 'list') {
-		$('.product-grid').attr('class', 'product-list');
-		
-		$('.products-block  .product-block').each(function(index, element) {
- 
-			 $(element).parent().addClass("col-fullwidth");
-		});		
-		
-		$('.display').html('<span style="float: left;">Display:</span><a class="list active"><i class="icon-th-list"></i><em>List</em></a><a class="grid" onclick="display(\'grid\');"><i class="icon-th"></i><em>Grid</em></a>');
-	
-		$.totalStorage('display', 'list'); 
-	} else {
-		$('.product-list').attr('class', 'product-grid');
-		
-		$('.products-block  .product-block').each(function(index, element) {
-			 $(element).parent().removeClass("col-fullwidth");  
-		});	
-					
-		$('.display').html('<span style="float: left;">Display:</span><a class="list" onclick="display(\'list\');"><i class="icon-th-list"></i><em>List</em></a><a class="grid active"><i class="icon-th"></i><em>Grid</em></a>');
-	
-		$.totalStorage('display', 'grid');
-	}
-}
-
-/*
-view = $.totalStorage('display');
-
-if (view) {
-	display(view);
-} else {
-	display('grid');
-}
-/*	*/
-</script>
+					<script type="text/javascript">
+						var view_type = get_local('view_type');
+						display_item(view_type);
+					</script>
 				</section>
 				
 				<aside id="oc-column-right" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 offcanvas-sidebar">

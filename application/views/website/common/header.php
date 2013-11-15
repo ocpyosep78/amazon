@@ -1,3 +1,6 @@
+<?php
+	$array_category = $this->Category_model->get_array_with_sub();
+?>
 <header id="header">
 	<section id="topbar">
 		<div class="container">
@@ -49,21 +52,21 @@
 								<div class="collapse navbar-collapse navbar-ex1-collapse">
 									<ul class="nav navbar-nav megamenu">
 										<li class="home first">
-											<a href="http://parapekerja.com/opencart/?route=common/home"><span class="menu-title">Home</span></a>
+											<a href="<?php echo base_url(); ?>"><span class="menu-title">Home</span></a>
 										</li>
 										<li class="parent dropdown pav-parrent"></li>
 										<li class="">
-											<a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=25">
+											<a href="#">
 												<span class="menu-title">Holiday Shopping Guide</span>
 											</a>
 										</li>
 										<li class="">
-											<a href="http://parapekerja.com/opencart/index.php?route=pavdeals/deals">
+											<a href="#">
 												<span class="menu-title">Deals</span>
 											</a>
 										</li>
 										<li class="last">
-											<a href="http://parapekerja.com/opencart/?route=pavblog/blogs">
+											<a href="#">
 												<span class="menu-title">Blog</span>
 											</a>
 										</li>
@@ -87,52 +90,18 @@
 						</div>
 						<div class="menu-content d-content"><div class="pav-verticalmenu"><div class="navbar navbar-default"><div id="mainmenutop" class="verticalmenu" role="navigation"><div class="navbar-header"><div class="collapse navbar-collapse navbar-ex1-collapse">
 							<ul class="nav navbar-nav verticalmenu">
-								<li class="home first">
-									<a href="http://parapekerja.com/opencart/?route=common/home"><span class="menu-title">Audible Audiobooks</span></a>
-								</li>
+								<?php foreach ($array_category as $row) { ?>
 								<li class="parent dropdown pav-parrent">
-									<a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=25" class="dropdown-toggle" data-toggle="dropdown"><span class="menu-title">Vehicle, GPS &amp; Navigation</span><b class="caret"></b></a>
+									<a href="<?php echo $row['link']; ?>" class="dropdown-toggle" data-toggle="dropdown"><span class="menu-title"><?php echo $row['name']; ?></span><b class="caret"></b></a>
 									<div class="dropdown-menu" style="width:700px"><div class="dropdown-menu-inner"><div class="row">
 										<div class="mega-col col-md-6"><div class="mega-col-inner">
 											<div class="pavo-widget" id="wid-7">
-												<h3 class="menu-title"><span>Electronics &amp; Computer</span></h3>
-												<div class="widget-html">
-													<div class="widget-inner">
-														<ul>
-															<li class="first"><a href="#">Computers &amp; Tablets</a></li>
-															<li><a href="#">TV &amp; Home Theater</a></li>
-															<li><a href="#">Cell Phones &amp; Services</a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
-											<div class="pavo-widget" id="wid-8">
-												<h3 class="menu-title"><span>Camera &amp; Videos</span></h3>
-												<div class="widget-html">
-													<div class="widget-inner">
-														<ul>
-															<li class="first"><a href="#">Vehicle, GPS &amp; Navigation</a></li>
-															<li><a href="#">Musical Instruments</a></li>
-															<li><a href="#">Video Games &amp; Consoles</a></li>
-															<li class="last"><a href="#">Software</a></li>
-														</ul>
-													</div>
-												</div>
+												<?php foreach ($row['category_sub'] as $child) { ?>
+												<h3 class="menu-title"><a href="<?php echo $child['link']; ?>"><span><?php echo $child['name']; ?></span></a></h3>
+												<?php } ?>
 											</div>
 										</div></div>
 										<div class="mega-col col-md-6"><div class="mega-col-inner">
-											<div class="pavo-widget" id="wid-9">
-												<h3 class="menu-title"><span>Home &amp; Portable Audio</span></h3>
-												<div class="widget-html">
-													<div class="widget-inner">
-														<ul>
-															<li class="first"><a href="#">Office Products</a></li>
-															<li><a href="#">Electronics Accessories</a></li>
-															<li class="last"><a href="#">Trade In Electronics</a></li>
-														</ul>
-													</div>
-												</div>
-											</div>
 											<div class="pavo-widget" id="wid-10">
 												<h3 class="menu-title"><span>Image Sub Verticalmenu</span></h3>
 												<div class="widget-image">
@@ -144,9 +113,7 @@
 										</div></div>
 									</div></div></div>
 								</li>
-								<li class="">
-									<a href=""><span class="menu-title">All Conten Sub category</span></a>
-								</li>
+								<?php } ?>
 							</ul>
 						</div></div></div></div></div></div>
 					</div>

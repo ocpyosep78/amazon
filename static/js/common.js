@@ -202,3 +202,49 @@ function addToCompare(product_id) {
 		}
 	});
 }
+
+function display_item(view) {
+	if (view == 'list') {
+		$('.product-grid').attr('class', 'product-list');
+		$('.products-block .product-block').each(function(index, element) {
+			$(element).parent().addClass("col-fullwidth");
+		});
+		
+		$('.product-filter .list').addClass('active');
+		$('.product-filter .grid').removeClass('active');
+	} else {
+		$('.product-list').attr('class', 'product-grid');
+		$('.products-block .product-block').each(function(index, element) {
+			$(element).parent().removeClass("col-fullwidth");  
+		});
+		
+		$('.product-filter .grid').addClass('active');
+		$('.product-filter .list').removeClass('active');
+	}
+	
+	set_local('view_type', view);
+}
+
+function get_local(name) {
+	var result = '';
+	
+	if (typeof(localStorage) != 'undefined') {
+		if (typeof(localStorage[name]) == 'undefined') {
+			if (name == 'view_type') {
+				localStorage[name] = 'list';
+			} else {
+				localStorage[name] = '';
+			}
+		}
+		
+		result = localStorage[name];
+	}
+	
+	return result;
+}
+
+function set_local(name, value) {
+	if (typeof(localStorage) != 'undefined') {
+		localStorage[name] = value;
+	}
+}

@@ -1724,7 +1724,7 @@ ul.contact-us li a {
   padding: 0 0 0 40px;
 }
 .sidebar ul > li .collapsed {
-/*  background: url(../image/icon-minus.png) no-repeat 0 0;	*/
+  background: url(../img/icon-minus.png) no-repeat 0 0;
 }
 .sidebar ul > li .subcart {
   display: block;
@@ -1734,12 +1734,12 @@ ul.contact-us li a {
   position: absolute;
   top: 16px;
   right: 10px;
-/*  background: url(../image/icon-minus.png) no-repeat 0 0;	*/
+  background: url(../img/icon-minus.png) no-repeat 0 0;
 }
 .sidebar ul > li .subcart.collapsed {
   width: 5px;
   height: 5px;
-  background: url(../image/icon-plus.png) no-repeat 0 0;
+  background: url(../img/icon-plus.png) no-repeat 0 0;
 }
 .sidebar ul .haschild {
   position: relative;

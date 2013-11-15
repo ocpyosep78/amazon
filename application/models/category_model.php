@@ -69,6 +69,18 @@ class Category_model extends CI_Model {
         return $array;
     }
 
+    function get_array_with_sub($param = array()) {
+		$array = $this->get_array($param);
+		
+		// loop
+		foreach ($array as $key => $row) {
+			$array_category_sub = $this->Category_Sub_model->get_array(array( 'category_id' => $row['id'] ));
+			$array[$key]['category_sub'] = $array_category_sub;
+		}
+		
+        return $array;
+    }
+
     function get_count($param = array()) {
 		$select_query = "SELECT FOUND_ROWS() TotalRecord";
 		$select_result = mysql_query($select_query) or die(mysql_error());

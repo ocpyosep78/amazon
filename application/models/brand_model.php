@@ -79,6 +79,30 @@ class Brand_model extends CI_Model {
 		
         return $array;
     }
+	
+    function get_array_with_count($param = array()) {
+        $array = array();
+		
+		$string_publish = (isset($param['is_publish'])) ? "AND Item.is_publish = '".$param['is_publish']."'" : '';
+		$string_namelike = (!empty($param['namelike'])) ? "AND Brand.name LIKE '%".$param['namelike']."%'" : '';
+		$string_filter = GetStringFilter($param, @$param['column']);
+		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
+		$string_limit = GetStringLimit($param);
+		
+		$select_query = "
+			SELECT COUNT(*) total, Brand.alias, Brand.name
+			FROM ".BRAND." Brand
+			LEFT JOIN ".ITEM." Item ON Brand.id = Item.brand_id
+			WHERE 1 $string_publish $string_namelike $string_filter
+			GROUP BY Brand.alias, Brand.name
+		";
+        $select_result = mysql_query($select_query) or die(mysql_error());
+		while ( $row = mysql_fetch_assoc( $select_result ) ) {
+			$array[] = $this->sync($row, @$param['column']);
+		}
+		
+        return $array;
+    }
 
     function get_count($param = array()) {
 		$select_query = "SELECT FOUND_ROWS() TotalRecord";
@@ -101,6 +125,7 @@ class Brand_model extends CI_Model {
 	
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
+		$row['link'] = base_url('brand/'.$row['alias']);
 		
 		return $row;
 	}
