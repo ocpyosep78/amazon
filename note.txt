@@ -31,6 +31,10 @@ ok => - Status Post : Incomplete | Review | Approve | Unpublish
 ----------------------------------------------------------------------
 Website
 ----------------------------------------------------------------------
+Link Item
+- linknya seperti : http://www.shopermarket.com/item/code
+- link seperti "shopermarket.com/kategory/subkategory/judul" tidak support karena terlalu panjang (ada 3 folder)
+
 Link Out
 - Tambah 1 page sebagai link out seperti : https://www.shopermarket.com/url?q=http://www.amazon.com/c/product/891221-REG/ASUS_X202E_DH31T_VivoBook_X202E_DH31T_11_6_Multi_Touch.html/kw/ASX202EDH31T&sa=U&ei=w416Uq7DOYPTrQe9-oCgAw&ved=0CBoQ2yk&usg=AFQjCNGuHhWnQ
 
