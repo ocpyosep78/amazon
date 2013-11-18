@@ -32,7 +32,8 @@ class item extends XX_Controller {
 	}
 	
 	function view() {
-		$this->load->view( 'panel/product/popup/item' );
+		$form_name = (isset($_POST['form_name'])) ? $_POST['form_name'] : 'item';
+		$this->load->view( 'panel/product/popup/'.$form_name );
 	}
 	
 	function do_scrape() {
@@ -72,7 +73,7 @@ class item extends XX_Controller {
 			$item_param['category_sub_id'] = $scrape['category_sub_id'];
 			$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
 			$item_param['store'] = $scrape['store'];
-			$item_param['item_status_id'] = ITEM_STATUS_REVIEW;
+			$item_param['item_status_id'] = ITEM_MULTI_TITLE_REVIEW;
 			$item_param['date_update'] = $this->config->item('current_date');
 			$result = $this->Item_model->update_complex($item_param);
 			$item = $this->Item_model->get_by_id($result);
@@ -126,7 +127,7 @@ class item extends XX_Controller {
 					}
 					
 					// insert
-					$param_item = array( 'scrape_id' => $scrape['id'], 'link_source' => $link_source, 'item_status_id' => ITEM_STATUS_INCOMPLETE );
+					$param_item = array( 'scrape_id' => $scrape['id'], 'link_source' => $link_source, 'item_status_id' => ITEM_MULTI_TITLE_INCOMPLETE );
 					$this->Item_model->update_complex($param_item);
 					
 					// message

@@ -26,6 +26,7 @@ define('CONFIGURATION',							'configuration');
 define('CATEGORY',								'category');
 define('CATEGORY_SUB',							'category_sub');
 define('ITEM',									'item');
+define('ITEM_MULTI_TITLE',						'item_multi_title');
 define('ITEM_STATUS',							'item_status');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');

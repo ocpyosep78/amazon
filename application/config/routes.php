@@ -30,8 +30,8 @@ if ($is_website) {
 	$route['rss/(:any)'] = "website/rss";
 	$route['search'] = "website/home";
 	$route['search/(:any)'] = "website/home";
-	$route['brand'] = "website/home";
 	$route['brand/(:any)'] = "website/home";
+	$route['item/(:any)'] = "website/item";
 	
 	// form
 	$route['contact/(:any)'] = "website/contact";

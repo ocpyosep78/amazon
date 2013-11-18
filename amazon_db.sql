@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 18, 2013 at 09:09 AM
--- Server version: 5.5.32
--- PHP Version: 5.4.19
+-- Host: localhost
+-- Generation Time: Nov 18, 2013 at 08:41 PM
+-- Server version: 5.1.41
+-- PHP Version: 5.3.1
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,8 +18,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `amazon_db`
 --
-CREATE DATABASE IF NOT EXISTS `amazon_db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `amazon_db`;
 
 -- --------------------------------------------------------
 
@@ -195,6 +192,29 @@ INSERT INTO `item` (`id`, `brand_id`, `scrape_id`, `item_status_id`, `category_s
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `item_multi_title`
+--
+
+CREATE TABLE IF NOT EXISTS `item_multi_title` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `desc` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `item_multi_title`
+--
+
+INSERT INTO `item_multi_title` (`id`, `item_id`, `name`, `desc`) VALUES
+(1, 30, 'Title 011', 'Desc 011'),
+(2, 30, 'Title 022', 'Desc 022<br>'),
+(3, 30, 'Title 03', '03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `item_status`
 --
 
@@ -226,6 +246,11 @@ CREATE TABLE IF NOT EXISTS `item_tag` (
   `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `item_tag`
+--
+
 
 -- --------------------------------------------------------
 
@@ -297,6 +322,11 @@ CREATE TABLE IF NOT EXISTS `scrape_page` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Dumping data for table `scrape_page`
+--
+
+
 -- --------------------------------------------------------
 
 --
@@ -335,6 +365,11 @@ CREATE TABLE IF NOT EXISTS `tag` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+--
+-- Dumping data for table `tag`
+--
+
 
 -- --------------------------------------------------------
 

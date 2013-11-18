@@ -123,8 +123,10 @@ class Item_model extends CI_Model {
 	
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
-		$row['item_link'] = base_url($row['alias']);
 		$row['desc_limit'] = get_length_char(strip_tags($row['desc']), 250, ' ...');
+		
+		// link
+		$row['item_link'] = base_url('item/'.$row['alias']);
 		
 		// price
 		$row['price_old_text'] = '$ '.$row['price_old'];
