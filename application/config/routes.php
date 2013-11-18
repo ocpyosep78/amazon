@@ -28,8 +28,10 @@ if ($is_website) {
 	// list post
 	$route['rss'] = "website/rss";
 	$route['rss/(:any)'] = "website/rss";
-	$route['search'] = "website/search";
-	$route['search/(:any)'] = "website/search";
+	$route['search'] = "website/home";
+	$route['search/(:any)'] = "website/home";
+	$route['brand'] = "website/home";
+	$route['brand/(:any)'] = "website/home";
 	
 	// form
 	$route['contact/(:any)'] = "website/contact";

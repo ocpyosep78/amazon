@@ -8,7 +8,10 @@ Ext.onReady(function() {
 	var main_store = Ext.create('Ext.data.Store', {
 		autoLoad: true, pageSize: 25, remoteSort: true,
         sorters: [{ property: 'name', direction: 'ASC' }],
-		fields: [ 'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name', 'scrape_id' ],
+		fields: [
+			'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name',
+			'scrape_id', 'item_status_name'
+		],
 		proxy: {
 			type: 'ajax',
 			url : URLS.base + 'panel/product/item/grid', actionMethods: { read: 'POST' },
@@ -26,6 +29,7 @@ Ext.onReady(function() {
 			}, {	header: 'Code', dataIndex: 'code', sortable: true, filter: true, width: 200
 			}, {	header: 'Brand', dataIndex: 'brand_name', sortable: true, filter: true, width: 200
 			}, {	header: 'Price', dataIndex: 'price_show', sortable: true, filter: true, width: 200
+			}, {	header: 'Status', dataIndex: 'item_status_name', sortable: true, filter: true, width: 200
 			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
 					items: [ {
 							iconCls: 'refreshIcon', tooltip: 'Re Scrape', handler: function(grid, rowIndex, colIndex) {
@@ -183,7 +187,7 @@ Ext.onReady(function() {
 							win.code = new Ext.form.TextField({ renderTo: 'codeED', width: 225 });
 							win.store = new Ext.form.TextField({ renderTo: 'storeED', width: 225 });
 							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
-							win.is_publish = new Ext.form.Checkbox({ renderTo: 'is_publishED' });
+							win.item_status = Combo.Class.ItemStatus({ renderTo: 'item_statusED', width: 225 });
 							win.price_old = new Ext.form.TextField({ renderTo: 'price_oldED', width: 225 });
 							win.price_show = new Ext.form.TextField({ renderTo: 'price_showED', width: 225 });
 							win.price_range = new Ext.form.TextField({ renderTo: 'price_rangeED', width: 225 });
@@ -207,7 +211,7 @@ Ext.onReady(function() {
 								win.price_show.setValue(param.price_show);
 								win.price_range.setValue(param.price_range);
 								win.image.setValue(param.image);
-								win.is_publish.setValue((param.is_publish == 1));
+								win.item_status.setValue(param.item_status_id);
 								
 								win.brand.setValue(param.brand_id);
 								win.category.setValue(param.category_id);
@@ -237,7 +241,7 @@ Ext.onReady(function() {
 				ajax.price_show = win.price_show.getValue();
 				ajax.price_range = win.price_range.getValue();
 				ajax.image = win.image.getValue();
-				ajax.is_publish = (win.is_publish.getValue()) ? 1 : 0;
+				ajax.item_status_id = win.item_status.getValue();
 				ajax.brand_id = win.brand.getValue();
 				ajax.category_id = win.category.getValue();
 				ajax.category_sub_id = win.category_sub.getValue();

@@ -11,11 +11,12 @@ class home extends CI_Controller {
 	
 	function check() {
 		$is_login = $this->User_model->is_login(true);
+		$user = $this->User_model->get_session();
 		
 		$result['success'] = false;
 		if ($is_login) {
 			$result['success'] = true;
-			$result['menu'] = $this->User_model->get_menu();
+			$result['menu'] = $this->User_model->get_menu($user);
 		}
 		
 		echo json_encode($result);
@@ -32,7 +33,7 @@ class home extends CI_Controller {
 			$result['message'] = 'Maaf, user anda tidak aktif';
 		} else if ($user['passwd'] == EncriptPassword($_POST['passwd'])) {
 			$result['success'] = true;
-			$result['menu'] = $this->User_model->get_menu();
+			$result['menu'] = $this->User_model->get_menu($user);
 			$this->User_model->set_session($user);
 			
 			/*

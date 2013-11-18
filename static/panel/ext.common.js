@@ -244,6 +244,18 @@ var Store = {
 		});
 		return Store;
 	},
+	ItemStatus: function() {
+		var Store = new Ext.create('Ext.data.Store', {
+			fields: ['id', 'name'],
+			autoLoad: true, proxy: {
+				type: 'ajax', extraParams: { action: 'item_status' },
+				url: URLS.base + 'panel/combo',
+				reader: { type: 'json', root: 'res' },
+				actionMethods: { read: 'POST' }
+			}
+		});
+		return Store;
+	},
 	PostType: function() {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
@@ -311,6 +323,15 @@ var Combo = {
 			
 			return p;
 		},
+		ItemStatus: function(Param) {
+			var p = {
+				xtype: 'combo', store: Store.ItemStatus(), minChars: 1, selectOnFocus: true,
+				valueField: 'id', displayField: 'name', readonly: true, editable: false
+			}
+			p = Func.SyncComboParam(p, Param);
+			
+			return p;
+		},
 		PostType: function(Param) {
 			var p = {
 				xtype: 'combo', store: Store.PostType(), minChars: 1, selectOnFocus: true,
@@ -369,6 +390,10 @@ Combo.Class = {
 	},
 	CategorySub: function(Param) {
 		var c = new Ext.form.ComboBox(Combo.Param.CategorySub(Param));
+		return c;
+	},
+	ItemStatus: function(Param) {
+		var c = new Ext.form.ComboBox(Combo.Param.ItemStatus(Param));
 		return c;
 	},
 	PostType: function(Param) {

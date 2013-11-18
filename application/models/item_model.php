@@ -6,7 +6,7 @@ class Item_model extends CI_Model {
 		
         $this->field = array(
 			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'price_old', 'price_show', 'price_range',
-			'status_stock', 'date_update', 'image', 'is_publish'
+			'status_stock', 'date_update', 'image', 'item_status_id'
 		);
     }
 
@@ -71,6 +71,8 @@ class Item_model extends CI_Model {
     function get_array($param = array()) {
         $array = array();
 		
+		$string_brand = (!empty($param['brand_id'])) ? "AND Item.brand_id = '".$param['brand_id']."'" : '';
+		$string_item_status = (isset($param['item_status_id'])) ? "AND Item.item_status_id = '".$param['item_status_id']."'" : '';
 		$string_namelike = (!empty($param['namelike'])) ? "AND Item.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
@@ -81,12 +83,14 @@ class Item_model extends CI_Model {
 				SQL_CALC_FOUND_ROWS Item.*,
 				Brand.id brand_id, Brand.name brand_name,
 				CategorySub.id category_sub_id, CategorySub.name category_sub_name,
-				Category.id category_id, Category.name category_name
+				Category.id category_id, Category.name category_name,
+				ItemStatus.id item_status_id, ItemStatus.name item_status_name
 			FROM ".ITEM." Item
 			LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
+			LEFT JOIN ".ITEM_STATUS." ItemStatus ON ItemStatus.id = Item.item_status_id
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
 			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
-			WHERE 1 $string_namelike $string_filter
+			WHERE 1 $string_namelike $string_brand $string_item_status $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -120,6 +124,11 @@ class Item_model extends CI_Model {
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
 		$row['item_link'] = base_url($row['alias']);
+		$row['desc_limit'] = get_length_char(strip_tags($row['desc']), 250, ' ...');
+		
+		// price
+		$row['price_old_text'] = '$ '.$row['price_old'];
+		$row['price_show_text'] = '$ '.$row['price_show'];
 		
 		return $row;
 	}

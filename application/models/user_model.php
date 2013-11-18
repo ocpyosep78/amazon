@@ -104,32 +104,47 @@ class User_model extends CI_Model {
 		return $row;
 	}
 	
-	function get_menu() {
-		$menu = array(
+	function get_menu($user) {
+		$menu_all = array(
 			array(
 				'Title' => 'Product Management',
 				'Child' => array(
-					array( 'Title' => 'Item', 'Link' => base_url('panel/product/item') )
+					array( 'Title' => 'Item', 'Link' => base_url('panel/product/item'), 'user_type_id' => array(1, 2) )
 				)
 			),
 			array(
 				'Title' => 'User Management',
 				'Child' => array(
-					array( 'Title' => 'User', 'Link' => base_url('panel/user/user') ),
-					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe') )
+					array( 'Title' => 'User', 'Link' => base_url('panel/user/user'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe'), 'user_type_id' => array(1) )
 				)
 			),
 			array(
 				'Title' => 'Master',
 				'Child' => array(
-					array( 'Title' => 'Page Static', 'Link' => base_url('panel/master/page_static') ),
-					array( 'Title' => 'Configuration', 'Link' => base_url('panel/master/configuration') ),
-					array( 'Title' => 'Category', 'Link' => base_url('panel/master/category') ),
-					array( 'Title' => 'Sub Category', 'Link' => base_url('panel/master/category_sub') ),
-					array( 'Title' => 'Scrape', 'Link' => base_url('panel/master/scrape') ),
+					array( 'Title' => 'Page Static', 'Link' => base_url('panel/master/page_static'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Configuration', 'Link' => base_url('panel/master/configuration'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Category', 'Link' => base_url('panel/master/category'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Sub Category', 'Link' => base_url('panel/master/category_sub'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Scrape', 'Link' => base_url('panel/master/scrape'), 'user_type_id' => array(1) ),
 				)
 			)
 		);
+		
+		$menu = array();
+		foreach ($menu_all as $key => $menu_parent) {
+			$temp = array();
+			foreach ($menu_parent['Child'] as $module_info) {
+				if (in_array($user['user_type_id'], $module_info['user_type_id'])) {
+					$temp[] = $module_info;
+				}
+			}
+			
+			if (count($temp) > 0) {
+				$menu_parent['Child'] = $temp;
+				$menu[] = $menu_parent;
+			}
+		}
 		
 		return $menu;
 	}
@@ -145,9 +160,6 @@ class User_model extends CI_Model {
 				$result = false;
 			}
 		}
-		
-		// hack for template
-		$result = true;
 		
 		return $result;
 	}

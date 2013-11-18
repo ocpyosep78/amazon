@@ -35,8 +35,8 @@
 		<div style="float: left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Tag :</div>
 		<div style="float: left; width: 250px;"><div id="tagED"></div></div>
 		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Is Publish :</div>
-		<div style="float:left; width: 250px;"><div id="is_publishED"></div></div>
+		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Status :</div>
+		<div style="float:left; width: 250px;"><div id="item_statusED"></div></div>
 		<div class="clear"></div>
 		<div style="float: left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">&nbsp;</div>
 		<div class="clear"></div>

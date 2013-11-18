@@ -1,5 +1,5 @@
 <?php
-	$array_brand = $this->Brand_model->get_array_with_count(array( 'is_publish' => 1 ));
+	$array_brand = $this->Brand_model->get_array_with_count(array( 'item_status_id' => ITEM_STATUS_APPROVE ));
 ?>
 <div class="box category highlights">
 	<div class="box-heading"><span>Sort By Brand</span></div>

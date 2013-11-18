@@ -15,12 +15,18 @@ define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 define('SHA_SECRET',							'OraNgerti');
+define('USER_TYPE_ADMINISTRATOR',				1);
+define('ITEM_STATUS_INCOMPLETE',				1);
+define('ITEM_STATUS_REVIEW',					2);
+define('ITEM_STATUS_APPROVE',					3);
+define('ITEM_STATUS_UNPUBLISH',					4);
 
 define('BRAND',									'brand');
 define('CONFIGURATION',							'configuration');
 define('CATEGORY',								'category');
 define('CATEGORY_SUB',							'category_sub');
 define('ITEM',									'item');
+define('ITEM_STATUS',							'item_status');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');
 define('SCRAPE_PAGE',							'scrape_page');

@@ -15,6 +15,8 @@ class combo extends CI_Controller {
 			$array = $this->Category_model->get_array(array( ));
 		} else if ($action == 'category_sub') {
 			$array = $this->Category_Sub_model->get_array($_POST);
+		} else if ($action == 'item_status') {
+			$array = $this->Item_Status_model->get_array(array());
 		} else if ($action == 'post_type') {
 			$array = $this->Post_Type_model->get_array(array( ));
 		} else if ($action == 'scrape') {

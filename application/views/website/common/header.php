@@ -127,10 +127,12 @@
 				<div class="col-lg-2 col-sm-6 col-md-3 col-xs-12">
 					<div class="cart-top"><div id="cart" class="clearfix"><div class="heading">
 						<i class="icon-shopping-cart"></i>
+						<!--
 						<div class="cart-inner">
 							<h4>Shdasdas Cart</h4>
 							<a><span id="cart-total">0 item(s) - $0.00</span></a>
 						</div>
+						-->
 					</div></div></div>
 				</div>
 			</div>

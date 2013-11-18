@@ -36,6 +36,7 @@
     }
     
     if (! function_exists('ShowOption')) {
+		// echo ShowOption(array( 'Array' => $array_kategori, 'ArrayID' => 'id', 'ArrayTitle' => 'nama' ));
         function ShowOption($Param) {
             $Param['OptAll'] = (isset($Param['OptAll'])) ? $Param['OptAll'] : false;
             $Param['ArrayID'] = (isset($Param['ArrayID'])) ? $Param['ArrayID'] : 'id';
@@ -58,7 +59,8 @@
             
             foreach ($Param['Array'] as $Array) {
                 $Selected = ($Param['Selected'] == $Array[$Param['ArrayID']]) ? 'selected' : '';
-                $Content .= '<option value="'.$Array[$Param['ArrayID']].'" '.$Selected.'>'.$Array[$Param['ArrayTitle']].'</option>';
+				
+				$Content .= '<option value="'.htmlentities($Array[$Param['ArrayID']]).'" '.$Selected.'>'.$Array[$Param['ArrayTitle']].'</option>';
             }
             
             return $Content;

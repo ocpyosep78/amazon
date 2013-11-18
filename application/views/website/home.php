@@ -1,10 +1,55 @@
+<?php
+	$param_breadcrumb = array(
+		'title_list' => array(
+			array( 'link' => base_url(), 'title' => 'Home', 'class' => 'first' ),
+			array( 'link' => base_url('dekstop'), 'title' => 'Dekstop 2', 'class' => 'last' )
+		)
+	);
+	
+	// brand
+	preg_match('/brand\/([a-z0-9]+)/i', $_SERVER['REQUEST_URI'], $match);
+	$brand_alias = (isset($match[1])) ? $match[1] : '';
+	$brand = $this->Brand_model->get_by_id(array( 'alias' => $brand_alias ));
+	
+	// page info
+	$page_sort = (isset($_POST['page_sort'])) ? $_POST['page_sort'] : '[{"property":"date_update","direction":"DESC"},{"property":"Item.id","direction":"DESC"}]';
+	$page_active = (isset($_POST['page_active'])) ? $_POST['page_active'] : 1;
+	$page_limit = (isset($_POST['page_limit'])) ? $_POST['page_limit'] : 12;
+	$page_offset = ($page_active * $page_limit) - $page_limit;
+	
+	$param_item = array(
+		'item_status_id' => ITEM_STATUS_APPROVE,
+		'brand_id' => @$brand['id'],
+		'sort' => $page_sort,
+		'start' => $page_offset,
+		'limit' => $page_limit
+	);
+	$array_item = $this->Item_model->get_array($param_item);
+	$total_item = $this->Item_model->get_count($param_item);
+	$page_total = ceil($total_item / $page_limit);
+	
+	/* region form */
+	
+	$array_sort[] = array( 'value' => '[{"property":"date_update","direction":"DESC"},{"property":"Item.id","direction":"DESC"}]', 'label' => 'Default' );
+	$array_sort[] = array( 'value' => '[{"property":"price_show","direction":"ASC"}]', 'label' => 'Price (Low &gt; High)' );
+	$array_sort[] = array( 'value' => '[{"property":"price_show","direction":"DESC"}]', 'label' => 'Price (High &gt; Low)' );
+	
+	$array_limit = array( array( 'value' => 4 ), array( 'value' => 8 ), array( 'value' => 12 ), array( 'value' => 25 ), array( 'value' => 50 ), array( 'value' => 75 ), array( 'value' => 100 ) );
+	
+	/* end region form */
+	
+	/*
+	$page_active = 10;
+	$page_total = 20;
+	/*	*/
+?>
 <?php $this->load->view( 'website/common/meta' ); ?>
 <body id="offcanvas-container" class="offcanvas-container layout-fullwidth fs12 page-product">
 <section id="page" class="offcanvas-pusher" role="main">
 	<?php $this->load->view( 'website/common/header' ); ?>
 	
 	<section id="columns" class="offcanvas-siderbars">
-		<?php $this->load->view( 'website/common/breadcrumb' ); ?>
+		<?php $this->load->view( 'website/common/breadcrumb', $param_breadcrumb ); ?>
 		
 		<div class="container">
 			<div class="row">
@@ -17,12 +62,22 @@
 							</div>
 						</div>
 						
+						<?php if (count($brand) > 0) { ?>
 						<h4>Refine Search</h4>
 						<div class="category-list clearfix">
 							<ul class="links">
-								<li class="first"><a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20_26">PC (5)</a></li>
-								<li class="last"><a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20_27">Mac (1)</a></li>
+								<li class="first"><a href="<?php echo $brand['link']; ?>"><?php echo $brand['name']; ?></a></li>
+								<!-- <li class="last"><a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20_27">Mac (1)</a></li> -->
 							</ul>
+						</div>
+						<?php } ?>
+						
+						<div class="hidden">
+							<form id="form-hidden" method="post">
+								<input type="hidden" name="page_sort" value="<?php echo htmlentities($page_sort); ?>" />
+								<input type="hidden" name="page_active" value="<?php echo 1; ?>" />
+								<input type="hidden" name="page_limit" value="<?php echo $page_limit; ?>" />
+							</form>
 						</div>
 						
 						<div class="product-filter clearfix">
@@ -34,44 +89,40 @@
 							
 							<div class="sort">
 								<span>Sort By:</span>
-								<select onchange="location = this.value;">
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
+								<select class="change_sort">
+									<?php echo ShowOption(array( 'Array' => $array_sort, 'ArrayID' => 'value', 'ArrayTitle' => 'label', 'Selected' => $page_sort, 'WithEmptySelect' => false )); ?>
 								</select>
 							</div>
 							
 							<div class="limit">
 								<span>Show:</span>
-								<select onchange="location = this.value;">
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;limit=12" selected="selected">12</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;limit=25">25</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;limit=50">50</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;limit=75">75</option>
-									<option value="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;limit=100">100</option>
+								<select class="change_limit">
+									<?php echo ShowOption(array( 'Array' => $array_limit, 'ArrayID' => 'value', 'ArrayTitle' => 'value', 'Selected' => $page_limit, 'WithEmptySelect' => false )); ?>
 								</select>
 							</div>
 						</div>
 						
 						<div class="product-list"><div class="products-block"><div class="row">
+							<?php foreach ($array_item as $row) { ?>
 							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-fullwidth">
 								<div class="product-block">
 									<div class="image">
 										<span class="product-label-special"><span>Sale</span></span>
-										<a href="#=43"><img src="<?php echo base_url('static/img/product_11-500x510.jpg'); ?>" title="MacBook" alt="MacBook" class="img-responsive"></a>
-										<a href="http://parapekerja.com/opencart/image/data/demo/product_11.jpg" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="MacBook"><i class="icon-zoom-in"></i></a>
+										<a href="<?php echo $row['item_link']; ?>"><img src="<?php echo $row['image']; ?>" title="<?php echo $row['name']; ?>" alt="<?php echo $row['name']; ?>" class="img-responsive"></a>
+										<a href="<?php echo $row['item_link']; ?>" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="<?php echo $row['name']; ?>"><i class="icon-zoom-in"></i></a>
 										<div class="img-overlay"></div>
 									</div>
 									<div class="product-meta">
 										<div class="left">
-											<h3 class="name"><a href="#=43">MacBook</a></h3>
-											<p class="description">Intel Core 2 Duo processor Powered by an Intel Core 2 Duo processor at speeds up to 2.16GHz, th.....</p>
+											<h3 class="name"><a href="<?php echo $row['item_link']; ?>"><?php echo get_length_char($row['name'], 50, ' ...'); ?></a></h3>
+											<p class="description"><?php echo $row['desc_limit']; ?></p>
 										</div>
 										<div class="right">
 											<div class="price">
-												<span class="price-old">$589.50</span>
-												<span class="price-new">$88.95</span>
-												<span class="price-tax">Ex Tax: $74.00</span>
+												<?php if (!empty($row['price_old'])) { ?>
+												<span class="price-old"><?php echo $row['price_old_text']; ?></span>
+												<?php } ?>
+												<span class="price-new"><?php echo $row['price_show_text']; ?></span>
 											</div>
 											<div class="action">
 												<div class="cart">
@@ -88,136 +139,62 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-fullwidth">
-								<div class="product-block">
-									<div class="image">
-										<a href="#=44"><img src="<?php echo base_url('static/img/product_11-500x510.jpg'); ?>" title="MacBook Air" alt="MacBook Air" class="img-responsive"></a>
-										<a href="http://parapekerja.com/opencart/image/data/demo/product_23.jpg" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="MacBook Air"><i class="icon-zoom-in"></i></a>
-										<div class="img-overlay"></div>
-									</div>
-									<div class="product-meta">
-										<div class="left">
-											<h3 class="name"><a href="#=44">MacBook Air</a></h3>
-											<p class="description">MacBook Air is ultrathin, ultraportable, and ultra unlike anything else. But you don’t lose inches a.....</p>
-										</div>
-										<div class="right">
-											<div class="price">
-												<span class="special-price">$1,177.00</span>
-												<span class="price-tax">Ex Tax: $1,000.00</span>
-											</div>
-											<div class="action">
-												<div class="cart">
-													<input value="?" onclick="addToCart('44');" class="product-icon icon-shopping-cart" data-placement="top" data-toggle="tooltip" data-original-title="Add to Cart" type="button">
-												</div>
-												<div class="wishlist">
-													<a onclick="addToWishList('44');" title="" class="icon-heart product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Wish List">&nbsp;</a>
-												</div>
-												<div class="compare">
-													<a onclick="addToCompare('44');" title="" class="icon-exchange product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Compare">&nbsp;</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-fullwidth">
-								<div class="product-block">
-									<div class="image">
-										<span class="product-label-special"><span>Sale</span></span>
-										<a href="#=29"><img src="<?php echo base_url('static/img/product_26-500x510.jpg'); ?>" title="Palm Treo Pro" alt="Palm Treo Pro" class="img-responsive"></a>
-										<a href="http://parapekerja.com/opencart/image/data/demo/product_26.jpg" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="Palm Treo Pro"><i class="icon-zoom-in"></i></a>
-										<div class="img-overlay"></div>
-									</div>
-									<div class="product-meta">
-										<div class="left">
-											<h3 class="name"><a href="#=29">Palm Treo Pro</a></h3>
-											<p class="description">Redefine your workday with the Palm Treo Pro smartphone. Perfectly balanced, you can respond to busi.....</p>
-										</div>
-										<div class="right">
-										<div class="price">
-											<span class="price-old">$330.99</span>
-											<span class="price-new">$96.00</span>
-											<span class="price-tax">Ex Tax: $80.00</span>
-										</div>
-										<div class="action">
-											<div class="cart">
-												<input value="?" onclick="addToCart('29');" class="product-icon icon-shopping-cart" data-placement="top" data-toggle="tooltip" data-original-title="Add to Cart" type="button">
-											</div>
-											<div class="wishlist">
-												<a onclick="addToWishList('29');" title="" class="icon-heart product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Wish List">&nbsp;</a>
-											</div>
-											<div class="compare">
-												<a onclick="addToCompare('29');" title="" class="icon-exchange product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Compare">&nbsp;</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-							<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 col-fullwidth">
-								<div class="product-block">
-									<div class="image">
-										<a href="#=33"><img src="<?php echo base_url('static/img/product_11-500x510.jpg'); ?>" title="Samsung SyncMaster 941BW" alt="Samsung SyncMaster 941BW" class="img-responsive"></a>
-										<a href="http://parapekerja.com/opencart/image/data/demo/product_29.jpg" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="Samsung SyncMaster 941BW"><i class="icon-zoom-in"></i></a>
-										<div class="img-overlay"></div>
-									</div>
-									<div class="product-meta">
-										<div class="left">
-											<h3 class="name"><a href="#=33">Samsung SyncMaster 941BW</a></h3>
-											<p class="description">Imagine the advantages of going big without slowing down. The big 19" 941BW monitor combines wide as.....</p>
-										</div>
-										<div class="right">
-											<div class="price">
-												<span class="special-price">$237.00</span>
-												<span class="price-tax">Ex Tax: $200.00</span>
-											</div>
-											<div class="action">
-												<div class="cart">
-													<input value="?" onclick="addToCart('33');" class="product-icon icon-shopping-cart" data-placement="top" data-toggle="tooltip" data-original-title="Add to Cart" type="button">
-												</div>
-												<div class="wishlist">
-													<a onclick="addToWishList('33');" title="" class="icon-heart product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Wish List">&nbsp;</a>
-												</div>
-												<div class="compare">
-													<a onclick="addToCompare('33');" title="" class="icon-exchange product-icon" data-placement="top" data-toggle="tooltip" data-original-title="Add to Compare">&nbsp;</a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<?php } ?>
 						</div></div></div>
 						
 						<div class="pagination">
 							<div class="links">
-								<b>1</b>
-								<a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;page=2">2</a>
-								<a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;page=2">&gt;</a>
-								<a href="http://parapekerja.com/opencart/index.php?route=product/category&amp;path=20&amp;page=2">&gt;|</a>
+								<?php if ($page_active > 1) { ?>
+								<?php $page_counter = $page_active - 1; ?>
+								<a data-page-value="<?php echo 1; ?>">|&lt;</a>
+								<a data-page-value="<?php echo $page_counter; ?>">&lt;</a>
+								<?php } ?>
+								
+								<?php for ($i = -4; $i <= 4; $i++) { ?>
+									<?php $page_counter = $page_active + $i; ?>
+									<?php if ($page_counter > 0 && $page_counter <= $page_total) { ?>
+									<?php if ($i == 0) { ?>
+									<b><?php echo $page_counter; ?></b>
+									<?php } else { ?>
+									<a data-page-value="<?php echo $page_counter; ?>"><?php echo $page_counter; ?></a>
+									<?php } ?>
+									<?php } ?>
+								<?php } ?>
+								
+								<?php if ($page_active < $page_total) { ?>
+								<?php $page_counter = $page_active + 1; ?>
+								<a data-page-value="<?php echo $page_counter; ?>">&gt;</a>
+								<a data-page-value="<?php echo $page_total; ?>">&gt;|</a>
+								<?php } ?>
 							</div>
-							<div class="results">Showing 1 to 12 of 15 (2 Pages)</div>
+							<div class="results"><?php echo "Showing ".($page_offset + 1)." to ".($page_offset + count($array_item))." of $total_item ($page_total Pages)"; ?></div>
 						</div>
 					</div>
 					<script type="text/javascript">
 						var view_type = get_local('view_type');
 						display_item(view_type);
+						
+						// search
+						$('.change_sort').change(function() {
+							$('#form-hidden [name="page_sort"]').val($(this).val());
+							$('#form-hidden').submit();
+						});
+						$('.change_limit').change(function() {
+							$('#form-hidden [name="page_limit"]').val($(this).val());
+							$('#form-hidden').submit();
+						});
+						$('.pagination .links a').click(function() {
+							$('#form-hidden [name="page_active"]').val($(this).data('page-value'));
+							$('#form-hidden').submit();
+						});
 					</script>
 				</section>
 				
 				<aside id="oc-column-right" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 offcanvas-sidebar">
 					<div id="column-right" class="sidebar">
 						<?php $this->load->view( 'website/common/sort_brand' ); ?>
-						
-						<div class="box box-product bestseller">
-							<div class="box-heading"><span>Bestsellers</span></div>
-							<div class="box-content">
-								<div class="product-list">pasang widget disini</div>
-							</div>
-						</div>
-						
-						<div id="banner0" class="box banner">
-							<div style="display: block;"><img src="<?php echo base_url('static/img/banner-macbook-270x230.jpg'); ?>" alt="Macbook Pro" title="Macbook Pro"></div>
-						</div>
+						<?php $this->load->view( 'website/common/best_seller' ); ?>
+						<?php $this->load->view( 'website/common/banner_right' ); ?>
 					</div>
 				</aside>
 			</div>
