@@ -5,8 +5,8 @@ class Item_model extends CI_Model {
         parent::__construct();
 		
         $this->field = array(
-			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'price_old', 'price_show', 'price_range',
-			'status_stock', 'date_update', 'image', 'item_status_id'
+			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'link_replace', 'price_old', 'price_show', 'price_range',
+			'status_stock', 'date_update', 'image', 'item_status_id', 'total_view', 'total_link_out'
 		);
     }
 
@@ -59,6 +59,22 @@ class Item_model extends CI_Model {
 		return $this->update($param);
 	}
 	
+	function update_view($param) {
+		$item = $this->get_by_id($param);
+		
+		$param_update['id'] = $item['id'];
+		$param_update['total_view'] = $item['total_view'] + 1;
+		$this->update($param_update);
+	}
+	
+	function update_link_out($param) {
+		$item = $this->get_by_id($param);
+		
+		$param_update['id'] = $item['id'];
+		$param_update['total_link_out'] = $item['total_link_out'] + 1;
+		$this->update($param_update);
+	}
+	
     function get_by_id($param) {
         $array = array();
 		$param['tag_include'] = (isset($param['tag_include'])) ? $param['tag_include'] : false;
@@ -82,6 +98,15 @@ class Item_model extends CI_Model {
 			// fix link source before quesy
 			$link_source = preg_replace('/\/ref=.+$/i', '', $param['link_source']);
             $select_query  = "SELECT * FROM ".ITEM." WHERE link_source LIKE '".$link_source."%' LIMIT 1";
+        } else if (isset($param['link_replace'])) {
+            $select_query  = "
+				SELECT Item.*
+				FROM ".ITEM." Item
+				WHERE
+					link_source LIKE '%".$param['link_source']."%'
+					OR link_replace LIKE '%".$param['link_replace']."%'
+				LIMIT 1
+			";
         }
        
         $select_result = mysql_query($select_query) or die(mysql_error());
@@ -164,6 +189,14 @@ class Item_model extends CI_Model {
 		if (isset($row['category_alias']) && isset($row['category_sub_alias'])) {
 			$row['category_sub_link'] = base_url($row['category_alias'].'/'.$row['category_sub_alias']);
 		}
+		
+		// link out
+		if (!empty($row['link_replace'])) {
+			$row['link_out'] = $row['link_replace'];
+		} else {
+			$row['link_out'] = $row['link_source'];
+		}
+		$row['link_redirect'] = base_url('url?q='.$row['link_out']);
 		
 		// price
 		$row['price_old_text'] = '$ '.$row['price_old'];

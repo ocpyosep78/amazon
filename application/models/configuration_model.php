@@ -34,6 +34,8 @@ class Configuration_model extends CI_Model {
        
         if (isset($param['id'])) {
             $select_query  = "SELECT * FROM ".CONFIGURATION." WHERE id = '".$param['id']."' LIMIT 1";
+        } else if (isset($param['name'])) {
+            $select_query  = "SELECT * FROM ".CONFIGURATION." WHERE name = '".$param['name']."' LIMIT 1";
         } 
        
         $select_result = mysql_query($select_query) or die(mysql_error());

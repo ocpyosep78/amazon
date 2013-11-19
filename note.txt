@@ -38,37 +38,40 @@ ok => - link seperti "shopermarket.com/kategory/subkategory/judul" tidak support
 Website - Single Link
 ok => - link : http://shoperindo.com/shopermarket/single.htm
 ok => - reviewnya disitu.. jika mau lihat more review yang entry, url jadi namaproduk/review
-- statistik : total view dan total link out
-- image bisa slider
+ok => - statistik : total view dan total link out
+ok => - support multi title & desc seperti dunis db
 
 Link Out
-- Tambah 1 page sebagai link out seperti : https://www.shopermarket.com/url?q=http://www.amazon.com/c/product/891221-REG/ASUS_X202E_DH31T_VivoBook_X202E_DH31T_11_6_Multi_Touch.html/kw/ASX202EDH31T&sa=U&ei=w416Uq7DOYPTrQe9-oCgAw&ved=0CBoQ2yk&usg=AFQjCNGuHhWnQ
+ok => - Tambah 1 page sebagai link out seperti : https://www.shopermarket.com/url?q=http://www.amazon.com/c/product/891221-REG/ASUS_X202E_DH31T_VivoBook_X202E_DH31T_11_6_Multi_Touch.html/kw/ASX202EDH31T&sa=U&ei=w416Uq7DOYPTrQe9-oCgAw&ved=0CBoQ2yk&usg=AFQjCNGuHhWnQ
 
 Website - RSS
-- ada RSS nya
+ok => - ada RSS nya
+ok => - link nya base_url('rss')
 
 Report crash link out
-- ini laporan dari pengunjung jika ada link crash = kasih buton aja dan sampaikan ke admin
+ok => - ini laporan dari pengunjung jika ada link crash = kasih buton aja dan sampaikan ke admin
 
 Website - Search
-- shopermarket.com/kategory/subkategory/judul
-- pencarian dengan url seperti parapekerja lalu
+ok => - shopermarket.com/kategory/subkategory/judul
+ok => - pencarian dengan url seperti parapekerja lalu
 
 Website - Sub Menu
-- untuk sub menu pake yang model : kategory Vehicle, GPS & Navigation
+ok => - untuk sub menu pake yang model : kategory Vehicle, GPS & Navigation
 
 Website - Common
-- link : shoperindo.com/shopermarket/
-- ada rate nya (star / rating)
+ok => - link : shoperindo.com/shopermarket/
+ok => - review ada rate nya
 ----------------------------------------------------------------------
 Hold
 ----------------------------------------------------------------------
-Ridwan Amir: tadi tang add field tab itu : di pasang di bagian tab di http://shoperindo.com/shopermarket/single.htm ,
-Ridwan Amir: pasang di sebelahnya review
-Ridwan Amir: tab review
-Ridwan Amir: contoh kalo add field tab : custom block tab, ya jadinya seperti itu
-Ridwan Amir: isi conten custom block tab di bagian bawahnya..
-herry: oh ok, ini saya note dulu mas
-
 Subscriber
 - kirim template untuk subscribe, jadi admin membuat berita setelah disimpan, berita ini akan dikirim kepada semua member yang sudah subscribe
+- dalam pengerjaan
+
+Website - Link Item
+- image bisa slider, gimana klo dibuatkan list image slide diantara gambar produk & tab description ?
+- butuh penjelasan atau diskusi
+
+Fitur Compare
+- apa ada contoh untuk fitur ini ?
+- butuh penjelasan atau diskusi

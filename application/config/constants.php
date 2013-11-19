@@ -22,6 +22,7 @@ define('ITEM_STATUS_APPROVE',					3);
 define('ITEM_STATUS_UNPUBLISH',					4);
 
 define('BRAND',									'brand');
+define('BROKEN_LINK',							'broken_link');
 define('CONFIGURATION',							'configuration');
 define('CATEGORY',								'category');
 define('CATEGORY_SUB',							'category_sub');

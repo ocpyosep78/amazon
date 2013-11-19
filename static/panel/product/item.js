@@ -310,7 +310,7 @@ Ext.onReady(function() {
 								sorters: [{ property: 'name', direction: 'ASC' }],
 								fields: [ 'id', 'name', 'desc' ],
 								proxy: {
-									type: 'ajax',
+									type: 'ajax', extraParams: { item_id: param.id },
 									url : URLS.base + 'panel/product/item_multi_title/grid', actionMethods: { read: 'POST' },
 									reader: { type: 'json', root: 'rows', totalProperty: 'count' }
 								}

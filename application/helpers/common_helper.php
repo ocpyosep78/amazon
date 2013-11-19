@@ -953,6 +953,16 @@
 		}
 	}
 	
+	if (! function_exists('get_search')) {
+		function get_search($value) {
+			preg_match('/search\/([a-z0-9\-]+)/i', $value, $match);
+			$result = (isset($match[1])) ? $match[1] : '';
+			$result = preg_replace('/-/i', ' ', $result);
+			
+			return $result;
+		}
+	}
+	
 	if (! class_exists('curl')) {
 		class curl {
 			var $callback = false;

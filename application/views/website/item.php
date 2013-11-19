@@ -8,6 +8,9 @@
 	$item = $this->Item_model->get_by_id(array( 'alias' => $item_alias ));
 	$item = $this->Item_model->get_by_id(array( 'id' => $item['id'], 'tag_include' => true ));
 	
+	// update view
+	$this->Item_model->update_view(array( 'id' => $item['id'] ));
+	
 	// build breadcrumb
 	$param_breadcrumb = array( 'title_list' => array( ) );
 	$param_breadcrumb['title_list'][] = array( 'link' => base_url(), 'title' => 'Home', 'class' => 'first' );
@@ -69,6 +72,11 @@
 											<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a>
 										</div>
 									</div>
+									<div class="review">
+										<div>
+											<a href="<?php echo $item['link_redirect']; ?>">Go to Store</a>
+										</div>
+									</div>
 									<?php if (count($item['array_tag']) > 0) { ?>
 									<div class="tags">
 										<b>Tags:</b>
@@ -86,6 +94,7 @@
 							<div style="background: #FFFFFF; padding: 10px;">
 								<div style="padding: 0 0 10px 0;"><strong><?php echo $review['name']; ?></strong> by <strong><?php echo $review['user']; ?></strong></div>
 								<div><?php echo $review['desc']; ?></div>
+								<div style="padding: 8px 0 0 0;">Rating : <?php echo $review['rating_text']; ?></div>
 							</div>
 						</div>
 						<?php } ?>
@@ -95,7 +104,9 @@
 								<ul class="nav nav-tabs box-heading clearfix">
 									<li class="first"><a class="selected" href="#tab-description">Description</a></li>
 									<li><a href="#tab-review">Reviews (<?php echo count($array_item_review); ?>)</a></li>
-									<li class="last"><a href="#tab-customtab">Custom Block Tab</a></li>
+									<?php foreach ($array_multi_title as $row) { ?>
+									<li><a href="#tab-multi-<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></li>
+									<?php } ?>
 								</ul>
 							</div>
 							<div style="display: block;" id="tab-description" class="tab-content"><?php echo $item['desc']; ?></div>
@@ -153,26 +164,15 @@
 							</div>
 							<!-- end review -->
 							
-							<div style="display: none;" id="tab-customtab" class="tab-content custom-tab">
+							<!-- multi title -->
+							<?php foreach ($array_multi_title as $row) { ?>
+							<div style="display: none;" id="tab-multi-<?php echo $row['id']; ?>" class="tab-content custom-tab">
 								<div class="inner">
-									<p>
-										<strong>Proin facilisis ipsum quis enim lobortis lacinias</strong><br />
-										Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-									</p>
-									<p><embed class="embed-video" src="shop/iFFiOPjMEZ8.htm" type="application/x-shockwave-flash" height="250" width="400"></p>
-									<p>
-										<strong>Proin facilisis ipsum quis enim lobortis lacinias</strong><br />
-										Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-									</p>
-									
-									<ul>
-										<li class="first"><strong>Sed ut perspiciatis unde omnis</strong></li>
-										<li>Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod.</li>
-										<li>Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod.</li>
-										<li class="last">Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod.</li>
-									</ul>
+									<?php echo $row['desc']; ?>
 								</div>
 							</div>
+							<?php } ?>
+							<!-- end multi title -->
 						</div>
 					</div>
 <script type="text/javascript">

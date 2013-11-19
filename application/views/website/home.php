@@ -2,6 +2,7 @@
 	// default param
 	$category = (isset($category)) ? $category : array();
 	$category_sub = (isset($category_sub)) ? $category_sub : array();
+	$use_search_page = (count($category) > 0 || count($category_sub) > 0) ? 0 : 1;
 	$param_breadcrumb = array( 'title_list' => array( ) );
 	
 	// build breadcrumb
@@ -12,6 +13,9 @@
 	if (count($category_sub) > 0) {
 		$param_breadcrumb['title_list'][] = array( 'link' => $category_sub['link'], 'title' => $category_sub['name'], 'class' => '' );
 	}
+	
+	// search
+	$namelike = get_search($_SERVER['REQUEST_URI']);
 	
 	// brand
 	preg_match('/brand\/([a-z0-9]+)/i', $_SERVER['REQUEST_URI'], $match);
@@ -25,6 +29,7 @@
 	$page_offset = ($page_active * $page_limit) - $page_limit;
 	
 	$param_item = array(
+		'namelike' => $namelike,
 		'item_status_id' => ITEM_STATUS_APPROVE,
 		'brand_id' => @$brand['id'],
 		'category_id' => @$category['id'],
@@ -91,6 +96,9 @@
 						<?php } ?>
 						
 						<div class="hidden">
+							<!-- just for current page -->
+							<input type="hidden" name="use_search_page" value="<?php echo $use_search_page; ?>" />
+							
 							<form id="form-hidden" method="post">
 								<input type="hidden" name="page_sort" value="<?php echo htmlentities($page_sort); ?>" />
 								<input type="hidden" name="page_active" value="<?php echo 1; ?>" />

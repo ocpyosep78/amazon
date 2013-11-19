@@ -1,40 +1,37 @@
 $(document).ready(function() {
 	/* Search */
+	var go_search = function(link, search) {
+		var use_search_page = ($('[name="use_search_page"]').length == 1) ? $('[name="use_search_page"]').val() : 1;
+		if (use_search_page == 1) {
+			location = link;
+		} else {
+			location = window.location.href + '/search/' + Func.GetName(search);
+		}
+	}
 	$('.button-search').bind('click', function() {
-		url = $('base').attr('href') + 'index.php?route=product/search';
-				 
-		var search = $('input[name=\'search\']').attr('value');
-		
+		var url = web.host + 'search/';
+		var search = $('input[name="search"]').val();
 		if (search) {
-			url += '&search=' + encodeURIComponent(search);
+			url += Func.GetName(search);
 		}
-		
-		location = url;
+		go_search(url, search);
 	});
-	//search detect mobile
 	$('.button-search-mobile').bind('click', function() {
-		url = $('base').attr('href') + 'index.php?route=product/search';
-				 
-		var search = $('.button-search-mobile input[name=\'search\']').attr('value');
-		
+		var url = web.host + 'search/';
+		var search = $('.button-search-mobile').prev().val();
 		if (search) {
-			url += '&search=' + encodeURIComponent(search);
+			url += Func.GetName(search);
 		}
-		
-		location = url;
+		go_search(url, search);
 	});
-	
-	$('#header input[name=\'search\']').bind('keydown', function(e) {
+	$('#header input[name="search"]').bind('keydown', function(e) {
 		if (e.keyCode == 13) {
-			url = $('base').attr('href') + 'index.php?route=product/search';
-			 
-			var search = $('input[name=\'search\']').attr('value');
-			
+			var url = web.host + 'search/'; 
+			var search = $(this).val();
 			if (search) {
-				url += '&search=' + encodeURIComponent(search);
+				url += Func.GetName(search);
 			}
-			
-			location = url;
+			go_search(url, search);
 		}
 	});
 	

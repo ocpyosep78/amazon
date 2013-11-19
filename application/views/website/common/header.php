@@ -1,4 +1,7 @@
 <?php
+	// search
+	$namelike = get_search($_SERVER['REQUEST_URI']);
+	
 	$array_category = $this->Category_model->get_array_with_sub();
 ?>
 <header id="header">
@@ -14,7 +17,7 @@
 				<div id="search_mobile" class="search pull-left">
 					<div class="quickaccess-toggle">Find</div>
 					<div class="inner-toggle">
-						<input name="search" placeholder="Search" class="form-control input-search" type="text">
+						<input name="search" placeholder="Search" class="form-control input-search" type="text" value="<?php echo $namelike; ?>" />
 						<div class="button-search-mobile"><span class="icon-search"></span></div>
 					</div>
 				</div>
@@ -120,7 +123,7 @@
 				</div>
 				<div class="col-lg-7 col-sm-6 col-md-6 col-xs-12">
 					<div id="search">
-						<input name="search" placeholder="Search" class="form-control input-search" type="text" />
+						<input name="search" placeholder="Search" class="form-control input-search" type="text" value="<?php echo $namelike; ?>" />
 						<div class="button-search"><span class="icon-search"></span></div>
 					</div>
 				</div>

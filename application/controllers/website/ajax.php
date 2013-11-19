@@ -43,6 +43,13 @@ class ajax extends CI_Controller {
 			if ($result['status']) {
 				$result['message'] = 'Review anda berhasil disimpan pada database kami.';
 			}
+		} else if ($action == 'report_broken_link') {
+			$_POST['date_report'] = $this->config->item('current_datetime');
+			$result = $this->Broken_Link_model->update($_POST);
+			
+			if ($result['status']) {
+				$result['message'] = 'Terima kasih, laporan Anda berhasil disimpan dan akan segera diperbaiki oleh tim kami.';
+			}
 		}
 		
 		echo json_encode($result);

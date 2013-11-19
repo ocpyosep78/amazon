@@ -110,7 +110,8 @@ class User_model extends CI_Model {
 				'Title' => 'Product Management',
 				'Child' => array(
 					array( 'Title' => 'Item', 'Link' => base_url('panel/product/item'), 'user_type_id' => array(1, 2) ),
-					array( 'Title' => 'Item Review', 'Link' => base_url('panel/product/item_review'), 'user_type_id' => array(1, 2) )
+					array( 'Title' => 'Item Review', 'Link' => base_url('panel/product/item_review'), 'user_type_id' => array(1, 2) ),
+					array( 'Title' => 'Broken Link', 'Link' => base_url('panel/report/broken_link'), 'user_type_id' => array(1, 2) )
 				)
 			),
 			array(
