@@ -31,13 +31,14 @@ if ($is_website) {
 	$route['search'] = "website/home";
 	$route['search/(:any)'] = "website/home";
 	$route['brand/(:any)'] = "website/home";
-	$route['item/(:any)'] = "website/item";
+	$route['item/(:any)'] = "website/other";
 	
 	// form
 	$route['contact/(:any)'] = "website/contact";
 	
 	// last option
-	$route['(:any)/(:any)/(:any)'] = "website/common";
+	$route['(:any)/(:any)'] = "website/other";
+	$route['(:any)/(:any)/(:any)'] = "website/other";
 }
 
 if ($is_other_page) {

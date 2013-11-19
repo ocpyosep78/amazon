@@ -944,6 +944,15 @@
 		}
 	}
 	
+	if (! function_exists('get_review_alias')) {
+		function get_review_alias($value) {
+			preg_match('/([a-z0-9\-]+)\/review\/([a-z0-9\-]+)/i', $value, $match);
+			$result = (isset($match[2])) ? $match[2] : '';
+			
+			return $result;
+		}
+	}
+	
 	if (! class_exists('curl')) {
 		class curl {
 			var $callback = false;

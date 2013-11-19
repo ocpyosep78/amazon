@@ -15,6 +15,16 @@ class combo extends CI_Controller {
 			$array = $this->Category_model->get_array(array( ));
 		} else if ($action == 'category_sub') {
 			$array = $this->Category_Sub_model->get_array($_POST);
+		} else if ($action == 'item') {
+			$temp = $this->Item_model->get_array(array( 'namelike' => @$_POST['query'] ));
+			
+			// collect
+			$array = array();
+			foreach ($temp as $key => $row_raw) {
+				$row['id'] = $row_raw['id'];
+				$row['name'] = $row_raw['name'];
+				$array[] = $row;
+			}
 		} else if ($action == 'item_status') {
 			$array = $this->Item_Status_model->get_array(array());
 		} else if ($action == 'post_type') {

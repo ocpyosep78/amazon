@@ -33,9 +33,22 @@ class Category_Sub_model extends CI_Model {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".CATEGORY_SUB." WHERE id = '".$param['id']."' LIMIT 1";
+            $select_query  = "
+				SELECT CategorySub.*,
+					Category.id category_id, Category.alias category_alias, Category.name category_name
+				FROM ".CATEGORY_SUB."
+				WHERE CategorySub.id = '".$param['id']."'
+				LIMIT 1
+			";
         } else if (isset($param['alias'])) {
-            $select_query  = "SELECT * FROM ".CATEGORY_SUB." WHERE alias = '".$param['alias']."' LIMIT 1";
+            $select_query  = "
+				SELECT CategorySub.*,
+					Category.id category_id, Category.alias category_alias, Category.name category_name
+				FROM ".CATEGORY_SUB." CategorySub
+				LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+				WHERE CategorySub.alias = '".$param['alias']."'
+				LIMIT 1
+			";
         } 
        
         $select_result = mysql_query($select_query) or die(mysql_error());

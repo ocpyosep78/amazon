@@ -217,7 +217,6 @@ Ext.onReady(function() {
 								win.status_stock.setValue(param.status_stock);
 								win.code.setValue(param.code);
 								win.store.setValue(param.store);
-								win.tag.setValue(param.tag_implode);
 								win.price_old.setValue(param.price_old);
 								win.price_show.setValue(param.price_show);
 								win.price_range.setValue(param.price_range);
@@ -227,6 +226,15 @@ Ext.onReady(function() {
 								win.brand.setValue(param.brand_id);
 								win.category.setValue(param.category_id);
 								Func.SetValue({ action : 'category_sub', ForceID: param.category_sub_id, Combo: win.category_sub });
+								
+								// tag
+								if (param.array_tag != null) {
+									var string_tag = '';
+									for (var i = 0; i < param.array_tag.length; i++) {
+										string_tag += (string_tag == '') ? param.array_tag[i].tag_name : ',' + param.array_tag[i].tag_name;
+									}
+									win.tag.setValue(string_tag);
+								}
 							}
 						}
 					});

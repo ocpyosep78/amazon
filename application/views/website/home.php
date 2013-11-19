@@ -1,10 +1,17 @@
 <?php
-	$param_breadcrumb = array(
-		'title_list' => array(
-			array( 'link' => base_url(), 'title' => 'Home', 'class' => 'first' ),
-			array( 'link' => base_url('dekstop'), 'title' => 'Dekstop 2', 'class' => 'last' )
-		)
-	);
+	// default param
+	$category = (isset($category)) ? $category : array();
+	$category_sub = (isset($category_sub)) ? $category_sub : array();
+	$param_breadcrumb = array( 'title_list' => array( ) );
+	
+	// build breadcrumb
+	if (count($category) > 0) {
+		$param_breadcrumb['title_list'][] = array( 'link' => base_url(), 'title' => 'Home', 'class' => 'first' );
+		$param_breadcrumb['title_list'][] = array( 'link' => $category['link'], 'title' => $category['name'], 'class' => '' );
+	}
+	if (count($category_sub) > 0) {
+		$param_breadcrumb['title_list'][] = array( 'link' => $category_sub['link'], 'title' => $category_sub['name'], 'class' => '' );
+	}
 	
 	// brand
 	preg_match('/brand\/([a-z0-9]+)/i', $_SERVER['REQUEST_URI'], $match);
@@ -20,6 +27,8 @@
 	$param_item = array(
 		'item_status_id' => ITEM_STATUS_APPROVE,
 		'brand_id' => @$brand['id'],
+		'category_id' => @$category['id'],
+		'category_sub_id' => @$category_sub['id'],
 		'sort' => $page_sort,
 		'start' => $page_offset,
 		'limit' => $page_limit
@@ -55,12 +64,21 @@
 			<div class="row">
 				<section class="col-lg-9 col-md-9 col-sm-12 col-xs-12 main-column">
 					<div id="content">
-						<h1>Desktops</h1>
+						<?php if (count($category_sub) > 0) { ?>
+						<h1><?php echo $category_sub['name']; ?></h1>
 						<div class="category-info clearfix">
 							<div class="category-description wrapper">
-								<p>Tempora, ducimus, asperiores repudiandae cupiditate natus velit corrupti! Labore, doloremque quis harum nemo nostrum facere unde esse nobis quo voluptatem ipsa iure cumque atque exercitationem voluptas animi adipisci cum maiores quidem nam eligendi maxime</p>
+								<p><?php echo $category_sub['desc']; ?></p>
 							</div>
 						</div>
+						<?php } else if (count($category) > 0) { ?>
+						<h1><?php echo $category['name']; ?></h1>
+						<div class="category-info clearfix">
+							<div class="category-description wrapper">
+								<p><?php echo $category['desc']; ?></p>
+							</div>
+						</div>
+						<?php } ?>
 						
 						<?php if (count($brand) > 0) { ?>
 						<h4>Refine Search</h4>

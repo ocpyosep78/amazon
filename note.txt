@@ -36,8 +36,8 @@ ok => - linknya seperti : http://www.shopermarket.com/item/code
 ok => - link seperti "shopermarket.com/kategory/subkategory/judul" tidak support karena terlalu panjang (ada 3 folder)
 
 Website - Single Link
-- link : http://shoperindo.com/shopermarket/single.htm
-- reviewnya disitu.. jika mau lihat more review yang entry, url jadi namaproduk/review
+ok => - link : http://shoperindo.com/shopermarket/single.htm
+ok => - reviewnya disitu.. jika mau lihat more review yang entry, url jadi namaproduk/review
 - statistik : total view dan total link out
 - image bisa slider
 

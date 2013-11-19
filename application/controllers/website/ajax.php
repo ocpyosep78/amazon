@@ -9,6 +9,7 @@ class ajax extends CI_Controller {
 		$action = (isset($_POST['action'])) ? $_POST['action'] : "";
 		
 		$result = array();
+		
 		if ($action == 'mail_subscriber') {
 			$email = $this->Subscribe_model->get_by_id(array( 'email' => $_POST['email'] ));
 			
@@ -27,6 +28,20 @@ class ajax extends CI_Controller {
 			
 			if ($result['status']) {
 				$result['message'] = 'Email anda berhasil disimpan pada database kami.';
+			}
+		} else if ($action == 'send_review') {
+			if (@$_SESSION['captha'] != $_POST['captcha']) {
+				$result['status'] = false;
+				$result['message'] = 'Chapcha anda tidak sama.';
+				echo json_encode($result);
+				exit;
+			}
+			
+			$_POST['alias'] = get_name($_POST['name']);
+			$_POST['date_update'] = $this->config->item('current_datetime');
+			$result = $this->Item_Review_model->update($_POST);
+			if ($result['status']) {
+				$result['message'] = 'Review anda berhasil disimpan pada database kami.';
 			}
 		}
 		

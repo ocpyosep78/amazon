@@ -244,6 +244,18 @@ var Store = {
 		});
 		return Store;
 	},
+	Item: function() {
+		var Store = new Ext.create('Ext.data.Store', {
+			fields: ['id', 'name'],
+			autoLoad: true, proxy: {
+				type: 'ajax', extraParams: { action: 'item' },
+				url: URLS.base + 'panel/combo',
+				reader: { type: 'json', root: 'res' },
+				actionMethods: { read: 'POST' }
+			}
+		});
+		return Store;
+	},
 	ItemStatus: function() {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
@@ -266,6 +278,10 @@ var Store = {
 				actionMethods: { read: 'POST' }
 			}
 		});
+		return Store;
+	},
+	Rating: function() {
+		var Store = [1,2,3,4,5];
 		return Store;
 	},
 	Scrape: function() {
@@ -323,6 +339,17 @@ var Combo = {
 			
 			return p;
 		},
+		Item: function(Param) {
+			var p = {
+				xtype: 'combo', store: Store.Item(), minChars: 1, selectOnFocus: false,
+				triggerAction: 'all', lazyRender: true, typeAhead: true,
+				valueField: 'id', displayField: 'name',
+				readonly: false, editable: true
+			}
+			p = Func.SyncComboParam(p, Param);
+
+			return p;
+		},
 		ItemStatus: function(Param) {
 			var p = {
 				xtype: 'combo', store: Store.ItemStatus(), minChars: 1, selectOnFocus: true,
@@ -336,6 +363,15 @@ var Combo = {
 			var p = {
 				xtype: 'combo', store: Store.PostType(), minChars: 1, selectOnFocus: true,
 				valueField: 'id', displayField: 'name', readonly: true, editable: false
+			}
+			p = Func.SyncComboParam(p, Param);
+			
+			return p;
+		},
+		Rating: function(Param) {
+			var p = {
+				xtype: 'combo', store: Store.Rating(), minChars: 1, selectOnFocus: true,
+				readonly: true, editable: false
 			}
 			p = Func.SyncComboParam(p, Param);
 			
@@ -392,12 +428,20 @@ Combo.Class = {
 		var c = new Ext.form.ComboBox(Combo.Param.CategorySub(Param));
 		return c;
 	},
+	Item: function(Param) {
+		var c = new Ext.form.ComboBox(Combo.Param.Item(Param));
+		return c;
+	},
 	ItemStatus: function(Param) {
 		var c = new Ext.form.ComboBox(Combo.Param.ItemStatus(Param));
 		return c;
 	},
 	PostType: function(Param) {
 		var c = new Ext.form.ComboBox(Combo.Param.PostType(Param));
+		return c;
+	},
+	Rating: function(Param) {
+		var c = new Ext.form.ComboBox(Combo.Param.Rating(Param));
 		return c;
 	},
 	Scrape: function(Param) {

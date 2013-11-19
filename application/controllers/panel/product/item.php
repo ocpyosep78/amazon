@@ -23,7 +23,7 @@ class item extends XX_Controller {
 		if ($action == 'update') {
 			$result = $this->Item_model->update_complex($_POST);
 		} else if ($action == 'get_by_id') {
-			$result = $this->Item_model->get_by_id(array( 'id' => $_POST['id'] ));
+			$result = $this->Item_model->get_by_id(array( 'id' => $_POST['id'], 'tag_include' => true ));
 		} else if ($action == 'delete') {
 			$result = $this->Item_model->delete($_POST);
 		}

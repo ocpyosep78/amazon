@@ -47,6 +47,7 @@ class Item_Multi_Title_model extends CI_Model {
     function get_array($param = array()) {
         $array = array();
 		
+		$string_item = (!empty($param['item_id'])) ? "AND ItemMultiTitle.item_id = '".$param['item_id']."'" : '';
 		$string_namelike = (!empty($param['namelike'])) ? "AND ItemMultiTitle.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
@@ -55,7 +56,7 @@ class Item_Multi_Title_model extends CI_Model {
 		$select_query = "
 			SELECT SQL_CALC_FOUND_ROWS ItemMultiTitle.*
 			FROM ".ITEM_MULTI_TITLE." ItemMultiTitle
-			WHERE 1 $string_namelike $string_filter
+			WHERE 1 $string_namelike $string_item $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";

@@ -28,9 +28,32 @@ class Item_model extends CI_Model {
             $result['status'] = '1';
             $result['message'] = 'Data berhasil diperbaharui.';
         }
-       
+		
+		$this->update_tag($param);
+		
         return $result;
     }
+	
+	function update_tag($param) {
+		if (isset($param['tag'])) {
+			$this->Item_Tag_model->delete(array( 'item_id' => $param['id'] ));
+			$array_tag = explode(',', $param['tag']);
+			foreach ($array_tag as $tag_queue) {
+				$tag_name = trim($tag_queue);
+				if (empty($tag_name)) {
+					continue;
+				}
+				
+				$tag_alias = $this->Tag_model->get_name($tag_name);
+				$tag = $this->Tag_model->get_by_id(array( 'alias' => $tag_alias, 'name' => $tag_name, 'force_insert' => true ));
+				
+				// insert
+				$param_tag['item_id'] = $param['id'];
+				$param_tag['tag_id'] = $tag['id'];
+				$this->Item_Tag_model->update($param_tag);
+			}
+		}
+	}
 
 	function update_complex($param) {
 		return $this->update($param);
@@ -38,13 +61,14 @@ class Item_model extends CI_Model {
 	
     function get_by_id($param) {
         $array = array();
+		$param['tag_include'] = (isset($param['tag_include'])) ? $param['tag_include'] : false;
        
         if (isset($param['id'])) {
             $select_query  = "
 				SELECT Item.*,
 					Brand.id brand_id, Brand.name brand_name,
-					CategorySub.id category_sub_id, CategorySub.name category_sub_name,
-					Category.id category_id, Category.name category_name
+					CategorySub.id category_sub_id, CategorySub.name category_sub_name, CategorySub.alias category_sub_alias,
+					Category.id category_id, Category.name category_name, Category.alias category_alias
 				FROM ".ITEM." Item
 				LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
 				LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
@@ -64,6 +88,11 @@ class Item_model extends CI_Model {
         if (false !== $row = mysql_fetch_assoc($select_result)) {
             $array = $this->sync($row);
         }
+		
+		if ($param['tag_include']) {
+			$array['array_tag'] = $this->Item_Tag_model->get_array(array( 'item_id' => $array['id'] ));
+		}
+		
        
         return $array;
     }
@@ -72,6 +101,8 @@ class Item_model extends CI_Model {
         $array = array();
 		
 		$string_brand = (!empty($param['brand_id'])) ? "AND Item.brand_id = '".$param['brand_id']."'" : '';
+		$string_category = (!empty($param['category_id'])) ? "AND CategorySub.category_id = '".$param['category_id']."'" : '';
+		$string_category_sub = (!empty($param['category_sub_id'])) ? "AND Item.category_sub_id = '".$param['category_sub_id']."'" : '';
 		$string_item_status = (isset($param['item_status_id'])) ? "AND Item.item_status_id = '".$param['item_status_id']."'" : '';
 		$string_namelike = (!empty($param['namelike'])) ? "AND Item.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
@@ -90,7 +121,7 @@ class Item_model extends CI_Model {
 			LEFT JOIN ".ITEM_STATUS." ItemStatus ON ItemStatus.id = Item.item_status_id
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
 			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
-			WHERE 1 $string_namelike $string_brand $string_item_status $string_filter
+			WHERE 1 $string_namelike $string_brand $string_category $string_category_sub $string_item_status $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -127,6 +158,12 @@ class Item_model extends CI_Model {
 		
 		// link
 		$row['item_link'] = base_url('item/'.$row['alias']);
+		if (isset($row['category_alias'])) {
+			$row['category_link'] = base_url($row['category_alias']);
+		}
+		if (isset($row['category_alias']) && isset($row['category_sub_alias'])) {
+			$row['category_sub_link'] = base_url($row['category_alias'].'/'.$row['category_sub_alias']);
+		}
 		
 		// price
 		$row['price_old_text'] = '$ '.$row['price_old'];

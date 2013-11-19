@@ -9,6 +9,8 @@
 	);
 	<?php $this->load->view( 'website/common/breadcrumb', $param_breadcrumb ); ?>
 	/*	*/
+	
+	$title_list = (isset($title_list)) ? $title_list : array();
 ?>
 <div class="row visible-xs"><div class="container">
 	<div class="offcanvas-sidebars-buttons">

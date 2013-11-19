@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 18, 2013 at 08:41 PM
--- Server version: 5.1.41
--- PHP Version: 5.3.1
+-- Host: 127.0.0.1
+-- Generation Time: Nov 19, 2013 at 08:27 AM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.19
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,6 +19,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `amazon_db`
 --
+CREATE DATABASE IF NOT EXISTS `amazon_db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `amazon_db`;
 
 -- --------------------------------------------------------
 
@@ -215,6 +218,35 @@ INSERT INTO `item_multi_title` (`id`, `item_id`, `name`, `desc`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `item_review`
+--
+
+CREATE TABLE IF NOT EXISTS `item_review` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `item_id` int(11) NOT NULL,
+  `alias` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `desc` longtext NOT NULL,
+  `rating` int(11) NOT NULL,
+  `user` varchar(255) NOT NULL,
+  `date_update` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `item_review`
+--
+
+INSERT INTO `item_review` (`id`, `item_id`, `alias`, `name`, `desc`, `rating`, `user`, `date_update`) VALUES
+(1, 30, '1211', '1211', '3442', 5, 'Me', '2013-11-19 07:20:36'),
+(2, 27, 'review-01', 'Review 01', 'Content 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dkContent 01 asdkahsd kjash kjas hdkjha dkjhadkj hakjdh kaj hdkjahd kjashd kjahs dk', 2, 'Me 2', '2013-11-19 07:52:22'),
+(3, 27, 'review-02', 'Review 02', 'Content 02', 3, 'Me 3', '2013-11-19 07:52:26'),
+(4, 27, 'review-03', 'Review 03', 'Content 03', 3, 'Me', '2013-11-19 07:25:23'),
+(7, 27, '12122', '12122', 'ads', 3, '123', '2013-11-19 08:25:01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `item_status`
 --
 
@@ -245,12 +277,17 @@ CREATE TABLE IF NOT EXISTS `item_tag` (
   `item_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `item_tag`
 --
 
+INSERT INTO `item_tag` (`id`, `item_id`, `tag_id`) VALUES
+(1, 30, 1),
+(2, 30, 2),
+(3, 24, 3),
+(4, 24, 4);
 
 -- --------------------------------------------------------
 
@@ -322,11 +359,6 @@ CREATE TABLE IF NOT EXISTS `scrape_page` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Dumping data for table `scrape_page`
---
-
-
 -- --------------------------------------------------------
 
 --
@@ -364,12 +396,17 @@ CREATE TABLE IF NOT EXISTS `tag` (
   `alias` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tag`
 --
 
+INSERT INTO `tag` (`id`, `alias`, `name`) VALUES
+(1, 'tag-1', 'tag 1'),
+(2, 'tag-2', 'tag 2'),
+(3, 'htc', 'HTC'),
+(4, 'black', 'Black');
 
 -- --------------------------------------------------------
 
