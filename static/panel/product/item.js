@@ -60,7 +60,12 @@ Ext.onReady(function() {
 			}, '-', {
 				text: 'Ubah', iconCls: 'editIcon', tooltip: 'Ubah', handler: function() { main_grid.update({ }); }
 			}, '-', {
-				text: 'Multi Title', iconCls: 'editIcon', tooltip: 'Multi Title', handler: function() { main_grid.multi_title({ }); }
+				xtype: 'splitbutton', text: 'Multi Title', iconCls: 'editIcon', tooltip: 'Multi Title',
+				handler: function() { main_grid.multi_title({ }); },
+				menu: Ext.create('Ext.menu.Menu', { items: [
+					{	 text: 'Compare', iconCls: 'editIcon', tooltip: 'Tambah', handler: function() { main_grid.compare({ });; }
+					}
+				] } )
 			}, '-', {
 				text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() {
 					if (main_grid.getSelectionModel().getSelection().length == 0) {
@@ -143,6 +148,15 @@ Ext.onReady(function() {
 			}
 			
 			multi_title_win(row[0].data);
+		},
+		compare: function() {
+			var row = main_grid.getSelectionModel().getSelection();
+			if (row.length == 0) {
+				Ext.Msg.alert('Informasi', 'Silahkan memilih data.');
+				return false;
+			}
+			
+			compare_win(row[0].data);
 		}
 	});
 	
@@ -350,6 +364,12 @@ Ext.onReady(function() {
 									}, '-', {
 										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() { console.log('Hapus'); }
 								} ],
+								listeners: {
+									'itemclick': function(grid, record, item) {
+										win.name.setValue(record.data.name);
+										win.desc.setValue(record.data.desc);
+									}
+								},
 								edit_mode: function() {
 									win.name.setReadOnly(false);
 									win.desc.setReadOnly(false);
@@ -387,6 +407,144 @@ Ext.onReady(function() {
 								}
 								
 								Func.ajax({ param: ajax, url: URLS.base + 'panel/product/item_multi_title/action', callback: function(result) {
+									Ext.Msg.alert('Informasi', result.message);
+									if (result.status) {
+										win.store.load();
+										win.grid.read_mode();
+									}
+								} });
+							} });
+							win.cancel = new Ext.Button({ renderTo: 'cancel_btnEM', text: 'Cancel', width: 100, disabled: true, handler: function(btn) {
+								win.grid.read_mode();
+							} });
+						}
+					});
+				},
+				hide: function(w) {
+					w.destroy();
+					w = win = null;
+				}
+			}
+		});
+		win.show();
+	}
+	
+	function compare_win(param) {
+		var win = new Ext.Window({
+			layout: 'fit', width: 1070, height: 480,
+			closeAction: 'hide', plain: true, modal: true, title: 'Entry Compare',
+			buttons: [ { text: 'Close', handler: function() { win.hide(); } }],
+			listeners: {
+				show: function(w) {
+					Ext.Ajax.request({
+						params: { form_name: 'item_compare' },
+						url: URLS.base + 'panel/product/item/view',
+						success: function(Result) {
+							w.body.dom.innerHTML = Result.responseText;
+							
+							win.store = Ext.create('Ext.data.Store', {
+								autoLoad: true, pageSize: 25, remoteSort: true,
+								sorters: [{ property: 'name', direction: 'ASC' }],
+								fields: [ 'id', 'name', 'desc', 'price', 'url' ],
+								proxy: {
+									type: 'ajax', extraParams: { item_id: param.id },
+									url : URLS.base + 'panel/product/item_compare/grid', actionMethods: { read: 'POST' },
+									reader: { type: 'json', root: 'rows', totalProperty: 'count' }
+								}
+							});
+							
+							win.grid = new Ext.grid.GridPanel({
+								viewConfig: { forceFit: true }, store: win.store, height: 400, renderTo: 'grid-compareEM',
+								columns: [ {
+											header: 'Name', dataIndex: 'name', sortable: true, filter: true, width: 200, flex: 1
+								} ],
+								tbar: [ {
+										text: 'Tambah', iconCls: 'addIcon', tooltip: 'Tambah', handler: function() {
+											win.grid.edit_mode();
+											
+											// set new record
+											win.record = { id: 0 };
+											win.name.reset();
+											win.desc.reset();
+											win.price.reset();
+											win.url.reset();
+											win.name.focus();
+										}
+									}, '-', {
+										text: 'Ubah', iconCls: 'editIcon', tooltip: 'Ubah', handler: function() {
+											// set data
+											var row = win.grid.getSelectionModel().getSelection();
+											if (row.length == 0) {
+												Ext.Msg.alert('Informasi', 'Silahkan memilih data.');
+												return false;
+											}
+											
+											win.grid.edit_mode();
+											var record = row[0].data;
+											win.record = { id: record.id };
+											win.name.setValue(record.name);
+											win.desc.setValue(record.desc);
+											win.price.setValue(record.price);
+											win.url.setValue(record.url);
+										}
+									}, '-', {
+										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() { console.log('Hapus'); }
+								} ],
+								listeners: {
+									'itemclick': function(grid, record, item) {
+										win.name.setValue(record.data.name);
+										win.desc.setValue(record.data.desc);
+										win.price.setValue(record.data.price);
+										win.url.setValue(record.data.url);
+									}
+								},
+								edit_mode: function() {
+									win.name.setReadOnly(false);
+									win.desc.setReadOnly(false);
+									win.price.setReadOnly(false);
+									win.url.setReadOnly(false);
+									win.save.setDisabled(false);
+									win.cancel.setDisabled(false);
+								},
+								read_mode: function() {
+									win.name.setReadOnly(true);
+									win.desc.setReadOnly(true);
+									win.price.setReadOnly(true);
+									win.url.setReadOnly(true);
+									win.save.setDisabled(true);
+									win.cancel.setDisabled(true);
+									
+									win.name.reset();
+									win.desc.reset();
+									win.price.reset();
+									win.url.reset();
+								}
+							});
+							
+							win.name = new Ext.form.TextField({ renderTo: 'nameEM', width: 575, allowBlank: false, blankText: 'Masukkan Judul', readOnly: true });
+							win.desc = new Ext.form.HtmlEditor({ renderTo: 'descEM', width: 575, height: 285, enableFont: false, readOnly: true });
+							win.url = new Ext.form.TextField({ renderTo: 'urlEM', width: 575, readOnly: true });
+							win.price = new Ext.form.TextField({ renderTo: 'priceEM', width: 200, readOnly: true });
+							win.save = new Ext.Button({ renderTo: 'save_btnEM', text: 'Save', width: 100, disabled: true, handler: function(btn) {
+								var ajax = new Object();
+								ajax.action = 'update';
+								ajax.id = win.record.id;
+								ajax.item_id = param.id;
+								ajax.name = win.name.getValue();
+								ajax.desc = win.desc.getValue();
+								ajax.price = win.price.getValue();
+								ajax.url = win.url.getValue();
+								
+								// Validation
+								var is_valid = true;
+								if (! win.name.validate()) {
+									is_valid = false;
+								}
+								if (! is_valid) {
+									return;
+								}
+								
+								Func.ajax({ param: ajax, url: URLS.base + 'panel/product/item_compare/action', callback: function(result) {
 									Ext.Msg.alert('Informasi', result.message);
 									if (result.status) {
 										win.store.load();
