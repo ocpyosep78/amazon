@@ -30,6 +30,7 @@ Ext.onReady(function() {
 			}, {	header: 'Brand', dataIndex: 'brand_name', sortable: true, filter: true, width: 80
 			}, {	header: 'Price', dataIndex: 'price_show', sortable: true, filter: true, width: 80
 			}, {	header: 'Status', dataIndex: 'item_status_name', sortable: true, filter: true, width: 80
+			}, {	header: 'Tanggal Update', dataIndex: 'date_update', sortable: true, filter: true, width: 125
 			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
 					items: [ {
 							iconCls: 'refreshIcon', tooltip: 'Re Scrape', handler: function(grid, rowIndex, colIndex) {

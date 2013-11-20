@@ -1,6 +1,10 @@
 ----------------------------------------------------------------------
 Panel
 ----------------------------------------------------------------------
+link : http://shoperindo.com/shopermarket/demo/panel
+user : ridwan
+pass : ridwan
+
 ok => Category & Sub Category
 ok => - punya field tambahan : tag, description
 
@@ -65,10 +69,19 @@ ok => - review ada rate nya
 ----------------------------------------------------------------------
 Hold
 ----------------------------------------------------------------------
+Fitur Compare
+- dalam pengerjaan
+
 Website - Link Item
 - image bisa slider, gimana klo dibuatkan list image slide diantara gambar produk & tab description ?
 - butuh penjelasan atau diskusi
 
-Fitur Compare
-- apa ada contoh untuk fitur ini ?
-- butuh penjelasan atau diskusi
+
+mas ini ada tambahan field untuk setiap produk, jika di klik EDIT produk, maka muncul juga ini field FIELD ADD COMPARE
+
+jadi ada dua tambahan field
+
+1. add field tab ( isinya cuma judul dan text area )
+2. add field Compare ( isinya dan modelnya dan penempatannya di halaman single lihat link ini http://shoperindo.com/shopermarket/add%20field%20compare.png )
+
+makasih ya mas..
