@@ -1,24 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Subscribe_model extends CI_Model {
+class Mail_Mass_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array( 'id', 'email', 'is_active' );
+        $this->field = array( 'id', 'name', 'desc', 'queue_no', 'queue_max', 'date_update' );
     }
 
     function update($param) {
         $result = array();
        
         if (empty($param['id'])) {
-            $insert_query  = GenerateInsertQuery($this->field, $param, SUBSCRIBE);
+            $insert_query  = GenerateInsertQuery($this->field, $param, MAIL_MASS);
             $insert_result = mysql_query($insert_query) or die(mysql_error());
            
             $result['id'] = mysql_insert_id();
             $result['status'] = '1';
             $result['message'] = 'Data berhasil disimpan.';
         } else {
-            $update_query  = GenerateUpdateQuery($this->field, $param, SUBSCRIBE);
+            $update_query  = GenerateUpdateQuery($this->field, $param, MAIL_MASS);
             $update_result = mysql_query($update_query) or die(mysql_error());
            
             $result['id'] = $param['id'];
@@ -28,14 +28,20 @@ class Subscribe_model extends CI_Model {
        
         return $result;
     }
-
+	
+	function update_queue($param) {
+		$mail_mass = $this->get_by_id($param);
+		
+		$param_update['id'] = $mail_mass['id'];
+		$param_update['queue_no'] = $mail_mass['queue_no'] + 1;
+		$this->update($param_update);
+	}
+	
     function get_by_id($param) {
         $array = array();
        
         if (isset($param['id'])) {
-            $select_query  = "SELECT * FROM ".SUBSCRIBE." WHERE id = '".$param['id']."' LIMIT 1";
-        } else if (isset($param['email'])) {
-            $select_query  = "SELECT * FROM ".SUBSCRIBE." WHERE email = '".$param['email']."' LIMIT 1";
+            $select_query  = "SELECT * FROM ".MAIL_MASS." WHERE id = '".$param['id']."' LIMIT 1";
         } 
        
         $select_result = mysql_query($select_query) or die(mysql_error());
@@ -49,16 +55,15 @@ class Subscribe_model extends CI_Model {
     function get_array($param = array()) {
         $array = array();
 		
-		$string_active = (isset($param['is_active'])) ? "AND Subscribe.is_active = '".$param['is_active']."'" : '';
-		$string_emaillike = (!empty($param['namelike'])) ? "AND Subscribe.email LIKE '%".$param['namelike']."%'" : '';
+		$string_namelike = (!empty($param['namelike'])) ? "AND MailMass.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
-		$string_sorting = GetStringSorting($param, @$param['column'], 'email ASC');
+		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT SQL_CALC_FOUND_ROWS Subscribe.*
-			FROM ".SUBSCRIBE." Subscribe
-			WHERE 1 $string_emaillike $string_active $string_filter
+			SELECT SQL_CALC_FOUND_ROWS MailMass.*
+			FROM ".MAIL_MASS." MailMass
+			WHERE 1 $string_namelike $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -69,7 +74,7 @@ class Subscribe_model extends CI_Model {
 		
         return $array;
     }
-
+	
     function get_count($param = array()) {
 		$select_query = "SELECT FOUND_ROWS() TotalRecord";
 		$select_result = mysql_query($select_query) or die(mysql_error());
@@ -79,17 +84,8 @@ class Subscribe_model extends CI_Model {
 		return $TotalRecord;
     }
 	
-	function get_max_user() {
-		$select_query = "SELECT COUNT(*) total FROM ".SUBSCRIBE." Subscribe WHERE is_active = '1'";
-		$select_result = mysql_query($select_query) or die(mysql_error());
-		$row = mysql_fetch_assoc($select_result);
-		$result = $row['total'];
-		
-		return $result;
-	}
-	
     function delete($param) {
-		$delete_query  = "DELETE FROM ".SUBSCRIBE." WHERE id = '".$param['id']."' LIMIT 1";
+		$delete_query  = "DELETE FROM ".MAIL_MASS." WHERE id = '".$param['id']."' LIMIT 1";
 		$delete_result = mysql_query($delete_query) or die(mysql_error());
 		
 		$result['status'] = '1';
@@ -100,6 +96,12 @@ class Subscribe_model extends CI_Model {
 	
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
+		
+		if (empty($row['queue_max'])) {
+			$row['is_finish'] = true;
+		} else {
+			$row['is_finish'] = ($row['queue_no'] >= $row['queue_max']) ? true : false;
+		}
 		
 		return $row;
 	}

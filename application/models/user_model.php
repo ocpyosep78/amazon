@@ -118,7 +118,8 @@ class User_model extends CI_Model {
 				'Title' => 'User Management',
 				'Child' => array(
 					array( 'Title' => 'User', 'Link' => base_url('panel/user/user'), 'user_type_id' => array(1) ),
-					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe'), 'user_type_id' => array(1) )
+					array( 'Title' => 'Subscribe', 'Link' => base_url('panel/user/subscribe'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Mass Mail', 'Link' => base_url('panel/user/mail_mass'), 'user_type_id' => array(1) )
 				)
 			),
 			array(

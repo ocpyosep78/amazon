@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.4
+-- version 4.0.4.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Nov 19, 2013 at 08:08 PM
--- Server version: 5.1.41
--- PHP Version: 5.3.1
+-- Host: 127.0.0.1
+-- Generation Time: Nov 20, 2013 at 02:52 AM
+-- Server version: 5.5.32
+-- PHP Version: 5.4.19
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,6 +19,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Database: `amazon_db`
 --
+CREATE DATABASE IF NOT EXISTS `amazon_db` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `amazon_db`;
 
 -- --------------------------------------------------------
 
@@ -314,6 +317,29 @@ INSERT INTO `item_tag` (`id`, `item_id`, `tag_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mail_mass`
+--
+
+CREATE TABLE IF NOT EXISTS `mail_mass` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `desc` longtext NOT NULL,
+  `queue_no` int(11) NOT NULL,
+  `queue_max` int(11) NOT NULL,
+  `date_update` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `mail_mass`
+--
+
+INSERT INTO `mail_mass` (`id`, `name`, `desc`, `queue_no`, `queue_max`, `date_update`) VALUES
+(3, '12', '12323', 5, 5, '2013-11-20 02:25:55');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `page_static`
 --
 
@@ -380,11 +406,6 @@ CREATE TABLE IF NOT EXISTS `scrape_page` (
   `is_finish` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Dumping data for table `scrape_page`
---
-
 
 -- --------------------------------------------------------
 

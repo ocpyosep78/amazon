@@ -18,6 +18,7 @@ ok => - store : amazon
 Admin Subscribe
 ok => - fitur stop / delete subscriber
 ok => - tambah 1 widget dibagian footer subscriber seperti : "to stop receive from this web, please send to ridwanamirsene@yahoo.com with blank email" (bisa di edit)
+ok => - kirim template untuk subscribe, jadi admin membuat berita setelah disimpan, berita ini akan dikirim kepada semua member yang sudah subscribe
 
 User Type
 ok => - user type ada 2 (Editor & Administrator)
@@ -64,10 +65,6 @@ ok => - review ada rate nya
 ----------------------------------------------------------------------
 Hold
 ----------------------------------------------------------------------
-Subscriber
-- kirim template untuk subscribe, jadi admin membuat berita setelah disimpan, berita ini akan dikirim kepada semua member yang sudah subscribe
-- dalam pengerjaan
-
 Website - Link Item
 - image bisa slider, gimana klo dibuatkan list image slide diantara gambar produk & tab description ?
 - butuh penjelasan atau diskusi

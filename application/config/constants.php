@@ -31,6 +31,7 @@ define('ITEM_MULTI_TITLE',						'item_multi_title');
 define('ITEM_REVIEW',							'item_review');
 define('ITEM_STATUS',							'item_status');
 define('ITEM_TAG',								'item_tag');
+define('MAIL_MASS',								'mail_mass');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');
 define('SCRAPE_PAGE',							'scrape_page');

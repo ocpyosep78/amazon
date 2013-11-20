@@ -152,4 +152,5 @@ blockquote {color:#666; margin:1em;}
 .interviewIcon { background-image:url(../user_edit.png); background-repeat:no-repeat; width: 16px; cursor: pointer; margin: 0 3px; }
 .refreshIcon { background-image:url(../refresh.gif); background-repeat:no-repeat; width: 16px; cursor: pointer; margin: 0 3px; }
 .questionIcon { background-image:url(../question.png); background-repeat:no-repeat; width: 16px; cursor: pointer; margin: 0 3px; }
+.mailIcon { background-image:url(../mail.png); background-repeat:no-repeat; width: 16px; cursor: pointer; margin: 0 3px; }
 .spaceIcon { width: 16px; cursor: pointer; margin: 0 3px; }
