@@ -10,7 +10,7 @@ Ext.onReady(function() {
         sorters: [{ property: 'name', direction: 'ASC' }],
 		fields: [
 			'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name',
-			'scrape_id', 'item_status_name'
+			'scrape_id', 'item_status_name', 'item_link', 'total_view', 'total_link_out'
 		],
 		proxy: {
 			type: 'ajax',
@@ -30,6 +30,8 @@ Ext.onReady(function() {
 			}, {	header: 'Brand', dataIndex: 'brand_name', sortable: true, filter: true, width: 80
 			}, {	header: 'Price', dataIndex: 'price_show', sortable: true, filter: true, width: 80
 			}, {	header: 'Status', dataIndex: 'item_status_name', sortable: true, filter: true, width: 80
+			}, {	header: 'View', dataIndex: 'total_view', sortable: true, filter: true, width: 70, align: 'right'
+			}, {	header: 'Link Out', dataIndex: 'total_link_out', sortable: true, filter: true, width: 70, align: 'right'
 			}, {	header: 'Tanggal Update', dataIndex: 'date_update', sortable: true, filter: true, width: 125
 			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
 					items: [ {
@@ -37,6 +39,11 @@ Ext.onReady(function() {
 								var row = grid.store.getAt(rowIndex).data;
 								var link_scrape = URLS.base + 'panel/product/item/do_scrape?scrape_id=' + row.scrape_id + '&item_request_rescrape=' + row.id;
 								window.open(link_scrape);
+							}
+					}, {
+							iconCls: 'linkIcon', tooltip: 'Link', handler: function(grid, rowIndex, colIndex) {
+								var row = grid.store.getAt(rowIndex).data;
+								window.open(row.item_link);
 							}
 					} ]
 		} ],

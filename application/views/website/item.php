@@ -24,6 +24,9 @@
 	// review
 	$array_item_review = $this->Item_Review_model->get_array(array( 'item_id' => $item['id'] ));
 	$review = $this->Item_Review_model->get_by_id(array( 'item_id' => $item['id'], 'alias' => $review_alias ));
+	
+	// compare
+	$array_compare = $this->Item_Compare_model->get_array(array( 'item_id' => $item['id'] ));
 ?>
 <?php $this->load->view( 'website/common/meta' ); ?>
 <body id="offcanvas-container" class="offcanvas-container layout-fullwidth fs12 page-product">
@@ -103,6 +106,12 @@
 							<div id="tabs" class="htabs">
 								<ul class="nav nav-tabs box-heading clearfix">
 									<li class="first"><a class="selected" href="#tab-description">Description</a></li>
+									
+									<!-- item compare -->
+									<?php if (count($array_compare) > 0) { ?>
+									<li><a href="#tab-compare">Compare</a></li>
+									<?php } ?>
+									
 									<li><a href="#tab-review">Reviews (<?php echo count($array_item_review); ?>)</a></li>
 									<?php foreach ($array_multi_title as $row) { ?>
 									<li><a href="#tab-multi-<?php echo $row['id']; ?>"><?php echo $row['name']; ?></a></li>
@@ -110,6 +119,21 @@
 								</ul>
 							</div>
 							<div style="display: block;" id="tab-description" class="tab-content"><?php echo $item['desc']; ?></div>
+							
+							<!-- item compare -->
+							<?php if (count($array_compare) > 0) { ?>
+							<div style="display: block;" id="tab-compare" class="tab-content">
+								<?php foreach ($array_compare as $row) { ?>
+								<div>
+									<h4><?php echo $row['name']; ?></h4>
+									<div><?php echo $row['desc']; ?></div>
+									<div>Price : <?php echo $row['price']; ?></div>
+									<div>Link : <a href="<?php echo $row['url']; ?>" target="_blank"><?php echo $row['url']; ?></a></div>
+								</div>
+								<?php } ?>
+							</div>
+							<?php } ?>
+							<!-- end item compare -->
 							
 							<!-- review -->
 							<div style="display: none;" id="tab-review" class="tab-content no-margin">
