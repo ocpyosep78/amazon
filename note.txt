@@ -1,33 +1,26 @@
-Item :
-- Ridwan Amir: kl price kosong = tulisanya " cek price"
-- Ridwan Amir: kl availabity kosong = cek availabilty
+Website - Item :
+- jika price kosong, tulisannya "cek price"
+- jika availabity kosong, tulisannya "cek availabilty"
 
-Category :
-- tambah 1 field untuk image yang akan nongol di menu utama biar masing2 category punya gambar sendiri2
+Website - Menu Utama :
+- Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
 
-Tag Page :
-link : http://shoperindo.com/shopermarket/demo/tag/tag-2 masih error
+Website - Tag Page :
+- link : http://shoperindo.com/shopermarket/demo/tag/tag-2 masih error
 
-Page Static :
+Website - Page Static :
 - http://shoperindo.com/shopermarket/demo/about-us
 
-Item Review :
-http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint di halaman ini tampilkan list max 6 list review saja, trus
-herry: review terbaru aja mas ?
-herry: atau di review dikasih status (publish / unpublish) ? 
-Ridwan Amir is typing...
-Ridwan Amir: http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint  6 review terbaru saja, kan nanti di admin di review apa di tampilkan apa nda....
+Website - Item Review :
+- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+- tampilkan 6 review terbaru saja
+- tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
+- "More Review" punya paging (10 review per page)
 
-http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint di halaman ini tampilkan list max 6 list review saja, trus
+Website - Item Rating :
+- rating modelnya bintang (contoh amazon)
 
-tambahkan link view more review, arahkan ke http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review di sini kasih paging dengan list 10 max per paging
-
-ini detail revienya di biarin saja udah sesuai shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review/wah-top-abis-deh 
-
-Item Rating :
-rating modelnya bintang (contoh amazon)
-
-Breadcrump :
+Website - Breadcrump :
 - breadcump di aksih title="" dan alt=""
 
 Panel - Item :
@@ -36,7 +29,7 @@ Panel - Item :
 - Desc dari amazon bisa di show / hide
 - Link pengganti belum jalan (link add / link replace)
 
-Multi Description  :
+Panel - Item - Multi Description  :
 inputanya kurang :
 - short Desc ( tampilkan di halaman item, textarea )
 - long desc ( tampilan di halaman item, textarea )
@@ -44,76 +37,29 @@ inputanya kurang :
 - link aff ( tampilkan di halaman item, input )
 - field 2 (tambahan field buat jaga2 , input )
 
-Re Scrape bikin url baru :
-herry: iya
-Ridwan Amir: URL -1 itu di perhatikan karena url akan terindex di google
-Ridwan Amir: contoh shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
-Ridwan Amir: kan ada sperti itu ya..
-Ridwan Amir: jika urlnya berubah dari galaxy-mega-white-sprint waktu di re-grab menjadi galaxy-mega-white-sprint-1
-Ridwan Amir: jika ada trafik dari se yang udah ke index dengan url galaxy-mega-white-sprint, maka arahkan user itu otomatis di arahkan ke link galaxy-mega-white-sprint-1
-Ridwan Amir: ngerti
-herry: hmm
-herry: harusnya link ngak tetap mas
-Ridwan Amir: mestinya gitu..
-herry: meskipun dia di grab ulang
-herry: ini aja yaa yang di perbaiki
-Ridwan Amir: karena di se akan berubah terus dia..
-Ridwan Amir is typing...
-Ridwan Amir: ok ngerti ya..
+Panel - Bug Item Name :
+- link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
+- link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+- hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
 
 Website - Home :
-http://shoperindo.com/shopermarket/homes.htm
-Ridwan Amir: home 
-- popular view this week
-- Your Browsing History
-- tampilkan 4 dalam tag samsung
-Ridwan Amir: ngerti
-herry: masih belum
-Ridwan Amir: halaman index pake tampilan ini http://shoperindo.com/shopermarket/homes.htm
-herry: iya
-Ridwan Amir: dimana di situ yang ada tulisan Special
-Ridwan Amir: itu di ganti menjadi popular view this week
-herry: ketemu
-herry: ooo oh mas
-Ridwan Amir: popular view this week = 4 item
-Ridwan Amir: Your Browsing History = 4 item
-Ridwan Amir: tampilkan 4 dalam tag samsung = 4 item
-Ridwan Amir is typing...
-Ridwan Amir: ngerti..
+- link asli : http://shoperindo.com/shopermarket/homes.htm
+- ditampilkan : 
+   a. popular view this week (popular view this week = 4 item)
+   b. Your Browsing History
+   c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
 
-Re Scrape Model :
+Service - Re Scrape :
 1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
 2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab
 3. cron menjalankan script re grab
 
-Website Item :
+Website - Brand :
 - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
 - SORT BY BRAND tambah filter category
-
 
 Item Desc :
 - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
 - no pic & link
 - isi cuma text
 - max text (1000 char)
-
-
-----------------------------------------------------------------------
-Hold
-----------------------------------------------------------------------
-Fitur Compare
-- dalam pengerjaan
-
-Website - Link Item
-- image bisa slider, gimana klo dibuatkan list image slide diantara gambar produk & tab description ?
-- butuh penjelasan atau diskusi
-
-
-mas ini ada tambahan field untuk setiap produk, jika di klik EDIT produk, maka muncul juga ini field FIELD ADD COMPARE
-
-jadi ada dua tambahan field
-
-1. add field tab ( isinya cuma judul dan text area )
-2. add field Compare ( isinya dan modelnya dan penempatannya di halaman single lihat link ini http://shoperindo.com/shopermarket/add%20field%20compare.png )
-
-makasih ya mas..
