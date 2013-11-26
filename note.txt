@@ -1,3 +1,6 @@
+----------------------------------------------------------------------------------------
+WEBSITE
+----------------------------------------------------------------------------------------
 Website - Item :
 - jika price kosong, tulisannya "cek price"
 - jika availabity kosong, tulisannya "cek availabilty"
@@ -23,11 +26,30 @@ Website - Item Rating :
 Website - Breadcrump :
 - breadcump di aksih title="" dan alt=""
 
+Website - Home :
+- link asli : http://shoperindo.com/shopermarket/homes.htm
+- ditampilkan : 
+   a. popular view this week (popular view this week = 4 item)
+   b. Your Browsing History
+   c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
+
+Website - Brand :
+- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+- SORT BY BRAND tambah filter category
+----------------------------------------------------------------------------------------
+PANEL
+----------------------------------------------------------------------------------------
 Panel - Item :
 - Upload tidak jalan sampai ke item
 - kasih tombol approve di kolom grid
 - Desc dari amazon bisa di show / hide
 - Link pengganti belum jalan (link add / link replace)
+
+Panel - Item Desc :
+- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
+- no pic & link
+- isi cuma text
+- max text (1000 char)
 
 Panel - Item - Multi Description  :
 inputanya kurang :
@@ -41,25 +63,10 @@ Panel - Bug Item Name :
 - link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
 - link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
 - hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
-
-Website - Home :
-- link asli : http://shoperindo.com/shopermarket/homes.htm
-- ditampilkan : 
-   a. popular view this week (popular view this week = 4 item)
-   b. Your Browsing History
-   c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
-
+----------------------------------------------------------------------------------------
+SERVICE
+----------------------------------------------------------------------------------------
 Service - Re Scrape :
 1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
 2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab
 3. cron menjalankan script re grab
-
-Website - Brand :
-- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-- SORT BY BRAND tambah filter category
-
-Item Desc :
-- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
-- no pic & link
-- isi cuma text
-- max text (1000 char)
