@@ -2290,6 +2290,15 @@ ul.contact-us li a {
   padding: 3px 5px;
   text-transform: none;
 }
+.product-info .description .disable {
+  background: #d95750;
+  color: #FFFFFF;
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+  padding: 3px 5px;
+  text-transform: none;
+}
 .product-info .image-additional {
   margin: 0;
   clear: both;

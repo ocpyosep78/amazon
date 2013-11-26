@@ -56,16 +56,28 @@
 										<p><b>Product Code:</b><?php echo $item['code']; ?></p>
 										<p>
 											<b>Availability:</b>
+											<?php if (empty($item['status_stock'])) { ?>
+											<a href="<?php echo $item['link_redirect']; ?>" class="disable">Cek Store</a>
+											<?php } else { ?>
 											<span class="availability"><?php echo $item['status_stock']; ?></span>
+											<?php } ?>
 										</p>
 									</div>
 									<div class="price">
 										<div class="price-gruop">
 											<span class="text-price">Price:</span>
+											
+											<!-- price old -->
 											<?php if (!empty($item['price_old'])) { ?>
 											<span class="price-old"><?php echo $item['price_old_text']; ?></span>
 											<?php } ?>
+											
+											<!-- price new -->
+											<?php if (empty($item['price_show'])) { ?>
+											<a href="<?php echo $item['link_redirect']; ?>" style="color: #e27f7a;">Cek Store</a>
+											<?php } else { ?>
 											<span class="price-new"><?php echo $item['price_show_text']; ?></span>
+											<?php } ?>
 										</div>
 										<div class="other-price"><br /></div>
 									</div>

@@ -2,8 +2,8 @@
 WEBSITE
 ----------------------------------------------------------------------------------------
 Website - Item :
-- jika price kosong, tulisannya "cek price"
-- jika availabity kosong, tulisannya "cek availabilty"
+ok => - jika price kosong, tulisannya "cek price"
+ok => - jika availabity kosong, tulisannya "cek availabilty"
 
 Website - Menu Utama :
 - Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
