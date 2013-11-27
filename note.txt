@@ -75,3 +75,25 @@ UPDATE
 ----------------------------------------------------------------------------------------
 D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
 D:\Program Files\xampp\htdocs\amazon\trunk\static\css\stylesheet.css
+
+D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_tag_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_021740_6258.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022854_8421.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\category.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802_s.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\popup\category.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\tag.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\common\header.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\panel\master\category.js
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\category_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\page_static.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\tag.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\config\routes.php
+D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
+D:\Program Files\xampp\htdocs\amazon\trunk\application\helpers\common_helper.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\other.php
+D:\Program Files\xampp\htdocs\amazon\trunk\note.txt
