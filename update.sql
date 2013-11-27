@@ -7,3 +7,6 @@
 2013-11-20 :
 - CREATE TABLE  `amazon_db`.`item_compare` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY , `name` VARCHAR( 255 ) NOT NULL , `desc` LONGTEXT NOT NULL , `price` INT NOT NULL , `url` VARCHAR( 255 ) NOT NULL ) ENGINE = MYISAM ;
 - ALTER TABLE  `item_compare` ADD  `item_id` INT NOT NULL AFTER  `id`
+
+2013-11-27 :
+- ALTER TABLE `category` ADD `image` VARCHAR( 50 ) NOT NULL ;

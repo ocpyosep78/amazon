@@ -183,6 +183,7 @@ class Item_model extends CI_Model {
 		
 		// link
 		$row['item_link'] = base_url('item/'.$row['alias']);
+		$row['item_review_link'] = base_url('item/'.$row['alias'].'/review');
 		if (isset($row['category_alias'])) {
 			$row['category_link'] = base_url($row['category_alias']);
 		}

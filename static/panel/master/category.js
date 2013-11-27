@@ -107,7 +107,7 @@ Ext.onReady(function() {
 	
 	function main_win(param) {
 		var win = new Ext.Window({
-			layout: 'fit', width: 390, height: 220,
+			layout: 'fit', width: 710, height: 250,
 			closeAction: 'hide', plain: true, modal: true,
 			buttons: [ {
 						text: 'Save', handler: function() { win.save(); }
@@ -127,7 +127,7 @@ Ext.onReady(function() {
 							
 							win.id = param.id;
 							win.name = new Ext.form.TextField({
-								renderTo: 'nameED', width: 225, allowBlank: false, blankText: 'Masukkan Judul',
+								renderTo: 'nameED', width: 550, allowBlank: false, blankText: 'Masukkan Judul',
 								enableKeyEvents: true, listeners: {
 									keyup: function(me) {
 										var alias = Func.GetName(me.getValue());
@@ -135,9 +135,14 @@ Ext.onReady(function() {
 									}
 								}
 							});
-							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 225, readOnly: true });
-							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 225, height: 60 });
-							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
+							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 550, readOnly: true });
+							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 550, height: 60 });
+							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 550 });
+							win.image = new Ext.form.TextField({ renderTo: 'imageED', width: 275, readOnly: true });
+							win.image_button = new Ext.Button({ renderTo: 'btn_imageED', text: 'Browse', width: 75, handler: function(btn) {
+								window.iframe_image.browse();
+							} });
+							category_image = function(p) { win.image.setValue(p.file_name); }
 							
 							// Populate Record
 							if (param.id > 0) {
@@ -145,6 +150,7 @@ Ext.onReady(function() {
 								win.alias.setValue(param.alias);
 								win.desc.setValue(param.desc);
 								win.tag.setValue(param.tag);
+								win.image.setValue(param.image);
 							}
 						}
 					});
@@ -162,6 +168,7 @@ Ext.onReady(function() {
 				ajax.alias = win.alias.getValue();
 				ajax.desc = win.desc.getValue();
 				ajax.tag = win.tag.getValue();
+				ajax.image = win.image.getValue();
 				
 				// Validation
 				var is_valid = true;

@@ -38,6 +38,7 @@ if ($is_website) {
 	$route['contact/(:any)'] = "website/contact";
 	
 	// last option
+	$route['(:any)'] = "website/other";
 	$route['(:any)/(:any)'] = "website/other";
 	$route['(:any)/(:any)/(:any)'] = "website/other";
 }

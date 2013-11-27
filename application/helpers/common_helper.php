@@ -953,6 +953,28 @@
 		}
 	}
 	
+	if (! function_exists('is_index_review')) {
+		function is_index_review($value) {
+			$result = false;
+			
+			preg_match('/review(\/[a-z0-9\-]+)?/i', $value, $match);
+			
+			// http://localhost/amazon/trunk/item/samsung-galaxy-mega-white-sprint/review
+			if (count($match) == 1) {
+				$result = true;
+			}
+			
+			else if (count($match) == 2) {
+				// http://localhost/amazon/trunk/item/samsung-galaxy-mega-white-sprint/review/page-2
+				if (substr($match[1], 0, 6) == '/page-') {
+					$result = true;
+				}
+			}
+			
+			return $result;
+		}
+	}
+	
 	if (! function_exists('get_search')) {
 		function get_search($value) {
 			preg_match('/search\/([a-z0-9\-]+)/i', $value, $match);

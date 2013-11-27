@@ -49,6 +49,8 @@ class Item_Tag_model extends CI_Model {
 		
 		$string_tag = (!empty($param['tag_id'])) ? "AND ItemTag.tag_id = '".$param['tag_id']."'" : '';
 		$string_item = (!empty($param['item_id'])) ? "AND ItemTag.item_id = '".$param['item_id']."'" : '';
+		$string_brand = (!empty($param['brand_id'])) ? "AND Item.brand_id = '".$param['brand_id']."'" : '';
+		$string_namelike = (!empty($param['namelike'])) ? "AND Item.name LIKE '%".$param['namelike']."%'" : '';
 		$string_item_status = (isset($param['item_status_id'])) ? "AND Item.item_status_id = '".$param['item_status_id']."'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'Tag.name ASC');
@@ -56,11 +58,17 @@ class Item_Tag_model extends CI_Model {
 		
 		$select_query = "
 			SELECT SQL_CALC_FOUND_ROWS ItemTag.*,
-				Tag.name tag_name, Tag.alias tag_alias
+				Tag.name tag_name, Tag.alias tag_alias,
+				Item.alias item_alias, Item.name item_name, Item.desc item_desc, Item.image item_image,
+				Item.price_old, Item.price_show
 			FROM ".ITEM_TAG." ItemTag
 			LEFT JOIN ".TAG." Tag ON Tag.id = ItemTag.tag_id
 			LEFT JOIN ".ITEM." Item ON Item.id = ItemTag.item_id
-			WHERE 1 $string_tag $string_item $string_item_status $string_filter
+			LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
+			LEFT JOIN ".ITEM_STATUS." ItemStatus ON ItemStatus.id = Item.item_status_id
+			WHERE 1
+				$string_namelike $string_brand
+				$string_tag $string_item $string_item_status $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -100,6 +108,14 @@ class Item_Tag_model extends CI_Model {
 	function sync($row) {
 		$row = StripArray($row, array( 'item_create_date' ));
 		$row['tag_link'] = base_url('tag/'.$row['tag_alias']);
+		
+		// link
+		$row['item_link'] = base_url('item/'.$row['item_alias']);
+		$row['desc_limit'] = get_length_char(strip_tags($row['item_desc']), 250, ' ...');
+		
+		// price
+		$row['price_old_text'] = '$ '.$row['price_old'];
+		$row['price_show_text'] = '$ '.$row['price_show'];
 		
 		return $row;
 	}

@@ -6,19 +6,19 @@ ok => - jika price kosong, tulisannya "cek price"
 ok => - jika availabity kosong, tulisannya "cek availabilty"
 
 Website - Menu Utama :
-- Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
+ok => - Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
 
 Website - Tag Page :
-- link : http://shoperindo.com/shopermarket/demo/tag/tag-2 masih error
+ok => - link : http://shoperindo.com/shopermarket/demo/tag/tag-2 masih error
 
 Website - Page Static :
-- http://shoperindo.com/shopermarket/demo/about-us
+ok => - http://shoperindo.com/shopermarket/demo/about-us
 
 Website - Item Review :
-- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-- tampilkan 6 review terbaru saja
-- tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
-- "More Review" punya paging (10 review per page)
+ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+ok => - tampilkan 6 review terbaru saja
+ok => - tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
+ok => - "More Review" punya paging (10 review per page)
 
 Website - Item Rating :
 - rating modelnya bintang (contoh amazon)
@@ -70,3 +70,8 @@ Service - Re Scrape :
 1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
 2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab
 3. cron menjalankan script re grab
+----------------------------------------------------------------------------------------
+UPDATE
+----------------------------------------------------------------------------------------
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
+D:\Program Files\xampp\htdocs\amazon\trunk\static\css\stylesheet.css

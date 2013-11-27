@@ -4,7 +4,7 @@ class Category_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array( 'id', 'name', 'alias', 'desc', 'tag' );
+        $this->field = array( 'id', 'name', 'alias', 'desc', 'tag', 'image' );
     }
 
     function update($param) {
@@ -26,6 +26,8 @@ class Category_model extends CI_Model {
             $result['message'] = 'Data berhasil diperbaharui.';
         }
        
+		$this->resize_image($param);
+	   
         return $result;
     }
 
@@ -104,6 +106,21 @@ class Category_model extends CI_Model {
 		$row = StripArray($row);
 		$row['link'] = base_url($row['alias']);
 		
+		// image
+		if (!empty($row['image'])) {
+			$row['image_link'] = base_url('static/upload/'.$row['image']);
+		}
+		
 		return $row;
+	}
+	
+	function resize_image($param) {
+		if (!empty($param['image'])) {
+			$image_path = $this->config->item('base_path') . '/static/upload/';
+			$image_source = $image_path . $param['image'];
+			$image_result = $image_source;
+			
+			ImageResize($image_source, $image_result, 300, 250, 1);
+		}
 	}
 }

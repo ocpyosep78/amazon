@@ -1,6 +1,7 @@
 <?php
 	// default data
 	$review_alias = get_review_alias($_SERVER['REQUEST_URI']);
+	$is_index_review = is_index_review($_SERVER['REQUEST_URI']);
 	
 	// get item
 	preg_match('/item\/([a-z0-9\-]+)/i', $_SERVER['REQUEST_URI'], $match);
@@ -21,9 +22,22 @@
 	// multi title
 	$array_multi_title = $this->Item_Multi_Title_model->get_array(array( 'item_id' => $item['id'] ));
 	
-	// review
-	$array_item_review = $this->Item_Review_model->get_array(array( 'item_id' => $item['id'] ));
+	// tab review
+	$array_item_review = $this->Item_Review_model->get_array(array( 'item_id' => $item['id'], 'sort' => '[{"property":"date_update","direction":"DESC"}]' ));
 	$review = $this->Item_Review_model->get_by_id(array( 'item_id' => $item['id'], 'alias' => $review_alias ));
+	
+	// list review
+	$page_limit = 10;
+	$page_active = get_page();
+	$page_offset = ($page_active * $page_limit) - $page_limit;
+	$param_list_review = array(
+		'item_id' => $item['id'],
+		'sort' => '[{"property":"date_update","direction":"DESC"}]',
+		'start' => $page_offset,
+		'limit' => $page_limit
+	);
+	$array_list_review = $this->Item_Review_model->get_array($param_list_review);
+	$page_total = ceil($this->Item_Review_model->get_count($param_list_review) / $page_limit);
 	
 	// compare
 	$array_compare = $this->Item_Compare_model->get_array(array( 'item_id' => $item['id'] ));
@@ -104,6 +118,37 @@
 							</div>
 						</div>
 						
+						<?php if ($is_index_review) { ?>
+						<div style="margin: 10px 0;">
+							<div style="background: #FFFFFF; padding: 10px;">
+								<h4>List Review</h4>
+								<div>
+									<?php foreach ($array_list_review as $row) { ?>
+									<div style="padding: 5px 0;">
+										<div><a href="<?php echo $row['link']; ?>" style="color: #E27F7A;"><?php echo $row['name']; ?></a></div>
+										<div><?php echo get_length_char($row['desc_limit'], 150, ' ...'); ?></div>
+									</div>
+									<?php } ?>
+								</div>
+								
+								<div class="pagination" style="margin: 15px 0 0 0;">
+									<div class="links" style="float: none; text-align: center;">
+										<?php for ($i = -4; $i <= 4; $i++) { ?>
+											<?php $page_counter = $page_active + $i; ?>
+											<?php if ($page_counter > 0 && $page_counter <= $page_total) { ?>
+											<?php if ($i == 0) { ?>
+											<b><?php echo $page_counter; ?></b>
+											<?php } else { ?>
+											<a href="<?php echo $item['item_review_link'].'/page-'.$page_counter; ?>"><?php echo $page_counter; ?></a>
+											<?php } ?>
+											<?php } ?>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						</div>
+						<?php } ?>
+						
 						<?php if (count($review) > 0) { ?>
 						<div style="margin: 10px 0;">
 							<div style="background: #FFFFFF; padding: 10px;">
@@ -160,7 +205,10 @@
 									</div>
 									<?php } ?>
 									<?php } ?>
+									<div style="text-align: center;"><a href="<?php echo $item['item_review_link']; ?>">More Review</a></div>
 								</div>
+								
+								<hr />
 								
 								<h2 id="review-title">Write a review</h2>
 								<form id="form-review">
