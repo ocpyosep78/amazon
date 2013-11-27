@@ -218,7 +218,7 @@
 				
 				<aside id="oc-column-right" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 offcanvas-sidebar">
 					<div id="column-right" class="sidebar">
-						<?php $this->load->view( 'website/common/sort_brand' ); ?>
+						<?php $this->load->view( 'website/common/sort_brand', array( 'category_id' => @$category['id'], 'category_sub_id' => @$category_sub['id'] ) ); ?>
 						<?php $this->load->view( 'website/common/best_seller' ); ?>
 						<?php $this->load->view( 'website/common/banner_right' ); ?>
 					</div>

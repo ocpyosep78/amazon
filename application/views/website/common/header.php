@@ -107,11 +107,13 @@
 										<div class="mega-col col-md-6"><div class="mega-col-inner">
 											<div class="pavo-widget" id="wid-10">
 												<h3 class="menu-title"><span>Image Sub Verticalmenu</span></h3>
+												<?php if (!empty($row['image_link'])) { ?>
 												<div class="widget-image">
 													<div class="widget-inner clearfix">
 														<div><img src="<?php echo $row['image_link']; ?>" alt="" title=""></div>
 													</div>
 												</div>
+												<?php } ?>
 											</div>
 										</div></div>
 									</div></div></div>

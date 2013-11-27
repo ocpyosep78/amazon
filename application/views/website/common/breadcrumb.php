@@ -21,6 +21,6 @@
 
 <div id="breadcrumb"><ol class="breadcrumb container">
 	<?php foreach ($title_list as $item) { ?>
-		<li class="<?php echo $item['class']; ?>"><a href="<?php echo $item['link']; ?>"><span><?php echo $item['title']; ?></span></a></li>
+		<li class="<?php echo $item['class']; ?>"><a href="<?php echo $item['link']; ?>" title="<?php echo $item['title']; ?>" alt="<?php echo $item['title']; ?>"><span><?php echo $item['title']; ?></span></a></li>
 	<?php } ?>
 </ol></div>

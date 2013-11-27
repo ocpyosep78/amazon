@@ -3929,3 +3929,17 @@ ul.list li:hover:before {
     min-width: 281px;
   }
 }
+
+/*	RATING */
+.cnt-star-bg { background-image: url('../img/star.png'); background-position: 64px 0px; width: 65px; height: 12px; }
+.cnt-star-rate { background-image: url('../img/star.png'); height: 12px; }
+.cnt-star-bg .rate-05 { width: 6px; }
+.cnt-star-bg .rate-1 { width: 12px; }
+.cnt-star-bg .rate-15 { width: 19px; }
+.cnt-star-bg .rate-2 { width: 24px; }
+.cnt-star-bg .rate-25 { width: 33px; }
+.cnt-star-bg .rate-3 { width: 36px; }
+.cnt-star-bg .rate-35 { width: 45px; }
+.cnt-star-bg .rate-4 { width: 50px; }
+.cnt-star-bg .rate-45 { width: 59px; }
+.cnt-star-bg .rate-5 { width: 65px; }

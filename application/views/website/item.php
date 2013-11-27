@@ -154,7 +154,15 @@
 							<div style="background: #FFFFFF; padding: 10px;">
 								<div style="padding: 0 0 10px 0;"><strong><?php echo $review['name']; ?></strong> by <strong><?php echo $review['user']; ?></strong></div>
 								<div><?php echo $review['desc']; ?></div>
-								<div style="padding: 8px 0 0 0;">Rating : <?php echo $review['rating_text']; ?></div>
+								<div style="padding: 8px 0 0 0;">
+									<div style="float: left; width: 55px;">Rating :</div>
+									<div style="float: left; width: 100px; padding: 4px 0 0 0;">
+										<div class="cnt-star-bg">
+											<div class="cnt-star-rate rate-<?php echo $review['rating_text']; ?>"></div>
+										</div>
+									</div>
+									<div style="clear: both;"></div>
+								</div>
 							</div>
 						</div>
 						<?php } ?>
@@ -304,7 +312,7 @@ $('#button-review').click(function(event) {
 				
 				<aside id="oc-column-right" class="col-lg-3 col-md-3 col-sm-12 col-xs-12 offcanvas-sidebar">
 					<div id="column-right" class="sidebar">
-						<?php $this->load->view( 'website/common/sort_brand' ); ?>
+						<?php $this->load->view( 'website/common/sort_brand', array( 'category_sub_id' => $item['category_sub_id'] ) ); ?>
 						<?php $this->load->view( 'website/common/best_seller' ); ?>
 						<?php $this->load->view( 'website/common/banner_right' ); ?>
 					</div>

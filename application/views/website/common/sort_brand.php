@@ -1,5 +1,10 @@
 <?php
-	$array_brand = $this->Brand_model->get_array_with_count(array( 'item_status_id' => ITEM_STATUS_APPROVE ));
+	$param_brand = array(
+		'category_id' => @$category_id,
+		'category_sub_id' => @$category_sub_id,
+		'item_status_id' => ITEM_STATUS_APPROVE
+	);
+	$array_brand = $this->Brand_model->get_array_with_count($param_brand);
 ?>
 <div class="box category highlights">
 	<div class="box-heading"><span>Sort By Brand</span></div>

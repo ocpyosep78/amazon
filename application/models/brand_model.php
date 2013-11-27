@@ -83,6 +83,8 @@ class Brand_model extends CI_Model {
     function get_array_with_count($param = array()) {
         $array = array();
 		
+		$string_category = (!empty($param['category_id'])) ? "AND CategorySub.category_id = '".$param['category_id']."'" : '';
+		$string_category_sub = (!empty($param['category_sub_id'])) ? "AND Item.category_sub_id = '".$param['category_sub_id']."'" : '';
 		$string_item_status = (isset($param['item_status_id'])) ? "AND Item.item_status_id = '".$param['item_status_id']."'" : '';
 		$string_namelike = (!empty($param['namelike'])) ? "AND Brand.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
@@ -93,7 +95,9 @@ class Brand_model extends CI_Model {
 			SELECT COUNT(*) total, Brand.alias, Brand.name
 			FROM ".BRAND." Brand
 			LEFT JOIN ".ITEM." Item ON Brand.id = Item.brand_id
-			WHERE 1 $string_item_status $string_namelike $string_filter
+			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+			WHERE 1 $string_namelike $string_category $string_category_sub $string_item_status $string_filter
 			GROUP BY Brand.alias, Brand.name
 		";
         $select_result = mysql_query($select_query) or die(mysql_error());

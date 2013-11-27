@@ -97,7 +97,7 @@ class Item_Review_model extends CI_Model {
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
 		$row['desc_limit'] = get_length_char(strip_tags($row['desc']), 1000, ' ...');
-		$row['rating_text'] = $row['rating'].' / 5';
+		$row['rating_text'] = preg_replace('/[^0-9]+/i', '', $row['rating']);
 		
 		// link
 		if (isset($row['item_alias'])) {

@@ -21,10 +21,10 @@ ok => - tambah link "More Review" di link baru misal di http://shoperindo.com/sh
 ok => - "More Review" punya paging (10 review per page)
 
 Website - Item Rating :
-- rating modelnya bintang (contoh amazon)
+ok => - rating modelnya bintang (contoh amazon)
 
 Website - Breadcrump :
-- breadcump di aksih title="" dan alt=""
+ok => - breadcump di aksih title="" dan alt=""
 
 Website - Home :
 - link asli : http://shoperindo.com/shopermarket/homes.htm
@@ -34,8 +34,8 @@ Website - Home :
    c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
 
 Website - Brand :
-- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-- SORT BY BRAND tambah filter category
+ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+ok => - SORT BY BRAND tambah filter category
 ----------------------------------------------------------------------------------------
 PANEL
 ----------------------------------------------------------------------------------------
@@ -97,3 +97,39 @@ D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
 D:\Program Files\xampp\htdocs\amazon\trunk\application\helpers\common_helper.php
 D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\other.php
 D:\Program Files\xampp\htdocs\amazon\trunk\note.txt
+
+D:\Program Files\xampp\htdocs\amazon\trunk
+D:\Program Files\xampp\htdocs\amazon\trunk\application\config\routes.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\other.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\tag.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\helpers\common_helper.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\category_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_tag_model.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\category.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\popup\category.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\common\header.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\page_static.php
+D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\tag.php
+D:\Program Files\xampp\htdocs\amazon\trunk\note.txt
+D:\Program Files\xampp\htdocs\amazon\trunk\static\panel\master\category.js
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_021740_6258.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802_s.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022854_8421.jpg
+D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
+
+
+D:/Program Files/xampp/htdocs/amazon/trunk/application/models/brand_model.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/models/item_review_model.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/breadcrumb.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/header.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/sort_brand.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/home.php
+D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/item.php
+D:/Program Files/xampp/htdocs/amazon/trunk/note.txt
+D:/Program Files/xampp/htdocs/amazon/trunk/static/css/stylesheet.css
+D:/Program Files/xampp/htdocs/amazon/trunk/static/panel/ext.common.js
+D:/Program Files/xampp/htdocs/amazon/trunk/static/img/star.png
