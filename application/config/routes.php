@@ -1,7 +1,6 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
 $is_website = true;
-$is_other_page = false;
 
 $string_link_check = (isset($_SERVER['argv']) && isset($_SERVER['argv'][0])) ? $_SERVER['argv'][0] : '';
 $string_link_check = (empty($string_link_check) && isset($_SERVER['REDIRECT_QUERY_STRING'])) ? $_SERVER['REDIRECT_QUERY_STRING'] : $string_link_check;
@@ -12,8 +11,6 @@ if (count($array_arg) >= 1) {
 	$key = $array_arg[0];
 	if (in_array($key, array( 'panel' ))) {
 		$is_website = false;
-	} else if (in_array($key, array( 'full-page', 'about-us', 'privacy-policy', 'advertising', 'referer', 'widget' ))) {
-		$is_other_page = true;
 	}
 }
 
@@ -28,11 +25,11 @@ if ($is_website) {
 	// list post
 	$route['rss'] = "website/rss";
 	$route['rss/(:any)'] = "website/rss";
-	$route['search'] = "website/home";
-	$route['search/(:any)'] = "website/home";
+	$route['search'] = "website/search";
+	$route['search/(:any)'] = "website/search";
 	$route['url'] = "website/url";
 	$route['item/(:any)'] = "website/other";
-	$route['brand/(:any)'] = "website/home";
+	$route['brand/(:any)'] = "website/search";
 	
 	// form
 	$route['contact/(:any)'] = "website/contact";
@@ -41,10 +38,6 @@ if ($is_website) {
 	$route['(:any)'] = "website/other";
 	$route['(:any)/(:any)'] = "website/other";
 	$route['(:any)/(:any)/(:any)'] = "website/other";
-}
-
-if ($is_other_page) {
-	$route['(:any)'] = "website/other";
 }
 
 $route['panel'] = "panel/home";

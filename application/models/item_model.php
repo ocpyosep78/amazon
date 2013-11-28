@@ -123,12 +123,14 @@ class Item_model extends CI_Model {
     }
 	
     function get_array($param = array()) {
-        $array = array();
+		$array = array();
 		
 		$string_brand = (!empty($param['brand_id'])) ? "AND Item.brand_id = '".$param['brand_id']."'" : '';
 		$string_category = (!empty($param['category_id'])) ? "AND CategorySub.category_id = '".$param['category_id']."'" : '';
 		$string_category_sub = (!empty($param['category_sub_id'])) ? "AND Item.category_sub_id = '".$param['category_sub_id']."'" : '';
+		$string_item_list = (!empty($param['item_list'])) ? "AND Item.id IN (".$param['item_list'].")" : '';
 		$string_item_status = (isset($param['item_status_id'])) ? "AND Item.item_status_id = '".$param['item_status_id']."'" : '';
+		$string_date_update = (!empty($param['date_update'])) ? "AND Item.date_update >= '".$param['date_update']."'" : '';
 		$string_namelike = (!empty($param['namelike'])) ? "AND Item.name LIKE '%".$param['namelike']."%'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
@@ -146,7 +148,7 @@ class Item_model extends CI_Model {
 			LEFT JOIN ".ITEM_STATUS." ItemStatus ON ItemStatus.id = Item.item_status_id
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
 			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
-			WHERE 1 $string_namelike $string_brand $string_category $string_category_sub $string_item_status $string_filter
+			WHERE 1 $string_namelike $string_brand $string_category $string_category_sub $string_item_list $string_item_status $string_date_update $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
@@ -245,4 +247,31 @@ class Item_model extends CI_Model {
 		
 		return $result;
 	}
+	
+	/*	Cookie Region */
+	
+	function update_cookie($param) {
+		$history_item = (isset($_SESSION['history_item'])) ? $_SESSION['history_item'] : array();
+		
+		if ($param['action'] == 'update') {
+			if (!in_array($param['id'], $history_item)) {
+				$history_item[] = $param['id'];
+			}
+		}
+		
+		for ($i = count($history_item); $i > 4; $i--) {
+			array_shift($history_item);
+		}
+		
+		// set to session
+		$_SESSION['history_item'] = $history_item;
+	}
+	
+	function get_cookie() {
+		$history_item = (isset($_SESSION['history_item'])) ? $_SESSION['history_item'] : array();
+		
+		return $history_item;
+	}
+	
+	/*	End Cookie Region */
 }

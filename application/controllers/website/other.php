@@ -28,7 +28,7 @@ class other extends CI_Controller {
 		}
 		
 		if (count($category) > 0 || count($category_sub) > 0) {
-			$this->load->view( 'website/home', array( 'category' => $category, 'category_sub' => $category_sub ) );
+			$this->load->view( 'website/search', array( 'category' => $category, 'category_sub' => $category_sub ) );
 		} else if (count($page_static) > 0) {
 			$this->load->view( 'website/page_static', array( 'page_static' => $page_static ) );
 		} else {

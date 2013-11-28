@@ -9,6 +9,9 @@
 	$item = $this->Item_model->get_by_id(array( 'alias' => $item_alias ));
 	$item = $this->Item_model->get_by_id(array( 'id' => $item['id'], 'tag_include' => true ));
 	
+	// sent to cookie
+	$this->Item_model->update_cookie(array( 'action' => 'update', 'id' => $item['id'] ));
+	
 	// update view
 	$this->Item_model->update_view(array( 'id' => $item['id'] ));
 	
