@@ -56,9 +56,11 @@ class item extends XX_Controller {
 		if (count($item_request_rescrape) > 0 || count($item_incomplete) > 0) {
 			if (count($item_request_rescrape) > 0) {
 				$is_refresh = false;
+				$is_rescrape = true;
 				$item_id = $item_request_rescrape['id'];
 				$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_request_rescrape['link_source'] ));
 			} else {
+				$is_rescrape = false;
 				$item_id = $item_incomplete['id'];
 				$scrape_result = $this->$scrape['library']->scrape_item(array( 'link' => $item_incomplete['link_source'] ));
 			}
@@ -71,10 +73,15 @@ class item extends XX_Controller {
 			$item_param['id'] = $item_id;
 			$item_param['brand_id'] = @$brand['id'];
 			$item_param['category_sub_id'] = $scrape['category_sub_id'];
-			$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
 			$item_param['store'] = $scrape['store'];
 			$item_param['item_status_id'] = ITEM_STATUS_REVIEW;
 			$item_param['date_update'] = $this->config->item('current_datetime');
+			
+			if (!$is_rescrape) {
+				$item_param['alias'] = $this->Item_model->get_name($scrape_result['name']);
+			}
+			
+			// execute
 			$result = $this->Item_model->update_complex($item_param);
 			$item = $this->Item_model->get_by_id($result);
 			

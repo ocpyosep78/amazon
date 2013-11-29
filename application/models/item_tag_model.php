@@ -72,7 +72,6 @@ class Item_Tag_model extends CI_Model {
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";
-		
         $select_result = mysql_query($select_query) or die(mysql_error());
 		while ( $row = mysql_fetch_assoc( $select_result ) ) {
 			$array[] = $this->sync($row);
@@ -116,6 +115,14 @@ class Item_Tag_model extends CI_Model {
 		// price
 		$row['price_old_text'] = '$ '.$row['price_old'];
 		$row['price_show_text'] = '$ '.$row['price_show'];
+		
+		// link image
+		$image_check = substr($row['item_image'], 0, 4);
+		if ($image_check == 'http') {
+			$row['image_link'] = $row['item_image'];
+		} else {
+			$row['image_link'] = base_url('static/upload/'.$row['item_image']);
+		}
 		
 		return $row;
 	}

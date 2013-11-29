@@ -40,29 +40,29 @@ ok => - SORT BY BRAND tambah filter category
 PANEL
 ----------------------------------------------------------------------------------------
 Panel - Item :
-- Upload tidak jalan sampai ke item
-- kasih tombol approve di kolom grid
-- Desc dari amazon bisa di show / hide
-- Link pengganti belum jalan (link add / link replace)
+ok => - Upload tidak jalan sampai ke item
+ok => - kasih tombol approve di kolom grid
+ok => - Desc dari amazon bisa di show / hide
+ok => - Link pengganti belum jalan (link add / link replace)
 
 Panel - Item Desc :
-- link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
-- no pic & link
-- isi cuma text
-- max text (1000 char)
+ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
+ok => - no pic & link
+ok => - isi cuma text
+ok => - max text (1000 char)
 
 Panel - Item - Multi Description  :
-inputanya kurang :
-- short Desc ( tampilkan di halaman item, textarea )
-- long desc ( tampilan di halaman item, textarea )
-- long desc 2 ( tampilan di halaman item, textarea )
-- link aff ( tampilkan di halaman item, input )
-- field 2 (tambahan field buat jaga2 , input )
+ok => inputanya kurang :
+ok => - short Desc ( tampilkan di halaman item, textarea )
+ok => - long desc ( tampilan di halaman item, textarea )
+ok => - long desc 2 ( tampilan di halaman item, textarea )
+ok => - link aff ( tampilkan di halaman item, input )
+ok => - field 2 (tambahan field buat jaga2 , input )
 
 Panel - Bug Item Name :
-- link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
-- link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-- hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
+ok => - link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
+ok => - link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+ok => - hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
 ----------------------------------------------------------------------------------------
 SERVICE
 ----------------------------------------------------------------------------------------
@@ -143,3 +143,20 @@ application/views/website/item.php
 note.txt
 application/controllers/website/search.php
 application/views/website/search.php
+
+application/controllers/panel/product/item.php
+application/libraries/scrape/amazon_phone.php
+application/models/item_model.php
+application/models/item_multi_title_model.php
+application/models/item_tag_model.php
+application/views/panel/product/popup/item.php
+application/views/panel/product/popup/multi_title.php
+application/views/website/home.php
+application/views/website/item.php
+application/views/website/search.php
+application/views/website/tag.php
+note.txt
+static/panel/product/item.js
+static/upload/2013/11/29
+static/upload/2013/11/29/20131129_073534_8149.jpg
+update.sql

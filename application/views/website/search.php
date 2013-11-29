@@ -134,7 +134,7 @@
 								<div class="product-block">
 									<div class="image">
 										<span class="product-label-special"><span>Sale</span></span>
-										<a href="<?php echo $row['item_link']; ?>"><img src="<?php echo $row['image']; ?>" title="<?php echo $row['name']; ?>" alt="<?php echo $row['name']; ?>" class="img-responsive"></a>
+										<a href="<?php echo $row['item_link']; ?>"><img src="<?php echo $row['image_link']; ?>" title="<?php echo $row['name']; ?>" alt="<?php echo $row['name']; ?>" class="img-responsive"></a>
 										<a href="<?php echo $row['item_link']; ?>" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="<?php echo $row['name']; ?>"><i class="icon-zoom-in"></i></a>
 										<div class="img-overlay"></div>
 									</div>

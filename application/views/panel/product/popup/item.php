@@ -9,11 +9,17 @@
 		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Content :</div>
 		<div style="float:left; width: 600px;"><div id="descED"></div></div>
 		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Link Source :</div>
-		<div style="float:left; width: 600px;"><div id="link_sourceED"></div></div>
+		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Show Content :</div>
+		<div style="float:left; width: 600px;"><div id="desc_showED"></div></div>
 		<div class="clear"></div>
 		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Status Stock :</div>
 		<div style="float:left; width: 600px;"><div id="status_stockED"></div></div>
+		<div class="clear"></div>
+		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Link Source :</div>
+		<div style="float:left; width: 600px;"><div id="link_sourceED"></div></div>
+		<div class="clear"></div>
+		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Link Replace :</div>
+		<div style="float:left; width: 600px;"><div id="link_replaceED"></div></div>
 		<div class="clear"></div>
 	</div>
 	<div style="float: left; width: 350px;">

@@ -146,6 +146,9 @@ class amazon_phone {
 		$pos_end = strpos($content, $offset);
 		$content = trim(substr($content, 0, $pos_end));
 		
+		// set content
+		$content = trim(get_length_char(strip_tags($content), 1000, ' ...'));
+		
 		return $content;
 	}
 	

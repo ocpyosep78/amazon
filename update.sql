@@ -10,3 +10,7 @@
 
 2013-11-27 :
 - ALTER TABLE `category` ADD `image` VARCHAR( 50 ) NOT NULL ;
+- ALTER TABLE `item` ADD `show_desc` INT NOT NULL AFTER `desc` ;
+- ALTER TABLE `item` CHANGE `show_desc` `show_desc` INT( 11 ) NOT NULL DEFAULT '1';
+- ALTER TABLE `item` CHANGE `show_desc` `desc_show` INT( 11 ) NOT NULL DEFAULT '1';
+- ALTER TABLE `item_multi_title` ADD `desc_short` LONGTEXT NOT NULL , ADD `desc_long_1` LONGTEXT NOT NULL , ADD `desc_long_2` LONGTEXT NOT NULL , ADD `link_aff` VARCHAR( 255 ) NOT NULL , ADD `sign` VARCHAR( 255 ) NOT NULL ;

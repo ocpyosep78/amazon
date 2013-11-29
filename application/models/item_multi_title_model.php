@@ -4,7 +4,7 @@ class Item_Multi_Title_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array( 'id', 'item_id', 'name', 'desc' );
+        $this->field = array( 'id', 'item_id', 'name', 'desc', 'desc_short', 'desc_long_1', 'desc_long_2', 'link_aff', 'sign' );
     }
 
     function update($param) {

@@ -63,7 +63,7 @@
 									<span class="product-label-special"><span>Sale</span></span>
 									<div class="image">
 										<a href="<?php echo $item['item_link']; ?>" class="colorbox cboxElement">
-											<img src="<?php echo $item['image']; ?>">
+											<img src="<?php echo $item['image_link']; ?>">
 										</a>
 									</div>
 								</div>
@@ -173,7 +173,10 @@
 						<div class="tabs-group box">
 							<div id="tabs" class="htabs">
 								<ul class="nav nav-tabs box-heading clearfix">
+									<!-- item desc -->
+									<?php if ($item['desc_show'] == 1) { ?>
 									<li class="first"><a class="selected" href="#tab-description">Description</a></li>
+									<?php } ?>
 									
 									<!-- item compare -->
 									<?php if (count($array_compare) > 0) { ?>
@@ -186,7 +189,10 @@
 									<?php } ?>
 								</ul>
 							</div>
+							
+							<?php if ($item['desc_show'] == 1) { ?>
 							<div style="display: block;" id="tab-description" class="tab-content"><?php echo $item['desc']; ?></div>
+							<?php } ?>
 							
 							<!-- item compare -->
 							<?php if (count($array_compare) > 0) { ?>
@@ -215,8 +221,9 @@
 										<div><?php echo get_length_char($row['desc_limit'], 250, ' ... <a href="'.$row['link'].'">more</a>'); ?></div>
 									</div>
 									<?php } ?>
-									<?php } ?>
+									
 									<div style="text-align: center;"><a href="<?php echo $item['item_review_link']; ?>">More Review</a></div>
+									<?php } ?>
 								</div>
 								
 								<hr />

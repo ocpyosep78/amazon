@@ -10,7 +10,7 @@ Ext.onReady(function() {
         sorters: [{ property: 'name', direction: 'ASC' }],
 		fields: [
 			'id', 'alias', 'name', 'code', 'desc', 'price_show', 'date_update', 'brand_id', 'brand_name', 'category_id', 'category_name', 'category_sub_id', 'category_sub_name',
-			'scrape_id', 'item_status_name', 'item_link', 'total_view', 'total_link_out'
+			'scrape_id', 'item_status_name', 'item_link', 'total_view', 'total_link_out', 'item_status_id'
 		],
 		proxy: {
 			type: 'ajax',
@@ -35,6 +35,25 @@ Ext.onReady(function() {
 			}, {	header: 'Tanggal Update', dataIndex: 'date_update', sortable: true, filter: true, width: 125
 			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
 					items: [ {
+							getClass: function(v, meta, rec) {
+								if (rec.get('item_status_id') == 3) {
+									this.items[0].tooltip = 'Approve';
+									return 'acceptIcon';
+								} else {
+									this.items[0].tooltip = 'Unpublish';
+									return 'delIcon';
+								}
+							},
+							handler: function(grid, rowIndex, colIndex) {
+								var rec = grid.store.getAt(rowIndex);
+								var param = { action: 'update', id: rec.data.id, item_status_id: (rec.data.item_status_id == 3) ? 4 : 3 }
+								Func.ajax({ param: param, url: URLS.base + 'panel/product/item/action', callback: function(result) {
+									if (result.status) {
+										grid.store.load();
+									}
+								} });
+							}
+					}, {
 							iconCls: 'refreshIcon', tooltip: 'Re Scrape', handler: function(grid, rowIndex, colIndex) {
 								var row = grid.store.getAt(rowIndex).data;
 								var link_scrape = URLS.base + 'panel/product/item/do_scrape?scrape_id=' + row.scrape_id + '&item_request_rescrape=' + row.id;
@@ -198,9 +217,11 @@ Ext.onReady(function() {
 								}
 							});
 							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 575, readOnly: true });
-							win.desc = new Ext.form.HtmlEditor({ renderTo: 'descED', width: 575, height: 345, enableFont: false });
-							win.link_source = new Ext.form.TextField({ renderTo: 'link_sourceED', width: 575 });
+							win.desc = new Ext.form.HtmlEditor({ renderTo: 'descED', width: 575, height: 285, enableFont: false });
+							win.desc_show = new Ext.form.Checkbox({ renderTo: 'desc_showED' });
 							win.status_stock = new Ext.form.TextField({ renderTo: 'status_stockED', width: 575 });
+							win.link_source = new Ext.form.TextField({ renderTo: 'link_sourceED', width: 575 });
+							win.link_replace = new Ext.form.TextField({ renderTo: 'link_replaceED', width: 575 });
 							win.brand = Combo.Class.Brand({ renderTo: 'brandED', width: 225, allowBlank: false, blankText: 'Masukkan Brand' });
 							win.category = Combo.Class.Category({
 								renderTo: 'categoryED', width: 225, listeners: {
@@ -235,8 +256,9 @@ Ext.onReady(function() {
 								win.name.setValue(param.name);
 								win.alias.setValue(param.alias);
 								win.desc.setValue(param.desc);
-								win.link_source.setValue(param.link_source);
 								win.status_stock.setValue(param.status_stock);
+								win.link_source.setValue(param.link_source);
+								win.link_replace.setValue(param.link_replace);
 								win.code.setValue(param.code);
 								win.store.setValue(param.store);
 								win.price_old.setValue(param.price_old);
@@ -244,6 +266,7 @@ Ext.onReady(function() {
 								win.price_range.setValue(param.price_range);
 								win.image.setValue(param.image);
 								win.item_status.setValue(param.item_status_id);
+								win.desc_show.setValue((param.desc_show == 1));
 								
 								win.brand.setValue(param.brand_id);
 								win.category.setValue(param.category_id);
@@ -273,8 +296,9 @@ Ext.onReady(function() {
 				ajax.name = win.name.getValue();
 				ajax.alias = win.alias.getValue();
 				ajax.desc = win.desc.getValue();
-				ajax.link_source = win.link_source.getValue();
 				ajax.status_stock = win.status_stock.getValue();
+				ajax.link_source = win.link_source.getValue();
+				ajax.link_replace = win.link_replace.getValue();
 				ajax.code = win.code.getValue();
 				ajax.store = win.store.getValue();
 				ajax.tag = win.tag.getValue();
@@ -286,6 +310,7 @@ Ext.onReady(function() {
 				ajax.brand_id = win.brand.getValue();
 				ajax.category_id = win.category.getValue();
 				ajax.category_sub_id = win.category_sub.getValue();
+				ajax.desc_show = (win.desc_show.getValue() == true) ? 1 : 0;
 				
 				// Validation
 				var is_valid = true;
@@ -330,7 +355,7 @@ Ext.onReady(function() {
 							win.store = Ext.create('Ext.data.Store', {
 								autoLoad: true, pageSize: 25, remoteSort: true,
 								sorters: [{ property: 'name', direction: 'ASC' }],
-								fields: [ 'id', 'name', 'desc' ],
+								fields: [ 'id', 'name', 'desc', 'desc_short', 'desc_long_1', 'desc_long_2', 'link_aff', 'sign' ],
 								proxy: {
 									type: 'ajax', extraParams: { item_id: param.id },
 									url : URLS.base + 'panel/product/item_multi_title/grid', actionMethods: { read: 'POST' },
@@ -351,6 +376,11 @@ Ext.onReady(function() {
 											win.record = { id: 0 };
 											win.name.reset();
 											win.desc.reset();
+											win.desc_short.reset();
+											win.desc_long_1.reset();
+											win.desc_long_2.reset();
+											win.link_aff.reset();
+											win.sign.reset();
 											win.name.focus();
 										}
 									}, '-', {
@@ -367,35 +397,76 @@ Ext.onReady(function() {
 											win.record = { id: record.id };
 											win.name.setValue(record.name);
 											win.desc.setValue(record.desc);
+											win.desc_short.setValue(record.desc_short);
+											win.desc_long_1.setValue(record.desc_long_1);
+											win.desc_long_2.setValue(record.desc_long_2);
+											win.link_aff.setValue(record.link_aff);
+											win.sign.setValue(record.sign);
 										}
 									}, '-', {
-										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() { console.log('Hapus'); }
+										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() {
+											Ext.Ajax.request({
+												url: URLS.base + 'panel/product/item_multi_title/action',
+												params: { action: 'delete', id: win.grid.getSelectionModel().getSelection()[0].data.id },
+												success: function(TempResult) {
+													eval('var Result = ' + TempResult.responseText)
+													if (Result.status == '1') {
+														win.store.load();
+													}
+												}
+											});
+										}
 								} ],
 								listeners: {
 									'itemclick': function(grid, record, item) {
 										win.name.setValue(record.data.name);
 										win.desc.setValue(record.data.desc);
+										win.desc_short.setValue(record.data.desc_short);
+										win.desc_long_1.setValue(record.data.desc_long_1);
+										win.desc_long_2.setValue(record.data.desc_long_2);
+										win.link_aff.setValue(record.data.link_aff);
+										win.sign.setValue(record.data.sign);
 									}
 								},
 								edit_mode: function() {
 									win.name.setReadOnly(false);
 									win.desc.setReadOnly(false);
+									win.desc_short.setReadOnly(false);
+									win.desc_long_1.setReadOnly(false);
+									win.desc_long_2.setReadOnly(false);
+									win.link_aff.setReadOnly(false);
+									win.sign.setReadOnly(false);
 									win.save.setDisabled(false);
 									win.cancel.setDisabled(false);
 								},
 								read_mode: function() {
 									win.name.setReadOnly(true);
 									win.desc.setReadOnly(true);
+									win.desc_short.setReadOnly(true);
+									win.desc_long_1.setReadOnly(true);
+									win.desc_long_2.setReadOnly(true);
+									win.link_aff.setReadOnly(true);
+									win.sign.setReadOnly(true);
 									win.save.setDisabled(true);
 									win.cancel.setDisabled(true);
 									
 									win.name.reset();
 									win.desc.reset();
+									win.desc_short.reset();
+									win.desc_long_1.reset();
+									win.desc_long_2.reset();
+									win.link_aff.reset();
+									win.sign.reset();
 								}
 							});
 							
 							win.name = new Ext.form.TextField({ renderTo: 'nameEM', width: 575, allowBlank: false, blankText: 'Masukkan Judul', readOnly: true });
-							win.desc = new Ext.form.HtmlEditor({ renderTo: 'descEM', width: 575, height: 345, enableFont: false, readOnly: true });
+							win.desc = new Ext.form.TextArea({ renderTo: 'descEM', width: 575, height: 70, readOnly: true });
+							win.desc_short = new Ext.form.TextArea({ renderTo: 'desc_shortEM', width: 575, height: 70, readOnly: true });
+							win.desc_long_1 = new Ext.form.TextArea({ renderTo: 'desc_long_1EM', width: 575, height: 65, readOnly: true });
+							win.desc_long_2 = new Ext.form.TextArea({ renderTo: 'desc_long_2EM', width: 575, height: 65, readOnly: true });
+							win.link_aff = new Ext.form.TextField({ renderTo: 'link_affEM', width: 575, readOnly: true });
+							win.sign = new Ext.form.TextField({ renderTo: 'signEM', width: 575, readOnly: true });
 							win.save = new Ext.Button({ renderTo: 'save_btnEM', text: 'Save', width: 100, disabled: true, handler: function(btn) {
 								var ajax = new Object();
 								ajax.action = 'update';
@@ -403,6 +474,11 @@ Ext.onReady(function() {
 								ajax.item_id = param.id;
 								ajax.name = win.name.getValue();
 								ajax.desc = win.desc.getValue();
+								ajax.desc_short = win.desc_short.getValue();
+								ajax.desc_long_1 = win.desc_long_1.getValue();
+								ajax.desc_long_2 = win.desc_long_2.getValue();
+								ajax.link_aff = win.link_aff.getValue();
+								ajax.sign = win.sign.getValue();
 								
 								// Validation
 								var is_valid = true;
@@ -495,7 +571,18 @@ Ext.onReady(function() {
 											win.url.setValue(record.url);
 										}
 									}, '-', {
-										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() { console.log('Hapus'); }
+										text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() {
+											Ext.Ajax.request({
+												url: URLS.base + 'panel/product/item_compare/action',
+												params: { action: 'delete', id: win.grid.getSelectionModel().getSelection()[0].data.id },
+												success: function(TempResult) {
+													eval('var Result = ' + TempResult.responseText)
+													if (Result.status == '1') {
+														win.store.load();
+													}
+												}
+											});
+										}
 								} ],
 								listeners: {
 									'itemclick': function(grid, record, item) {

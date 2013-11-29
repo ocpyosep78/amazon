@@ -33,7 +33,7 @@
 			'name' => $row['item_name'],
 			'item_link' => $row['item_link'],
 			'desc_limit' => $row['desc_limit'],
-			'image' => $row['item_image'],
+			'image_link' => $row['image_link'],
 			'price_show_text' => $row['price_show_text']
 		);
 		$array_item[] = $temp;
@@ -65,7 +65,7 @@
 								<div class="product-block">
 									<div class="image">
 										<span class="product-label-special"><span>Sale</span></span>
-										<a href="<?php echo $row['item_link']; ?>"><img src="<?php echo $row['image']; ?>" title="<?php echo $row['name']; ?>" alt="<?php echo $row['name']; ?>" class="img-responsive"></a>
+										<a href="<?php echo $row['item_link']; ?>"><img src="<?php echo $row['image_link']; ?>" title="<?php echo $row['name']; ?>" alt="<?php echo $row['name']; ?>" class="img-responsive"></a>
 										<a href="<?php echo $row['item_link']; ?>" class="info-view colorbox product-zoom cboxElement" rel="colorbox" title="<?php echo $row['name']; ?>"><i class="icon-zoom-in"></i></a>
 										<div class="img-overlay"></div>
 									</div>

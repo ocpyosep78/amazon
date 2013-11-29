@@ -5,7 +5,7 @@ class Item_model extends CI_Model {
         parent::__construct();
 		
         $this->field = array(
-			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'link_source', 'link_replace', 'price_old', 'price_show', 'price_range',
+			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'desc_show', 'link_source', 'link_replace', 'price_old', 'price_show', 'price_range',
 			'status_stock', 'date_update', 'image', 'item_status_id', 'total_view', 'total_link_out'
 		);
     }
@@ -30,6 +30,7 @@ class Item_model extends CI_Model {
         }
 		
 		$this->update_tag($param);
+		$this->resize_image($param);
 		
         return $result;
     }
@@ -205,6 +206,14 @@ class Item_model extends CI_Model {
 		$row['price_old_text'] = '$ '.$row['price_old'];
 		$row['price_show_text'] = '$ '.$row['price_show'];
 		
+		// link image
+		$image_check = substr($row['image'], 0, 4);
+		if ($image_check == 'http') {
+			$row['image_link'] = $row['image'];
+		} else {
+			$row['image_link'] = base_url('static/upload/'.$row['image']);
+		}
+		
 		return $row;
 	}
 	
@@ -246,6 +255,16 @@ class Item_model extends CI_Model {
 		}
 		
 		return $result;
+	}
+	
+	function resize_image($param) {
+		if (!empty($param['image'])) {
+			$image_path = $this->config->item('base_path') . '/static/upload/';
+			$image_source = $image_path . $param['image'];
+			$image_result = $image_source;
+			
+			ImageResize($image_source, $image_result, 300, 300, 1);
+		}
 	}
 	
 	/*	Cookie Region */
