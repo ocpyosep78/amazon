@@ -35,6 +35,7 @@ define('ITEM_TAG',								'item_tag');
 define('MAIL_MASS',								'mail_mass');
 define('PAGE_STATIC',							'page_static');
 define('SCRAPE',								'scrape');
+define('SCRAPE_ITEM',							'scrape_item');
 define('SCRAPE_PAGE',							'scrape_page');
 define('SUBSCRIBE',								'subscribe');
 define('TAG',									'tag');

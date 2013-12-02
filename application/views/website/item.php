@@ -15,6 +15,9 @@
 	// update view
 	$this->Item_model->update_view(array( 'id' => $item['id'] ));
 	
+	// add to list scrape if item more older than limit day
+	$this->Scrape_Item_model->need_scrape(array( 'id' => $item['id'] ));
+	
 	// build breadcrumb
 	$param_breadcrumb = array( 'title_list' => array( ) );
 	$param_breadcrumb['title_list'][] = array( 'link' => base_url(), 'title' => 'Home', 'class' => 'first' );
@@ -74,7 +77,7 @@
 										<p>
 											<b>Availability:</b>
 											<?php if (empty($item['status_stock'])) { ?>
-											<a href="<?php echo $item['link_redirect']; ?>" class="disable">Cek Store</a>
+											<a href="<?php echo $item['link_redirect']; ?>" class="disable">Cek Availabilty</a>
 											<?php } else { ?>
 											<span class="availability"><?php echo $item['status_stock']; ?></span>
 											<?php } ?>
@@ -215,11 +218,17 @@
 									<?php if (count($array_item_review) == 0) { ?>
 									<div class="content">There are no reviews for this product.</div>
 									<?php } else { ?>
+									<?php $counter = 0; ?>
 									<?php foreach ($array_item_review as $row) { ?>
 									<div style="padding: 0 0 25px 0;">
 										<h4><a href="<?php echo $row['link']; ?>"><?php echo $row['name']; ?></a></h4>
 										<div><?php echo get_length_char($row['desc_limit'], 250, ' ... <a href="'.$row['link'].'">more</a>'); ?></div>
 									</div>
+									
+									<?php $counter++; ?>
+									<?php if ($counter >= 6) { ?>
+										<?php break; ?>
+									<?php } ?>
 									<?php } ?>
 									
 									<div style="text-align: center;"><a href="<?php echo $item['item_review_link']; ?>">More Review</a></div>

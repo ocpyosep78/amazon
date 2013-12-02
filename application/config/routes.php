@@ -9,7 +9,7 @@ $array_arg = explode('/', $url_arg);
 
 if (count($array_arg) >= 1) {
 	$key = $array_arg[0];
-	if (in_array($key, array( 'panel' ))) {
+	if (in_array($key, array( 'panel', 'service' ))) {
 		$is_website = false;
 	}
 }

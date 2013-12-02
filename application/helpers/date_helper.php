@@ -66,10 +66,10 @@ if (! function_exists('ConvertDateToArray')) {
 
 if (! function_exists('ConvertToUnixTime')) {
 	function ConvertToUnixTime($String) {
-		preg_match('/(\d{4})-(\d{2})-(\d{2})/i', $String, $Match);
+		preg_match('/(\d{4})-(\d{2})-(\d{2})( (\d{2}):(\d{2}):(\d{2}))*/i', $String, $Match);
 		
 		if (count($Match) >= 3) {
-			$UnixTime = mktime (0, 0, 0, $Match[2], $Match[3], $Match[1]);
+			$UnixTime = mktime (@$Match[5], @$Match[6], @$Match[7], $Match[2], $Match[3], $Match[1]);
 		} else {
 			$UnixTime = 0;
 		}

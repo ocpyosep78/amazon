@@ -2,161 +2,77 @@
 WEBSITE
 ----------------------------------------------------------------------------------------
 Website - Item :
-ok => - jika price kosong, tulisannya "cek price"
-ok => - jika availabity kosong, tulisannya "cek availabilty"
+cek => - jika price kosong, tulisannya "cek price"
+cek => - jika availabity kosong, tulisannya "cek availabilty"
 
 Website - Menu Utama :
-ok => - Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
+cek => - Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
 
 Website - Tag Page :
-ok => - link : http://shoperindo.com/shopermarket/demo/tag/tag-2 masih error
+cek => - link : http://shoperindo.com/shopermarket/demo/tag/samsung masih error
 
 Website - Page Static :
-ok => - http://shoperindo.com/shopermarket/demo/about-us
+cek => - http://shoperindo.com/shopermarket/demo/about-us
 
 Website - Item Review :
-ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-ok => - tampilkan 6 review terbaru saja
-ok => - tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
-ok => - "More Review" punya paging (10 review per page)
+cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+cek => - tampilkan 6 review terbaru saja
+cek => - tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
+cek => - "More Review" punya paging (10 review per page)
 
 Website - Item Rating :
-ok => - rating modelnya bintang (contoh amazon)
+cek => - rating modelnya bintang (contoh amazon)
 
 Website - Breadcrump :
-ok => - breadcump di aksih title="" dan alt=""
+cek => - breadcump di aksih title="" dan alt=""
 
 Website - Home :
-ok => - link asli : http://shoperindo.com/shopermarket/homes.htm
-ok => - ditampilkan : 
+cek => - link asli : http://shoperindo.com/shopermarket/homes.htm
+cek => - ditampilkan : 
    a. popular view this week (popular view this week = 4 item)
-   b. Your Browsing History
+   b. Your Browsing History => jika user belum punya 4 history, maka diambilkan dari produk random
    c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
 
 Website - Brand :
-ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-ok => - SORT BY BRAND tambah filter category
+cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+cek => - SORT BY BRAND tambah filter category
 ----------------------------------------------------------------------------------------
 PANEL
 ----------------------------------------------------------------------------------------
 Panel - Item :
-ok => - Upload tidak jalan sampai ke item
-ok => - kasih tombol approve di kolom grid
-ok => - Desc dari amazon bisa di show / hide
-ok => - Link pengganti belum jalan (link add / link replace)
+cek => - Upload tidak jalan sampai ke item
+cek => - kasih tombol approve di kolom grid
+cek => - Desc dari amazon bisa di show / hide
+cek => - Link pengganti belum jalan (link add / link replace)
 
 Panel - Item Desc :
-ok => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
-ok => - no pic & link
-ok => - isi cuma text
-ok => - max text (1000 char)
+cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
+cek => - no pic & link
+cek => - isi cuma text
+cek => - max text (1000 char)
+note => content lama yang ada di db masih ada gambar & linknya, nanti akan di replace sendiri oleh scrape ketika cron scrape sudah jalan
 
 Panel - Item - Multi Description  :
-ok => inputanya kurang :
-ok => - short Desc ( tampilkan di halaman item, textarea )
-ok => - long desc ( tampilan di halaman item, textarea )
-ok => - long desc 2 ( tampilan di halaman item, textarea )
-ok => - link aff ( tampilkan di halaman item, input )
-ok => - field 2 (tambahan field buat jaga2 , input )
+cek => inputanya kurang :
+cek => - short Desc ( tampilkan di halaman item, textarea )
+cek => - long desc ( tampilan di halaman item, textarea )
+cek => - long desc 2 ( tampilan di halaman item, textarea )
+cek => - link aff ( tampilkan di halaman item, input )
+cek => - field 2 (tambahan field buat jaga2 , input )
 
 Panel - Bug Item Name :
-ok => - link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
-ok => - link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-ok => - hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
+cek => - link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
+cek => - link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+cek => - hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
+note : bug sudah ditemukan dan diperbaiki, untuk proses re scrape data yang diperbaharui hanya harga dan jumlah stok saja, data yang lain seperti gambar, title dan desc tetap
 ----------------------------------------------------------------------------------------
 SERVICE
 ----------------------------------------------------------------------------------------
 Service - Re Scrape :
-1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab
-3. cron menjalankan script re grab
-----------------------------------------------------------------------------------------
-UPDATE
-----------------------------------------------------------------------------------------
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\css\stylesheet.css
+cek => 1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
+cek => 2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab => 3 hari ini bisa diganti di Master => Configuration => "Waktu Delay Rescrape", yang saat ini valuenya 14 hari
+cek => 3. cron menjalankan script re grab
 
-D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_tag_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_021740_6258.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022854_8421.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\category.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802_s.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\popup\category.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\tag.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\common\header.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\panel\master\category.js
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\category_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\page_static.php
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\tag.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\config\routes.php
-D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
-D:\Program Files\xampp\htdocs\amazon\trunk\application\helpers\common_helper.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\other.php
-D:\Program Files\xampp\htdocs\amazon\trunk\note.txt
-
-D:\Program Files\xampp\htdocs\amazon\trunk
-D:\Program Files\xampp\htdocs\amazon\trunk\application\config\routes.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\other.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\controllers\website\tag.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\helpers\common_helper.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\category_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\models\item_tag_model.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\category.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\panel\master\popup\category.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\common\header.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\item.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\page_static.php
-D:\Program Files\xampp\htdocs\amazon\trunk\application\views\website\tag.php
-D:\Program Files\xampp\htdocs\amazon\trunk\note.txt
-D:\Program Files\xampp\htdocs\amazon\trunk\static\panel\master\category.js
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_021740_6258.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022114_1802_s.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\static\upload\2013\11\27\20131127_022854_8421.jpg
-D:\Program Files\xampp\htdocs\amazon\trunk\update.sql
-
-
-D:/Program Files/xampp/htdocs/amazon/trunk/application/models/brand_model.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/models/item_review_model.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/breadcrumb.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/header.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/common/sort_brand.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/home.php
-D:/Program Files/xampp/htdocs/amazon/trunk/application/views/website/item.php
-D:/Program Files/xampp/htdocs/amazon/trunk/note.txt
-D:/Program Files/xampp/htdocs/amazon/trunk/static/css/stylesheet.css
-D:/Program Files/xampp/htdocs/amazon/trunk/static/panel/ext.common.js
-D:/Program Files/xampp/htdocs/amazon/trunk/static/img/star.png
-
-
-application/config/routes.php
-application/controllers/website/other.php
-application/models/item_model.php
-application/views/website/home.php
-application/views/website/item.php
-note.txt
-application/controllers/website/search.php
-application/views/website/search.php
-
-application/controllers/panel/product/item.php
-application/libraries/scrape/amazon_phone.php
-application/models/item_model.php
-application/models/item_multi_title_model.php
-application/models/item_tag_model.php
-application/views/panel/product/popup/item.php
-application/views/panel/product/popup/multi_title.php
-application/views/website/home.php
-application/views/website/item.php
-application/views/website/search.php
-application/views/website/tag.php
-note.txt
-static/panel/product/item.js
-static/upload/2013/11/29
-static/upload/2013/11/29/20131129_073534_8149.jpg
-update.sql
+Link Re Scrape yang bisa dijalankan oleh cron :
+- http://shopermarket.com/service/item_scrape
+- cron bisa di eksekusi setiap 1 jam sekali untuk mereload 25 item sekali jalan (misal di jalankan tiap 10 menit, 1 jam = 6 x 10 menit = 150 item yang akan di perbaharui datanya

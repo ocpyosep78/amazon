@@ -18,8 +18,9 @@
 	$array_item_history = $this->Item_model->get_array($param_item_history);
 	
 	// tag samsung
+	$tag = $this->Tag_model->get_by_id(array( 'alias' => 'samsung' ));
 	$param_item_samsung = array(
-		'tag_id' => 8,											// tag id samsung is 8
+		'tag_id' => $tag['id'],
 		'item_status_id' => ITEM_STATUS_APPROVE,
 		'sort' => '{"is_custom":"1","query":"RAND()"}',
 		'limit' => 4
@@ -71,7 +72,7 @@
 									</div>
 									<div class="product-meta">
 										<div class="left">
-											<h3 class="name"><a href="<?php echo $row['item_link']; ?>"><?php echo get_length_char($row['name'], 50, ' ...'); ?></a></h3>
+											<h3 class="name"><a href="<?php echo $row['item_link']; ?>"><?php echo get_length_char($row['name'], 45, ' ...'); ?></a></h3>
 											<p class="description"><?php echo $row['desc_limit']; ?></p>
 										</div>
 										<div class="right">

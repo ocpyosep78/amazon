@@ -14,3 +14,4 @@
 - ALTER TABLE `item` CHANGE `show_desc` `show_desc` INT( 11 ) NOT NULL DEFAULT '1';
 - ALTER TABLE `item` CHANGE `show_desc` `desc_show` INT( 11 ) NOT NULL DEFAULT '1';
 - ALTER TABLE `item_multi_title` ADD `desc_short` LONGTEXT NOT NULL , ADD `desc_long_1` LONGTEXT NOT NULL , ADD `desc_long_2` LONGTEXT NOT NULL , ADD `link_aff` VARCHAR( 255 ) NOT NULL , ADD `sign` VARCHAR( 255 ) NOT NULL ;
+- CREATE TABLE IF NOT EXISTS `scrape_item` ( `id` int(11) NOT NULL AUTO_INCREMENT, `item_id` int(11) NOT NULL, `is_finish` int(11) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
