@@ -1,78 +1,35 @@
-----------------------------------------------------------------------------------------
-WEBSITE
-----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------
+Website
+--------------------------------------------------------------------------------------------------------
+Website - Index :
+- Judul Item dikasih limit 40 karakter (sebelumnya 45 karakter)
+
 Website - Item :
-cek => - jika price kosong, tulisannya "cek price"
-cek => - jika availabity kosong, tulisannya "cek availabilty"
+- item juga punya rating sendiri
+- last update ditampilkan
 
-Website - Menu Utama :
-cek => - Category, tambah 1 field untuk image untuk data image yang akan tampil di menu utama biar masing2 category punya gambar sendiri2
+Website - Multi Title :
+- isinya cuma title & desc
+- field yang lain ditaruh di popup lain (form sendiri)
+- Short Desc :, Short Long 1 :, Short Long 2 :, Link Aff :, Additional : di tampilkan di atas tab, nanti saya rapikan yang di menu multi line
+- di tampilkan di atas tab review dibawah harga dan gambar..
 
-Website - Tag Page :
-cek => - link : http://shoperindo.com/shopermarket/demo/tag/samsung masih error
+Website - Support Multi Line :
+- item review
+- multi title menu
+- compare
+- review
+--------------------------------------------------------------------------------------------------------
+Panel
+--------------------------------------------------------------------------------------------------------
+Panel - Re Scrape :
+- status di pertahankan, jika status sudah publish di rescrape statusnya tetap publish
+- pastikan desc tidak kena rescrape
 
-Website - Page Static :
-cek => - http://shoperindo.com/shopermarket/demo/about-us
-
-Website - Item Review :
-cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-cek => - tampilkan 6 review terbaru saja
-cek => - tambah link "More Review" di link baru misal di http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint/review
-cek => - "More Review" punya paging (10 review per page)
-
-Website - Item Rating :
-cek => - rating modelnya bintang (contoh amazon)
-
-Website - Breadcrump :
-cek => - breadcump di aksih title="" dan alt=""
-
-Website - Home :
-cek => - link asli : http://shoperindo.com/shopermarket/homes.htm
-cek => - ditampilkan : 
-   a. popular view this week (popular view this week = 4 item)
-   b. Your Browsing History => jika user belum punya 4 history, maka diambilkan dari produk random
-   c. tampilkan 4 dalam tag samsung (tampilkan 4 dalam tag samsung = 4 item)
-
-Website - Brand :
-cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-cek => - SORT BY BRAND tambah filter category
-----------------------------------------------------------------------------------------
-PANEL
-----------------------------------------------------------------------------------------
-Panel - Item :
-cek => - Upload tidak jalan sampai ke item
-cek => - kasih tombol approve di kolom grid
-cek => - Desc dari amazon bisa di show / hide
-cek => - Link pengganti belum jalan (link add / link replace)
-
-Panel - Item Desc :
-cek => - link : http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-s4-purple-sprint
-cek => - no pic & link
-cek => - isi cuma text
-cek => - max text (1000 char)
-note => content lama yang ada di db masih ada gambar & linknya, nanti akan di replace sendiri oleh scrape ketika cron scrape sudah jalan
-
-Panel - Item - Multi Description  :
-cek => inputanya kurang :
-cek => - short Desc ( tampilkan di halaman item, textarea )
-cek => - long desc ( tampilan di halaman item, textarea )
-cek => - long desc 2 ( tampilan di halaman item, textarea )
-cek => - link aff ( tampilkan di halaman item, input )
-cek => - field 2 (tambahan field buat jaga2 , input )
-
-Panel - Bug Item Name :
-cek => - link contoh : shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint-1
-cek => - link sebelumnya ngak pakai (-1) => shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-cek => - hindari pergantian alias nama product, katanya karena fungsi "Re Scrape" bisa per item / per link
-note : bug sudah ditemukan dan diperbaiki, untuk proses re scrape data yang diperbaharui hanya harga dan jumlah stok saja, data yang lain seperti gambar, title dan desc tetap
-----------------------------------------------------------------------------------------
-SERVICE
-----------------------------------------------------------------------------------------
-Service - Re Scrape :
-cek => 1. user akses halaman http://shoperindo.com/shopermarket/demo/item/samsung-galaxy-mega-white-sprint
-cek => 2. check last update item diatas, jika umur grab nya lebih dari 3 hari, item dimasukkan ke daftar re grab => 3 hari ini bisa diganti di Master => Configuration => "Waktu Delay Rescrape", yang saat ini valuenya 14 hari
-cek => 3. cron menjalankan script re grab
-
-Link Re Scrape yang bisa dijalankan oleh cron :
-- http://shopermarket.com/service/item_scrape
-- cron bisa di eksekusi setiap 1 jam sekali untuk mereload 25 item sekali jalan (misal di jalankan tiap 10 menit, 1 jam = 6 x 10 menit = 150 item yang akan di perbaharui datanya
+Panel - Mass Email :
+- tiap kirim email 5000 email
+--------------------------------------------------------------------------------------------------------
+Service
+--------------------------------------------------------------------------------------------------------
+Next Scrape :
+- Coffee Maker => http://www.amazon.com/s/ref=lp_289913_nr_n_4?rh=n%3A1055398%2Cn%3A!1063498%2Cn%3A284507%2Cn%3A289913%2Cn%3A289742&bbn=289913&ie=UTF8&qid=1386039821&rnid=289913
