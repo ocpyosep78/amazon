@@ -6,7 +6,7 @@ class Item_model extends CI_Model {
 		
         $this->field = array(
 			'id', 'brand_id', 'scrape_id', 'category_sub_id', 'alias', 'name', 'code', 'store', 'desc', 'desc_show', 'link_source', 'link_replace', 'price_old', 'price_show', 'price_range',
-			'status_stock', 'date_update', 'image', 'item_status_id', 'total_view', 'total_link_out'
+			'status_stock', 'date_update', 'image', 'item_status_id', 'total_view', 'total_link_out', 'rating'
 		);
     }
 
@@ -183,6 +183,11 @@ class Item_model extends CI_Model {
 	function sync($row, $column = array()) {
 		$row = StripArray($row);
 		$row['desc_limit'] = get_length_char(strip_tags($row['desc']), 250, ' ...');
+		
+		// rating
+		if (isset($row['rating'])) {
+			$row['rating_text'] = preg_replace('/[^0-9]+/i', '', $row['rating']);
+		}
 		
 		// link
 		$row['item_link'] = base_url('item/'.$row['alias']);

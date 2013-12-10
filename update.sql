@@ -15,3 +15,7 @@
 - ALTER TABLE `item` CHANGE `show_desc` `desc_show` INT( 11 ) NOT NULL DEFAULT '1';
 - ALTER TABLE `item_multi_title` ADD `desc_short` LONGTEXT NOT NULL , ADD `desc_long_1` LONGTEXT NOT NULL , ADD `desc_long_2` LONGTEXT NOT NULL , ADD `link_aff` VARCHAR( 255 ) NOT NULL , ADD `sign` VARCHAR( 255 ) NOT NULL ;
 - CREATE TABLE IF NOT EXISTS `scrape_item` ( `id` int(11) NOT NULL AUTO_INCREMENT, `item_id` int(11) NOT NULL, `is_finish` int(11) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+2013-12-09 :
+- ALTER TABLE `item` ADD `rating` FLOAT NOT NULL AFTER `store`;
+- CREATE TABLE IF NOT EXISTS `item_additional` ( `id` int(11) NOT NULL AUTO_INCREMENT, `item_id` int(11) NOT NULL, `desc_short` longtext NOT NULL, `desc_long_1` longtext NOT NULL, `desc_long_2` longtext NOT NULL, `link_aff` varchar(255) NOT NULL, `sign` varchar(255) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;

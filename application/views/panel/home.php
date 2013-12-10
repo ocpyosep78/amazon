@@ -63,7 +63,7 @@
 		</ul></div>
 	</div>
 	<div id="footer" style="display:none;">
-		<p>&copy; <?php echo date("Y"); ?> <a href="">Suekarea</a></p>
+		<p>&copy; <?php echo date("Y"); ?> <a href="">Shopermarket</a></p>
 	</div>
 </body>
 </html>

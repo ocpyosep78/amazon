@@ -38,7 +38,7 @@ class mail_mass extends XX_Controller {
 			$param_subscribe = array(
 				'is_active' => 1,
 				'sort' => '[{"property":"id","direction":"ASC"}]',
-				'start' => $mail_mass['queue_no'], 'limit' => 5
+				'start' => $mail_mass['queue_no'], 'limit' => 5000
 			);
 			$array_subscribe = $this->Subscribe_model->get_array($param_subscribe);
 			
@@ -47,7 +47,7 @@ class mail_mass extends XX_Controller {
 				$param_mail['to'] = $row['email'];
 				$param_mail['subject'] = $mail_mass['name'];
 				$param_mail['message'] = $mail_mass['desc'];
-				// sent_mail($param_mail);
+				sent_mail($param_mail);
 				
 				// update queue
 				$this->Mail_Mass_model->update_queue($mail_mass);

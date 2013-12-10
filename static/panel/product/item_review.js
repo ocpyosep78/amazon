@@ -8,7 +8,7 @@ Ext.onReady(function() {
 	var main_store = Ext.create('Ext.data.Store', {
 		autoLoad: true, pageSize: 25, remoteSort: true,
         sorters: [{ property: 'name', direction: 'ASC' }],
-		fields: [ 'id', 'alias', 'name', 'rating', 'user', 'date_update', 'item_name' ],
+		fields: [ 'id', 'alias', 'name', 'rating', 'user', 'date_update', 'item_name', 'link' ],
 		proxy: {
 			type: 'ajax',
 			url : URLS.base + 'panel/product/item_review/grid', actionMethods: { read: 'POST' },
@@ -25,6 +25,13 @@ Ext.onReady(function() {
 			}, {	header: 'Rating', dataIndex: 'rating', sortable: true, filter: true, width: 100
 			}, {	header: 'Writer', dataIndex: 'user', sortable: true, filter: true, width: 100
 			}, {	header: 'Tanggal Update', dataIndex: 'date_update', sortable: true, filter: true, width: 150
+			}, {	header: 'Action', xtype: 'actioncolumn', width: 75, align: 'center',
+					items: [ {
+							iconCls: 'linkIcon', tooltip: 'Link', handler: function(grid, rowIndex, colIndex) {
+								var row = grid.store.getAt(rowIndex).data;
+								window.open(row.link);
+							}
+					} ]
 		} ],
 		tbar: [ {
 				text: 'Tambah', iconCls: 'addIcon', tooltip: 'Tambah', handler: function() { main_win({ id: 0 }); }

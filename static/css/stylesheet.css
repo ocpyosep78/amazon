@@ -1378,6 +1378,7 @@ body[class*="layout-boxed-"] .d-content:before {
   position: relative;
   overflow: hidden;
   text-align: center;
+  height: 195px;
 }
 .product-block .image .product-zoom {
   z-index: 10;

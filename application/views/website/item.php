@@ -9,6 +9,9 @@
 	$item = $this->Item_model->get_by_id(array( 'alias' => $item_alias ));
 	$item = $this->Item_model->get_by_id(array( 'id' => $item['id'], 'tag_include' => true ));
 	
+	// item additional
+	$item_additional = $this->Item_Additional_model->get_by_id(array( 'item_id' => $item['id'] ));
+	
 	// sent to cookie
 	$this->Item_model->update_cookie(array( 'action' => 'update', 'id' => $item['id'] ));
 	
@@ -106,6 +109,19 @@
 											<a onclick="$('a[href=\'#tab-review\']').trigger('click');"><?php echo count($array_item_review); ?> reviews</a> |
 											<a onclick="$('a[href=\'#tab-review\']').trigger('click');">Write a review</a>
 										</div>
+										<div style="padding: 8px 0 0 0;">Last Update : <?php echo GetFormatDate($item['date_update'], array( 'FormatDate' => 'd F Y')); ?></div>
+										
+										<?php if (!empty($item['rating_text'])) { ?>
+										<div style="padding: 8px 0 0 0;">
+											<div style="float: left; width: 55px;">Rating :</div>
+											<div style="float: left; width: 100px; padding: 4px 0 0 0;">
+												<div class="cnt-star-bg">
+													<div class="cnt-star-rate rate-<?php echo $item['rating_text']; ?>"></div>
+												</div>
+											</div>
+											<div style="clear: both;"></div>
+										</div>
+										<?php } ?>
 									</div>
 									<div class="review">
 										<div>
@@ -124,6 +140,18 @@
 							</div>
 						</div>
 						
+						<?php if (count($item_additional) > 0 && !empty($item_additional['desc_short']) && !empty($item_additional['desc_long_1'])) { ?>
+						<div style="margin: 10px 0;">
+							<div style="background: #FFFFFF; padding: 10px;">
+								<div>Short Desc : <?php echo $item_additional['desc_short']; ?></div>
+								<div>Long Desc 1 : <?php echo $item_additional['desc_long_1']; ?></div>
+								<div>Long Desc 2 : <?php echo $item_additional['desc_long_2']; ?></div>
+								<div>Link AFF : <?php echo $item_additional['link_aff']; ?></div>
+								<div>Additional : <?php echo $item_additional['sign']; ?></div>
+							</div>
+						</div>
+						<?php } ?>
+						
 						<?php if ($is_index_review) { ?>
 						<div style="margin: 10px 0;">
 							<div style="background: #FFFFFF; padding: 10px;">
@@ -132,7 +160,7 @@
 									<?php foreach ($array_list_review as $row) { ?>
 									<div style="padding: 5px 0;">
 										<div><a href="<?php echo $row['link']; ?>" style="color: #E27F7A;"><?php echo $row['name']; ?></a></div>
-										<div><?php echo get_length_char($row['desc_limit'], 150, ' ...'); ?></div>
+										<div><?php echo nl2br(get_length_char($row['desc_limit'], 150, ' ...')); ?></div>
 									</div>
 									<?php } ?>
 								</div>
@@ -159,7 +187,7 @@
 						<div style="margin: 10px 0;">
 							<div style="background: #FFFFFF; padding: 10px;">
 								<div style="padding: 0 0 10px 0;"><strong><?php echo $review['name']; ?></strong> by <strong><?php echo $review['user']; ?></strong></div>
-								<div><?php echo $review['desc']; ?></div>
+								<div><?php echo nl2br($review['desc']); ?></div>
 								<div style="padding: 8px 0 0 0;">
 									<div style="float: left; width: 55px;">Rating :</div>
 									<div style="float: left; width: 100px; padding: 4px 0 0 0;">
@@ -203,7 +231,7 @@
 								<?php foreach ($array_compare as $row) { ?>
 								<div>
 									<h4><?php echo $row['name']; ?></h4>
-									<div><?php echo $row['desc']; ?></div>
+									<div><?php echo nl2br($row['desc']); ?></div>
 									<div>Price : <?php echo $row['price']; ?></div>
 									<div>Link : <a href="<?php echo $row['url']; ?>" target="_blank"><?php echo $row['url']; ?></a></div>
 								</div>
@@ -222,7 +250,7 @@
 									<?php foreach ($array_item_review as $row) { ?>
 									<div style="padding: 0 0 25px 0;">
 										<h4><a href="<?php echo $row['link']; ?>"><?php echo $row['name']; ?></a></h4>
-										<div><?php echo get_length_char($row['desc_limit'], 250, ' ... <a href="'.$row['link'].'">more</a>'); ?></div>
+										<div><?php echo nl2br(get_length_char($row['desc_limit'], 250, ' ... <a href="'.$row['link'].'">more</a>')); ?></div>
 									</div>
 									
 									<?php $counter++; ?>
@@ -279,7 +307,7 @@
 							<?php foreach ($array_multi_title as $row) { ?>
 							<div style="display: none;" id="tab-multi-<?php echo $row['id']; ?>" class="tab-content custom-tab">
 								<div class="inner">
-									<?php echo $row['desc']; ?>
+									<?php echo nl2br($row['desc']); ?>
 								</div>
 							</div>
 							<?php } ?>

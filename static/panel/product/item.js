@@ -89,8 +89,8 @@ Ext.onReady(function() {
 				xtype: 'splitbutton', text: 'Multi Title', iconCls: 'editIcon', tooltip: 'Multi Title',
 				handler: function() { main_grid.multi_title({ }); },
 				menu: Ext.create('Ext.menu.Menu', { items: [
-					{	 text: 'Compare', iconCls: 'editIcon', tooltip: 'Tambah', handler: function() { main_grid.compare({ });; }
-					}
+					{	 text: 'Compare', iconCls: 'editIcon', tooltip: 'Tambah', handler: function() { main_grid.compare({ }); } },
+					{	 text: 'Additional Info', iconCls: 'editIcon', tooltip: 'Tambah', handler: function() { main_grid.additional({ }); } }
 				] } )
 			}, '-', {
 				text: 'Hapus', iconCls: 'delIcon', tooltip: 'Hapus', handler: function() {
@@ -183,6 +183,22 @@ Ext.onReady(function() {
 			}
 			
 			compare_win(row[0].data);
+		},
+		additional: function() {
+			var row = main_grid.getSelectionModel().getSelection();
+			if (row.length == 0) {
+				Ext.Msg.alert('Informasi', 'Silahkan memilih data.');
+				return false;
+			}
+			
+			Ext.Ajax.request({
+				url: URLS.base + 'panel/product/item_additional/action',
+				params: { action: 'get_by_id', item_id: row[0].data.id },
+				success: function(Result) {
+					eval('var record = ' + Result.responseText);
+					additional(record);
+				}
+			});
 		}
 	});
 	
@@ -240,6 +256,7 @@ Ext.onReady(function() {
 							});
 							win.code = new Ext.form.TextField({ renderTo: 'codeED', width: 225 });
 							win.store = new Ext.form.TextField({ renderTo: 'storeED', width: 225 });
+							win.rating = Combo.Class.Rating({ renderTo: 'ratingED', width: 80 });
 							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
 							win.item_status = Combo.Class.ItemStatus({ renderTo: 'item_statusED', width: 225 });
 							win.price_old = new Ext.form.TextField({ renderTo: 'price_oldED', width: 225 });
@@ -261,6 +278,7 @@ Ext.onReady(function() {
 								win.link_replace.setValue(param.link_replace);
 								win.code.setValue(param.code);
 								win.store.setValue(param.store);
+								win.rating.setValue(param.rating);
 								win.price_old.setValue(param.price_old);
 								win.price_show.setValue(param.price_show);
 								win.price_range.setValue(param.price_range);
@@ -301,6 +319,7 @@ Ext.onReady(function() {
 				ajax.link_replace = win.link_replace.getValue();
 				ajax.code = win.code.getValue();
 				ajax.store = win.store.getValue();
+				ajax.rating = win.rating.getValue();
 				ajax.tag = win.tag.getValue();
 				ajax.price_old = win.price_old.getValue();
 				ajax.price_show = win.price_show.getValue();
@@ -339,9 +358,71 @@ Ext.onReady(function() {
 		win.show();
 	}
 	
+	function additional(param) {
+		var win = new Ext.Window({
+			layout: 'fit', width: 725, height: 448,
+			closeAction: 'hide', plain: true, modal: true, title: 'Additinal Item - [Edit]',
+			buttons: [ {
+						text: 'Save', handler: function() { win.save(); }
+				}, {	text: 'Close', handler: function() {
+						win.hide();
+				}
+			}],
+			listeners: {
+				show: function(w) {
+					Ext.Ajax.request({
+						params: { form_name: 'item_additional' },
+						url: URLS.base + 'panel/product/item/view',
+						success: function(Result) {
+							w.body.dom.innerHTML = Result.responseText;
+							
+							win.id = param.id;
+							win.desc_short = new Ext.form.TextArea({ renderTo: 'desc_shortEM', width: 575, height: 100 });
+							win.desc_long_1 = new Ext.form.TextArea({ renderTo: 'desc_long_1EM', width: 575, height: 100 });
+							win.desc_long_2 = new Ext.form.TextArea({ renderTo: 'desc_long_2EM', width: 575, height: 100 });
+							win.link_aff = new Ext.form.TextField({ renderTo: 'link_affEM', width: 575 });
+							win.sign = new Ext.form.TextField({ renderTo: 'signEM', width: 575 });
+							
+							// Populate Record
+							if (param.id > 0) {
+								win.desc_short.setValue(param.desc_short);
+								win.desc_long_1.setValue(param.desc_long_1);
+								win.desc_long_2.setValue(param.desc_long_2);
+								win.link_aff.setValue(param.link_aff);
+								win.sign.setValue(param.sign);
+							}
+						}
+					});
+				},
+				hide: function(w) {
+					w.destroy();
+					w = win = null;
+				}
+			},
+			save: function() {
+				var ajax = new Object();
+				ajax.action = 'update';
+				ajax.id = win.id;
+				ajax.desc_short = win.desc_short.getValue();
+				ajax.desc_long_1 = win.desc_long_1.getValue();
+				ajax.desc_long_2 = win.desc_long_2.getValue();
+				ajax.link_aff = win.link_aff.getValue();
+				ajax.sign = win.sign.getValue();
+				
+				Func.ajax({ param: ajax, url: URLS.base + 'panel/product/item_additional/action', callback: function(result) {
+					Ext.Msg.alert('Informasi', result.message);
+					if (result.status) {
+						win.hide();
+					}
+				} });
+			}
+		});
+		win.show();
+	}
+	
 	function multi_title_win(param) {
 		var win = new Ext.Window({
-			layout: 'fit', width: 1070, height: 480,
+			layout: 'fit', width: 1070, height: 475,
 			closeAction: 'hide', plain: true, modal: true, title: 'Entry Multi Title',
 			buttons: [ { text: 'Close', handler: function() { win.hide(); } }],
 			listeners: {
@@ -461,7 +542,7 @@ Ext.onReady(function() {
 							});
 							
 							win.name = new Ext.form.TextField({ renderTo: 'nameEM', width: 575, allowBlank: false, blankText: 'Masukkan Judul', readOnly: true });
-							win.desc = new Ext.form.TextArea({ renderTo: 'descEM', width: 575, height: 70, readOnly: true });
+							win.desc = new Ext.form.TextArea({ renderTo: 'descEM', width: 575, height: 340, readOnly: true });
 							win.desc_short = new Ext.form.TextArea({ renderTo: 'desc_shortEM', width: 575, height: 70, readOnly: true });
 							win.desc_long_1 = new Ext.form.TextArea({ renderTo: 'desc_long_1EM', width: 575, height: 65, readOnly: true });
 							win.desc_long_2 = new Ext.form.TextArea({ renderTo: 'desc_long_2EM', width: 575, height: 65, readOnly: true });

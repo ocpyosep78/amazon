@@ -9,21 +9,23 @@
 		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Content :</div>
 		<div style="float:left; width: 600px;"><div id="descEM"></div></div>
 		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Desc :</div>
-		<div style="float:left; width: 600px;"><div id="desc_shortEM"></div></div>
-		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Long 1 :</div>
-		<div style="float:left; width: 600px;"><div id="desc_long_1EM"></div></div>
-		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Long 2 :</div>
-		<div style="float:left; width: 600px;"><div id="desc_long_2EM"></div></div>
-		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Link Aff :</div>
-		<div style="float:left; width: 600px;"><div id="link_affEM"></div></div>
-		<div class="clear"></div>
-		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Additional :</div>
-		<div style="float:left; width: 600px;"><div id="signEM"></div></div>
-		<div class="clear"></div>
+		<div class="x-hidden">
+			<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Desc :</div>
+			<div style="float:left; width: 600px;"><div id="desc_shortEM"></div></div>
+			<div class="clear"></div>
+			<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Long 1 :</div>
+			<div style="float:left; width: 600px;"><div id="desc_long_1EM"></div></div>
+			<div class="clear"></div>
+			<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Short Long 2 :</div>
+			<div style="float:left; width: 600px;"><div id="desc_long_2EM"></div></div>
+			<div class="clear"></div>
+			<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Link Aff :</div>
+			<div style="float:left; width: 600px;"><div id="link_affEM"></div></div>
+			<div class="clear"></div>
+			<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">Additional :</div>
+			<div style="float:left; width: 600px;"><div id="signEM"></div></div>
+			<div class="clear"></div>
+		</div>
 		<div style="float:left; width: 100px; padding: 3px 5px 12px 0; text-align: right;">&nbsp;</div>
 		<div style="float:left; width: 600px;">
 			<div style="width: 250px; margin: 0px auto;">

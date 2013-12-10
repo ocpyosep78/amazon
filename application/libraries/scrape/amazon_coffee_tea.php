@@ -1,6 +1,6 @@
 <?php
 
-class amazon_phone {
+class amazon_coffee_tea {
     function __construct() {
         $this->CI =& get_instance();
 		$this->use_curl = true;
@@ -81,11 +81,14 @@ class amazon_phone {
 		$page = ($this->use_curl) ? $curl->get($param['link']) : file_get_contents($param['link']);
 		$page_clean = $this->clean_item($page);
 		
+		// scrape it for debug purpose
+		// Write('item.txt', $page); echo 'done'; exit;
+		
 		$result['code'] = $this->get_code_item($param['link']);
 		$result['name'] = $this->get_name_item($page_clean);
 		$result['brand_name'] = $this->get_brand_item($page_clean);
 		$result['desc'] = $this->get_desc_item($page_clean);
-		$result['image'] = $this->get_image_item($page_clean);
+		$result['image'] = $this->get_image_item($page);
 		$result['status_stock'] = $this->get_status_stock_item($page_clean);
 		$result['desc_show'] = 1;
 		
@@ -98,12 +101,12 @@ class amazon_phone {
 	
 	function clean_item($content) {
 		// remove start offset
-		$offset = '<table border="0" cellpadding="0" cellspacing="0"  width="280" class="productImageGrid" align="left">';
+		$offset = '<div id="centerCol" class="centerColAlign">';
 		$pos_first = strpos($content, $offset);
 		$content = substr($content, $pos_first, strlen($content) - $pos_first);
 		
 		// remove end offset
-		$offset = '<h2 style="font-size: 18px;" class="orange" id="customerReviewsHeader">';
+		$offset = '<div id="session-sims-feature" class="use-beacon-styles is-aui">';
 		$pos_end = strpos($content, $offset);
 		$content = substr($content, 0, $pos_end);
 		
@@ -118,27 +121,22 @@ class amazon_phone {
 	}
 	
 	function get_name_item($content) {
-		preg_match('/parseasinTitle ">\s*<span id="btAsinTitle" +>([^<]+)<\/span>/i', $content, $match);
-		$result = (isset($match[1])) ? $match[1] : '';
+		preg_match('/id="title" class="[^"]+">([^<]+)<\/h1>/i', $content, $match);
+		$result = (isset($match[1])) ? trim($match[1]) : '';
 		
 		return $result;
 	}
 	
 	function get_brand_item($content) {
-		preg_match('/<span id="amsPopoverTrigger"><a href="[^"]+">([^<]+)<\/a>/i', $content, $match);
+		preg_match('/id="brand" class="[^"]+" href="[^"]+">([^<]+)<\/a>/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
-		
-		if (empty($result)) {
-			preg_match('/"btAsinTitle" +>[^<]+<\/span>\s*<\/h1>\s*<span >\s*by[^<]+<a href="[^\"]+">([^<]+)</i', $content, $match);
-			$result = (isset($match[1])) ? $match[1] : $result;
-		}
 		
 		return $result;
 	}
 	
 	function get_desc_item($content) {
 		// remove start offset
-		$offset = '<div class="aplus"';
+		$offset = '<div class="productDescriptionWrapper">';
 		$pos_first = strpos($content, $offset);
 		$content = substr($content, $pos_first, strlen($content) - $pos_first);
 		
@@ -147,41 +145,40 @@ class amazon_phone {
 		$pos_end = strpos($content, $offset);
 		$content = trim(substr($content, 0, $pos_end));
 		
-		// set content
+		// remove html tag
+		$content = preg_replace('/<\/?(div|img|h4|h5|p)[^>]*>/i', '', $content);
 		$content = trim(get_length_char(strip_tags($content), 1000, ' ...'));
 		
 		return $content;
 	}
 	
 	function get_image_item($content) {
-		preg_match('/src="([^"]+)" id="prodImage"/i', $content, $match);
+		preg_match('/src="([^"]+)" data-old/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
 		
 		return $result;
 	}
 	
 	function get_price_item($content) {
-		preg_match('/<span id="current-price" style="display: inline">([^<]+)<\/span>/i', $content, $match);
-		$temp_price = (isset($match[1])) ? $match[1] : '';
-		$temp_price = preg_replace('/(&#36;|&ndash;)/i', '', $temp_price);
-		$temp_price = preg_replace('/ +/i', ' ', $temp_price);
-		$temp_price = trim($temp_price);
+		// method 1
+		preg_match('/<span id="(priceblock_ourprice|priceblock_saleprice)" class="[^"]+">([^<]+)<\/span>/i', $content, $match);
+		$temp_price = (isset($match[2])) ? $match[2] : '';
+		$temp_price = preg_replace('/\$/i', '', $temp_price);
 		
-		$array_price = explode(' ', $temp_price);
-		
-		if (count($array_price) > 1) {
-			$result['price_show'] = $array_price[1];
-			$result['price_range'] = $array_price[0].' - '.$array_price[1];
-		} else {
-			$result['price_show'] = $array_price[0];
+		$result['price_show'] = 0;
+		if (!empty($temp_price)) {
+			$result['price_show'] = $temp_price;
 		}
 		
 		return $result;
 	}
 	
 	function get_status_stock_item($content) {
-		preg_match('/<span class="availGreen">([^<]+)<\/span>/i', $content, $match);
+		preg_match('/id="availability" class="[^"]+">\s*<span class="[^"]+">([^<]+)<\/span>/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
+		
+		// clean space
+		$result = trim(preg_replace('/\s+/i', ' ', $result));
 		
 		return $result;
 	}
