@@ -126,6 +126,13 @@ class Item_model extends CI_Model {
     function get_array($param = array()) {
 		$array = array();
 		
+		// replace
+		$param['field_replace']['name'] = 'Item.name';
+		$param['field_replace']['brand_name'] = 'Brand.name';
+		$param['field_replace']['category_name'] = 'Category.name';
+		$param['field_replace']['category_sub_name'] = 'CategorySub.name';
+		$param['field_replace']['item_status_name'] = 'ItemStatus.name';
+		
 		$string_brand = (!empty($param['brand_id'])) ? "AND Item.brand_id = '".$param['brand_id']."'" : '';
 		$string_category = (!empty($param['category_id'])) ? "AND CategorySub.category_id = '".$param['category_id']."'" : '';
 		$string_category_sub = (!empty($param['category_sub_id'])) ? "AND Item.category_sub_id = '".$param['category_sub_id']."'" : '';

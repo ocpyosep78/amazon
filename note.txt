@@ -2,34 +2,34 @@
 Website
 --------------------------------------------------------------------------------------------------------
 Website - Index :
-ok => - Judul Item dikasih limit 40 karakter (sebelumnya 45 karakter)
+cek => - Judul Item dikasih limit 40 karakter (sebelumnya 45 karakter)
 
 Website - Item :
-ok => - item juga punya rating sendiri
-ok => - last update ditampilkan
+cek => - item juga punya rating sendiri
+cek => - last update ditampilkan
 
 Website - Multi Title :
-ok => - isinya cuma title & desc
-ok => - field yang lain ditaruh di popup lain (form sendiri)
-ok => - Short Desc :, Short Long 1 :, Short Long 2 :, Link Aff :, Additional : di tampilkan di atas tab, nanti saya rapikan yang di menu multi line
-ok => - di tampilkan di atas tab review dibawah harga dan gambar..
+cek => - isinya cuma title & desc
+cek => - field yang lain ditaruh di popup lain (form sendiri)
+cek => - Short Desc :, Short Long 1 :, Short Long 2 :, Link Aff :, Additional : di tampilkan di atas tab, nanti saya rapikan yang di menu multi line
+cek => - di tampilkan di atas tab review dibawah harga dan gambar..
 
 Website - Support Multi Line :
-ok => - item review
-ok => - multi title menu
-ok => - compare
-ok => - review
+cek => - item review
+cek => - multi title menu
+cek => - compare
+cek => - review
 --------------------------------------------------------------------------------------------------------
 Panel
 --------------------------------------------------------------------------------------------------------
 Panel - Re Scrape :
-ok => - status di pertahankan, jika status sudah publish di rescrape statusnya tetap publish
-ok => - pastikan desc tidak kena rescrape
+cek => - status di pertahankan, jika status sudah publish di rescrape statusnya tetap publish
+cek => - pastikan desc tidak kena rescrape
 
 Panel - Mass Email :
-ok => - tiap kirim email 5000 email
+cek => - tiap kirim email 5000 email
 --------------------------------------------------------------------------------------------------------
 Service
 --------------------------------------------------------------------------------------------------------
 Next Scrape :
-ok => - Coffee Maker => http://www.amazon.com/s/ref=lp_289913_nr_n_4?rh=n%3A1055398%2Cn%3A!1063498%2Cn%3A284507%2Cn%3A289913%2Cn%3A289742&bbn=289913&ie=UTF8&qid=1386039821&rnid=289913
+cek => - Coffee Maker => http://www.amazon.com/s/ref=lp_289913_nr_n_4?rh=n%3A1055398%2Cn%3A!1063498%2Cn%3A284507%2Cn%3A289913%2Cn%3A289742&bbn=289913&ie=UTF8&qid=1386039821&rnid=289913

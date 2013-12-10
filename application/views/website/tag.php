@@ -101,7 +101,7 @@
 									</div>
 									<div class="product-meta">
 										<div class="left">
-											<h3 class="name"><a href="<?php echo $row['item_link']; ?>"><?php echo get_length_char($row['item_name'], 50, ' ...'); ?></a></h3>
+											<h3 class="name"><a href="<?php echo $row['item_link']; ?>"><?php echo get_length_char($row['item_name'], 40, ' ...'); ?></a></h3>
 											<p class="description"><?php echo $row['desc_limit']; ?></p>
 										</div>
 										<div class="right">
