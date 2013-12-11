@@ -1,0 +1,199 @@
+http://shopermarket.com/brand/keurig = nama brand jangan di campur = tampilkan sesuai dengan list ( mestinya yang muncul brand cofee maker)
+
+-
+
+add merek brand manual = di admin tambahkan menu add brand, untuk keperluan add manual item, dan pastikan brand tersebut juga bisa di sortir
+
+kemarin saya coba mau add manual item, waktu mau select brand, brand unknown kok nga ada ya.. jadi pastikan saya bisa selct brand yang akan saya pilih..
+
+-
+
+coba grab halaman kedua dan seterusnya di applicance dia error
+
+-
+
+chapcha kalo error kok nga otomatis ganti, sperti duniadb
+
+-
+
+brand di halaman ini http://shopermarket.com/item/casio-g-zone-commando-verizon-wireless, tampilkan max 20 list brand aja..
+
+-
+
+ini error gagal grab : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's Choice' LIMIT 1' at line 1
+
+-
+
+di halaman redirect 15 detik ke url asli, tampilkan url ini 
+
+URL yang muncul di atas tombol broken link udah betul, cuma link redirectnya adalah http://www.amazon.com/dp/KODEPRODUK?tag=shopermarket-20
+
+Contoh : http://www.amazon.com/dp/B00005MF9C?tag=shopermarket-20
+
+-
+
+harga :
+
+http://www.amazon.com/Black-Decker-DCM18S-Personal-Coffeemaker/dp/B00005MF9C/ref=lp_289742_1_13/181-5869081-4570160?s=kitchen
+
+yang di tampilkan di price item adalah harga real saja = $17.05
+
+-
+
+master > sub kategory = tombol ubahnya nga bisa (edit sub kategori)
+
+-
+
+meta.php :
+
+<title>title</title>
+        
+<meta name="Title" content="<?= $meta_title_long; ?>" />
+        
+<meta name="Description" content="<?= $meta_description; ?>" />
+      
+<meta name="Keywords" content="<?= $meta_keyword; ?>"/> 
+       
+<link rel="canonical" href="<?= $meta_canonical; ?>"/> 
+<link rel="canonical" href="url item"/> 
+<link rel="image_src" href="image default" />
+
+untuk meta ini mungkin mas bisa buatkan 1 halaman public_meta.php, dimana yang di bawah ini di jelaskan di halaman public_meta.php, baru nanti akan di pangil di halaman meta.php
+
+agar supaya search engine mudah mengcrawl sistem shopermarket
+
+---------------------------------------------------------------------------------
+
+
+halaman item
+url = http://shopermarket.com/item/samsung-galaxy-mega-white-sprint
+
+<title>nama item - harga</title>
+        
+<meta name="Title" content="short desc, long desc" />
+  
+<meta name="Title" content="long desc" />
+       
+<meta name="Description" content="desc default" />
+      
+<meta name="Keywords" content="nama brand, tag, nama store"/> 
+       
+<link rel="canonical" href="url item"/> 
+<link rel="image_src" href="image default" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/item/apple-iphone-4-16gb-white-verizon/review/saya-suka-dengan-iphone
+
+<title>Review <apple-iphone-4-16gb-white-verizon></title>
+        
+<meta name="Title" content="review <apple-iphone-4-16gb-white-verizon> " />
+  
+<meta name="Description" content="<saya-suka-dengan-iphone>" />
+      
+<meta name="Keywords" content="nama brand, kategory, sub kategori"/> 
+       
+<link rel="canonical" href="url item"/> 
+<link rel="image_src" href="image default" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/item/apple-iphone-4-16gb-white-verizon/review
+
+<title>Review <apple-iphone-4-16gb-white-verizon></title>
+        
+<meta name="Title" content="review <apple-iphone-4-16gb-white-verizon> " />
+  
+<meta name="Description" content="<desc default>" />
+      
+<meta name="Keywords" content="nama brand, kategory, sub kategori"/>
+       
+<link rel="canonical" href="url item"/> 
+<link rel="image_src" href="image default" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/brand/samsung
+
+<title>shopermarket - samsung</title>
+        
+<meta name="Title" content="Get cheaper and review price <sub kategory> <brand> at shopermarket.com" />
+   
+<meta name="Description" content="Get cheaper and review price <sub kategory> <brand> at shopermarket.com" />
+      
+<meta name="Keywords" content="<samsung>, <kategory>, <sub kategory> "/> 
+       
+<link rel="canonical" href="url"/> 
+<link rel="image_src" href="<array dari semua list gambar samsung yang tampil>" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/search/samsung
+
+<title>shopermarket - search - <samsung> </title>
+        
+<meta name="Title" content="Get cheaper and review price <samsung> at shopermarket.com" />
+  
+<meta name="Description" content="Get cheaper and review price <samsung> at shopermarket.com" />
+      
+<meta name="Keywords" content="<samsung>, <kategory>, <sub kategory> "/> 
+       
+<link rel="canonical" href="url"/> 
+<link rel="image_src" href="<array dari semua list gambar samsung yang tampil>" />
+
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/elektronik/hp
+
+<title>shopermarket - < elektronik> - <HP> </title>
+        
+<meta name="Title" content="Get cheaper and review price <HP> at shopermarket.com" />
+  
+<meta name="Description" content="<desc field yang di isi di master sub kategori" />
+      
+<meta name="Keywords" content="<tag field yang di isi di master sub kategori>, <semua brand yang ada di HP 10 brand saja = exp : samsung, sony, apple> "/>
+       
+<link rel="canonical" href="url"/> 
+<link rel="image_src" href="<array dari semua list gambar samsung yang tampil>" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/elektronik
+
+<title>shopermarket - < elektronik> - <HP> </title>
+        
+<meta name="Title" content="Get cheaper and review price <HP> at shopermarket.com" />
+  
+<meta name="Description" content="<desc field yang di isi di master kategori" />
+      
+<meta name="Keywords" content="<tag field yang di isi di master kategori>, <semua brand yang ada di HP 10 brand saja = exp : samsung, sony, apple> "/> 
+       
+<link rel="canonical" href="url"/> 
+<link rel="image_src" href="<array dari semua list gambar samsung yang tampil>" />
+
+-------------------------------
+
+halaman item
+url = http://shopermarket.com/about-us
+
+<title>shopermarket - <title> </title>
+        
+<meta name="Title" content="<title>" />
+  
+<meta name="Description" content="<desc content>" />
+      
+<meta name="Keywords" content="shoper market, about us"/> 
+       
+<link rel="canonical" href="url"/> 
+<link rel="image_src" href="<icon shopermarket>" />
+
+UNTUK HALAMAN WIDGET YANG LAIN SAMA, metanya sama dengan halaman about di atas
+
+-------------------------------
