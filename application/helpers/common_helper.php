@@ -990,7 +990,7 @@
 			$array_link = parse_url($link);
 			
 			$result = $link;
-			if ($array_link['host'] == 'www.amazon.com') {
+			if (isset($array_link['host']) && $array_link['host'] == 'www.amazon.com') {
 				preg_match('/dp\/([^\/]+)\//i', $link, $match);
 				$code = (isset($match[1])) ? $match[1] : '';
 				

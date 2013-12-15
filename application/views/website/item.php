@@ -7,7 +7,15 @@
 	preg_match('/item\/([a-z0-9\-]+)/i', $_SERVER['REQUEST_URI'], $match);
 	$item_alias = (isset($match[1])) ? $match[1] : '';
 	$item = $this->Item_model->get_by_id(array( 'alias' => $item_alias ));
-	$item = $this->Item_model->get_by_id(array( 'id' => $item['id'], 'tag_include' => true ));
+	
+	// get complete data
+	if (count($item) == 0) {
+		header("HTTP/1.1 301 Moved Permanently");
+		header('Location: '.base_url());
+		exit;
+	} else {
+		$item = $this->Item_model->get_by_id(array( 'id' => $item['id'], 'tag_include' => true ));
+	}
 	
 	// item additional
 	$item_additional = $this->Item_Additional_model->get_by_id(array( 'item_id' => $item['id'] ));

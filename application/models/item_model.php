@@ -218,7 +218,7 @@ class Item_model extends CI_Model {
 		} else {
 			$row['link_out'] = generate_link_out($row['link_source']);
 		}
-		$row['link_redirect'] = base_url('url?q='.$row['link_out']);
+		$row['link_redirect'] = base_url('url?q='.$row['link_source']);
 		
 		// price
 		$row['price_old_text'] = '$ '.$row['price_old'];

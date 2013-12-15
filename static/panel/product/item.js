@@ -361,7 +361,7 @@ Ext.onReady(function() {
 	function additional(param) {
 		var win = new Ext.Window({
 			layout: 'fit', width: 725, height: 448,
-			closeAction: 'hide', plain: true, modal: true, title: 'Additinal Item - [Edit]',
+			closeAction: 'hide', plain: true, modal: true, title: 'Additional Item - [Edit]',
 			buttons: [ {
 						text: 'Save', handler: function() { win.save(); }
 				}, {	text: 'Close', handler: function() {

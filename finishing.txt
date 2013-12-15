@@ -1,19 +1,19 @@
-ok => http://shopermarket.com/brand/keurig = nama brand jangan di campur = tampilkan sesuai dengan list ( mestinya yang muncul brand cofee maker)
+cek => http://shopermarket.com/brand/keurig = nama brand jangan di campur = tampilkan sesuai dengan list ( mestinya yang muncul brand cofee maker)
 
 -
 
-ok => add merek brand manual = di admin tambahkan menu add brand, untuk keperluan add manual item, dan pastikan brand tersebut juga bisa di sortir
+cek => add merek brand manual = di admin tambahkan menu add brand, untuk keperluan add manual item, dan pastikan brand tersebut juga bisa di sortir
 
-ok => kemarin saya coba mau add manual item, waktu mau select brand, brand unknown kok nga ada ya.. jadi pastikan saya bisa selct brand yang akan saya pilih..
+cek => kemarin saya coba mau add manual item, waktu mau select brand, brand unknown kok nga ada ya.. jadi pastikan saya bisa selct brand yang akan saya pilih..
 note => jumlah brand melebihi default (25) sehingga saya update ke auto complete
 
 -
 
-ok => coba grab halaman kedua dan seterusnya di applicance dia error
+cek => coba grab halaman kedua dan seterusnya di applicance dia error
 
 -
 
-ok => chapcha kalo error kok nga otomatis ganti, sperti duniadb
+cek => chapcha kalo error kok nga otomatis ganti, sperti duniadb
 
 -
 
@@ -22,28 +22,28 @@ note => yang skr cuma keluar 9 brand (yang "Sort By Brand" kan mas ?)
 
 -
 
-ok => ini error gagal grab : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's Choice' LIMIT 1' at line 1
+cek => ini error gagal grab : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's Choice' LIMIT 1' at line 1
 
 -
 
-ok => URL yang muncul di atas tombol broken link udah betul, cuma link redirectnya adalah http://www.amazon.com/dp/KODEPRODUK?tag=shopermarket-20
+cek => URL yang muncul di atas tombol broken link udah betul, cuma link redirectnya adalah http://www.amazon.com/dp/KODEPRODUK?tag=shopermarket-20
 
-ok => Contoh : http://www.amazon.com/dp/B00005MF9C?tag=shopermarket-20
+cek => Contoh : http://www.amazon.com/dp/B00005MF9C?tag=shopermarket-20
 
-ok => di halaman redirect 15 detik ke url asli, tampilkan url ini 
+cek => di halaman redirect 15 detik ke url asli, tampilkan url ini 
 
 -
 
 harga :
 
-ok => http://www.amazon.com/Black-Decker-DCM18S-Personal-Coffeemaker/dp/B00005MF9C/ref=lp_289742_1_13/181-5869081-4570160?s=kitchen
+cek => http://www.amazon.com/Black-Decker-DCM18S-Personal-Coffeemaker/dp/B00005MF9C/ref=lp_289742_1_13/181-5869081-4570160?s=kitchen
 note => item yang lain butuh rescrape untuk memperbaharui data price nya
 
-ok => yang di tampilkan di price item adalah harga real saja = $17.05
+cek => yang di tampilkan di price item adalah harga real saja = $17.05
 
 -
 
-ok => master > sub kategory = tombol ubahnya nga bisa (edit sub kategori)
+cek => master > sub kategory = tombol ubahnya nga bisa (edit sub kategori)
 
 -------------------------------------------------------------------------------------------------------- ok
 
@@ -84,6 +84,10 @@ url = http://shopermarket.com/item/samsung-galaxy-mega-white-sprint
        
 <link rel="canonical" href="url item"/> 
 <link rel="image_src" href="image default" />
+
+note : 
+<meta name="Title" content="short desc, long desc" />   		=> ini kosong jika additional infonya kosong (short desc, long desc ini ada di additional info)
+<meta name="Title" content="long desc" />			   			=> ini kosong jika additional infonya kosong (short desc, long desc ini ada di additional info)
 
 -------------------------------------------------------------------------------------------------------- ok
 
@@ -148,7 +152,6 @@ url = http://shopermarket.com/search/samsung
        
 <link rel="canonical" href="url"/> 
 <link rel="image_src" href="<array dari semua list gambar samsung yang tampil>" />
-
 
 -------------------------------------------------------------------------------------------------------- ok
 
