@@ -90,6 +90,7 @@ class Page_Static_model extends CI_Model {
 	function sync($row) {
 		$row = StripArray($row);
 		$row['page_link'] = base_url($row['alias']);
+		$row['desc_limit'] = get_length_char(strip_tags($row['desc']), 250, ' ...');
 		
 		return $row;
 	}

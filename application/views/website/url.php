@@ -21,7 +21,7 @@
 				<div style="margin: 0 0 20px 0; background: #FFFFFF;">
 					<div style="padding: 10px; text-align: center;">
 						<div style="padding: 0 0 8px 0">Halaman ini akan diredirect dalam <?php echo $delay['value']; ?> detik, atau silahkan klik link berikut :</div>
-						<a class="link-out" href="<?php echo $q; ?>"><?php echo $q; ?></a>
+						<a class="link-out" href="<?php echo $item['link_out']; ?>"><?php echo $q; ?></a>
 						
 						<div style="padding: 20px 0 0 0;">
 							<a style="padding: 6px 15px; background: #e27f7a; color: #FFFFFF;" class="broken-link">Report Broken Link</a>

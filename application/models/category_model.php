@@ -123,4 +123,30 @@ class Category_model extends CI_Model {
 			ImageResize($image_source, $image_result, 300, 250, 1);
 		}
 	}
+	
+	function get_meta($param) {
+		$result = '';
+		$category = $this->get_by_id($param);
+		
+		// get from tag
+		$result .= $category['tag'];
+		
+		// get brand
+		$select_query = "
+			SELECT Brand.name
+			FROM ".ITEM." Item
+			LEFT JOIN ".BRAND." Brand ON Brand.id = item.brand_id
+			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+			WHERE CategorySub.category_id = '".$category['id']."'
+			GROUP BY Brand.name
+			ORDER BY rand()
+			LIMIT 10
+		";
+        $select_result = mysql_query($select_query) or die(mysql_error());
+		while ( $row = mysql_fetch_assoc( $select_result ) ) {
+			$result .= (empty($result)) ? $row['name'] : ', '.$row['name'];
+		}
+		
+		return $result;
+	}
 }

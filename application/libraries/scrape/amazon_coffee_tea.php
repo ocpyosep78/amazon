@@ -108,7 +108,9 @@ class amazon_coffee_tea {
 		// remove end offset
 		$offset = '<div id="session-sims-feature" class="use-beacon-styles is-aui">';
 		$pos_end = strpos($content, $offset);
-		$content = substr($content, 0, $pos_end);
+		if ($pos_end) {
+			$content = substr($content, 0, $pos_end);
+		}
 		
 		return $content;
 	}

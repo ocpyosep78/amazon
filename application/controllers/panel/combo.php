@@ -10,7 +10,7 @@ class combo extends CI_Controller {
 		
 		$array = array();
 		if ($action == 'brand') {
-			$array = $this->Brand_model->get_array(array( ));
+			$array = $this->Brand_model->get_array(array( 'namelike' => @$_POST['query'] ));
 		} else if ($action == 'category') {
 			$array = $this->Category_model->get_array(array( ));
 		} else if ($action == 'category_sub') {

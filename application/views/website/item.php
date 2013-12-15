@@ -50,8 +50,48 @@
 	
 	// compare
 	$array_compare = $this->Item_Compare_model->get_array(array( 'item_id' => $item['id'] ));
+	
+	// meta
+	if ($is_index_review) {
+		$array_seo = array(
+			'title' => 'Review - '.$item['name'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Review - '.$item['name'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => $item['desc_limit'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $item['brand_name'].', '.$item['category_name'].', '.$item['category_sub_name'] );
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $item['item_link'] );
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $item['image_link'] );
+	} else if (count($review) > 0) {
+		$array_seo = array(
+			'title' => 'Review - '.$item['name'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Review - '.$item['name'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => $review['name'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $item['brand_name'].', '.$item['category_name'].', '.$item['category_sub_name'] );
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $item['item_link'] );
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $item['image_link'] );
+	} else {
+		$array_seo = array(
+			'title' => $item['name'].' - '.$item['price_show'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		if (count($item_additional) > 0) {
+			$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => $item_additional['desc_short'].','.$item_additional['desc_long_1'] );
+			$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => $item_additional['desc_long_2'] );
+		}
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => $item['desc_limit'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $item['brand_name'].', '.$item['tag_implode'].', '.$item['store'] );
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $item['item_link'] );
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $item['image_link'] );
+	}
 ?>
-<?php $this->load->view( 'website/common/meta' ); ?>
+
+<?php $this->load->view( 'website/common/meta', $array_seo ); ?>
 <body id="offcanvas-container" class="offcanvas-container layout-fullwidth fs12 page-product">
 <section id="page" class="offcanvas-pusher" role="main">
 	<?php $this->load->view( 'website/common/header' ); ?>
@@ -293,7 +333,7 @@
 											<span>Good</span>
 										</p>
 										<p><strong>Enter the code in the box below:</strong></p>
-										<img src="<?php echo base_url('static/img/captcha/'); ?>" />
+										<img src="<?php echo base_url('static/img/captcha/'); ?>" class="img-captcha" />
 										<p><input name="captcha" type="text"></p>
 									</div>
 									<div class="buttons no-padding">
@@ -350,6 +390,10 @@ $('#button-review').click(function(event) {
 			$.notify(result.message, "success");
 			$('#form-review')[0].reset();
 		} else {
+			// new captcha
+			var captcha_new = web.host + 'static/img/captcha/?' + new Date().getTime();
+			$('.img-captcha').attr('src', captcha_new);
+			
 			$.notify(result.message, "error");
 		}
 	} });

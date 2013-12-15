@@ -117,6 +117,12 @@ class Item_model extends CI_Model {
 		
 		if ($param['tag_include']) {
 			$array['array_tag'] = $this->Item_Tag_model->get_array(array( 'item_id' => $array['id'] ));
+			
+			// implode
+			$array['tag_implode'] = '';
+			foreach ($array['array_tag'] as $row) {
+				$array['tag_implode'] .= (empty($array['tag_implode'])) ? $row['tag_name'] : ','.$row['tag_name'];
+			}
 		}
 		
        
@@ -210,7 +216,7 @@ class Item_model extends CI_Model {
 		if (!empty($row['link_replace'])) {
 			$row['link_out'] = $row['link_replace'];
 		} else {
-			$row['link_out'] = $row['link_source'];
+			$row['link_out'] = generate_link_out($row['link_source']);
 		}
 		$row['link_redirect'] = base_url('url?q='.$row['link_out']);
 		

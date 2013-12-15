@@ -320,8 +320,10 @@ var Combo = {
 	Param: {
 		Brand: function(Param) {
 			var p = {
-				xtype: 'combo', store: Store.Brand(), minChars: 1, selectOnFocus: true,
-				valueField: 'id', displayField: 'name', readonly: true, editable: false
+				xtype: 'combo', store: Store.Brand(), minChars: 1, selectOnFocus: false,
+				triggerAction: 'all', lazyRender: true, typeAhead: true,
+				valueField: 'id', displayField: 'name',
+				readonly: false, editable: true
 			}
 			p = Func.SyncComboParam(p, Param);
 			

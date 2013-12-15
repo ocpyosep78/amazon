@@ -1,4 +1,14 @@
 <?php
+	// page brand
+	preg_match('/brand\/([a-z0-9\-]+)/i', $_SERVER['REQUEST_URI'], $match);
+	$brand_alias = (isset($match[1])) ? $match[1] : '';
+	$brand = $this->Brand_model->get_by_id(array( 'alias' => $brand_alias ));
+	if (count($brand) > 0 && empty($category_id) && empty($category_sub_id)) {
+		$brand_category = $this->Brand_model->get_category(array( 'id' => $brand['id'] ));
+		$category_id = $brand_category['category_id'];
+		$category_sub_id = $brand_category['category_sub_id'];
+	}
+	
 	$param_brand = array(
 		'category_id' => @$category_id,
 		'category_sub_id' => @$category_sub_id,

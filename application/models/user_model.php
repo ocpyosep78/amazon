@@ -127,6 +127,7 @@ class User_model extends CI_Model {
 				'Child' => array(
 					array( 'Title' => 'Page Static', 'Link' => base_url('panel/master/page_static'), 'user_type_id' => array(1) ),
 					array( 'Title' => 'Configuration', 'Link' => base_url('panel/master/configuration'), 'user_type_id' => array(1) ),
+					array( 'Title' => 'Brand', 'Link' => base_url('panel/master/brand'), 'user_type_id' => array(1) ),
 					array( 'Title' => 'Category', 'Link' => base_url('panel/master/category'), 'user_type_id' => array(1) ),
 					array( 'Title' => 'Sub Category', 'Link' => base_url('panel/master/category_sub'), 'user_type_id' => array(1) ),
 					array( 'Title' => 'Scrape', 'Link' => base_url('panel/master/scrape'), 'user_type_id' => array(1) ),

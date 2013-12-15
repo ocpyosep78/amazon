@@ -985,6 +985,22 @@
 		}
 	}
 	
+	if (! function_exists('generate_link_out')) {
+		function generate_link_out($link) {
+			$array_link = parse_url($link);
+			
+			$result = $link;
+			if ($array_link['host'] == 'www.amazon.com') {
+				preg_match('/dp\/([^\/]+)\//i', $link, $match);
+				$code = (isset($match[1])) ? $match[1] : '';
+				
+				$result = 'http://www.amazon.com/dp/'.$code.'?tag=shopermarket-20';
+			}
+			
+			return $result;
+		}
+	}
+	
 	if (! class_exists('curl')) {
 		class curl {
 			var $callback = false;

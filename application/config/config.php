@@ -32,6 +32,9 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 $config['time_reference'] = 'local';
 $config['cache_path'] = '';
 
+// site
+$config['site_title'] = 'shopermarket';
+
 /*
 |--------------------------------------------------------------------------
 | Session Variables

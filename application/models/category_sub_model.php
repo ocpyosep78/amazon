@@ -36,7 +36,8 @@ class Category_Sub_model extends CI_Model {
             $select_query  = "
 				SELECT CategorySub.*,
 					Category.id category_id, Category.alias category_alias, Category.name category_name
-				FROM ".CATEGORY_SUB."
+				FROM ".CATEGORY_SUB." CategorySub
+				LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
 				WHERE CategorySub.id = '".$param['id']."'
 				LIMIT 1
 			";
@@ -49,8 +50,8 @@ class Category_Sub_model extends CI_Model {
 				WHERE CategorySub.alias = '".$param['alias']."'
 				LIMIT 1
 			";
-        } 
-       
+        }
+		
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {
             $array = $this->sync($row);
@@ -114,5 +115,31 @@ class Category_Sub_model extends CI_Model {
 		}
 		
 		return $row;
+	}
+	
+	function get_meta($param) {
+		$result = '';
+		$category_sub = $this->get_by_id($param);
+		
+		// get from tag
+		$result .= $category_sub['tag'];
+		
+		// get brand
+		$select_query = "
+			SELECT Brand.name
+			FROM ".ITEM." Item
+			LEFT JOIN ".BRAND." Brand ON Brand.id = item.brand_id
+			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+			WHERE CategorySub.id = '".$category_sub['id']."'
+			GROUP BY Brand.name
+			ORDER BY rand()
+			LIMIT 10
+		";
+        $select_result = mysql_query($select_query) or die(mysql_error());
+		while ( $row = mysql_fetch_assoc( $select_result ) ) {
+			$result .= (empty($result)) ? $row['name'] : ', '.$row['name'];
+		}
+		
+		return $result;
 	}
 }

@@ -38,9 +38,9 @@ class Brand_model extends CI_Model {
             $select_query  = "SELECT * FROM ".BRAND." WHERE alias = '".$param['alias']."' LIMIT 1";
         } else if (isset($param['name'])) {
 			$param['name'] = trim($param['name']);
-            $select_query  = "SELECT * FROM ".BRAND." WHERE name = '".$param['name']."' LIMIT 1";
+            $select_query  = "SELECT * FROM ".BRAND." WHERE name = '".mysql_real_escape_string($param['name'])."' LIMIT 1";
         } 
-       
+		
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {
             $array = $this->sync($row);
@@ -115,6 +115,28 @@ class Brand_model extends CI_Model {
 		$TotalRecord = $row['TotalRecord'];
 		
 		return $TotalRecord;
+    }
+	
+	function get_category($param = array()) {
+        $result = array();
+		
+		$select_query = "
+			SELECT SUM(brand_id) total,
+				CategorySub.id, category_sub_id, CategorySub.name category_sub_name,
+				Category.id, category_id, Category.name category_name
+			FROM ".ITEM." Item
+			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+			WHERE brand_id = '".$param['id']."'
+			ORDER BY total DESC
+			LIMIT 25
+		";
+        $select_result = mysql_query($select_query) or die(mysql_error());
+		while ( $row = mysql_fetch_assoc( $select_result ) ) {
+			$result = $row;
+		}
+		
+        return $result;
     }
 	
     function delete($param) {

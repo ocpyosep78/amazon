@@ -18,7 +18,7 @@
 	$namelike = get_search($_SERVER['REQUEST_URI']);
 	
 	// brand
-	preg_match('/brand\/([a-z0-9]+)/i', $_SERVER['REQUEST_URI'], $match);
+	preg_match('/brand\/([a-z0-9\-]+)/i', $_SERVER['REQUEST_URI'], $match);
 	$brand_alias = (isset($match[1])) ? $match[1] : '';
 	$brand = $this->Brand_model->get_by_id(array( 'alias' => $brand_alias ));
 	
@@ -52,12 +52,96 @@
 	
 	/* end region form */
 	
-	/*
-	$page_active = 10;
-	$page_total = 20;
-	/*	*/
+	// meta
+	if (count($brand) > 0) {
+		// brand info
+		$brand_category = $this->Brand_model->get_category(array( 'id' => $brand['id'] ));
+		
+		$array_seo = array(
+			'title' => $this->config->item('site_title').' - '.$brand['name'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Get cheaper and review price '.$brand_category['category_sub_name'].' '.$brand['name'].' at shopermarket.com' );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => 'Get cheaper and review price '.$brand_category['category_sub_name'].' '.$brand['name'].' at shopermarket.com' );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $brand['name'].', '.$brand_category['category_name'].', '.$brand_category['category_sub_name'] );
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $brand['link'] );
+		
+		// generate image
+		$image_src = '';
+		foreach ($array_item as $row) {
+			$image_src .= (empty($image_src)) ? $row['image_link'] : ', '.$row['image_link'];
+		}
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $image_src );
+	}
+	else if (!empty($namelike)) {
+		$label = ucfirst($namelike);
+		
+		$array_seo = array(
+			'title' => $this->config->item('site_title').' - search - '.$label,
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Get cheaper and review price '.$label.' at shopermarket.com' );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => 'Get cheaper and review price '.$label.' at shopermarket.com' );
+		
+		// generate keyword
+		if (count($array_item) > 0) {
+			$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $label.', '.$array_item[0]['category_name'].', '.$array_item[0]['category_sub_name'] );
+		}
+		
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => base_url('search/'.$namelike) );
+		
+		// generate image
+		$image_src = '';
+		foreach ($array_item as $row) {
+			$image_src .= (empty($image_src)) ? $row['image_link'] : ', '.$row['image_link'];
+		}
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $image_src );
+	}
+	else if (count($category_sub) > 0) {
+		$array_seo = array(
+			'title' => $this->config->item('site_title').' - '.$category['name'].' - '.$category_sub['name'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Get cheaper and review price '.$category_sub['name'].' at shopermarket.com' );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => $category_sub['desc'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $this->Category_Sub_model->get_meta(array( 'id' => $category_sub['id'] )) );
+		
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $category_sub['link'] );
+		
+		// generate image
+		$image_src = '';
+		foreach ($array_item as $row) {
+			$image_src .= (empty($image_src)) ? $row['image_link'] : ', '.$row['image_link'];
+		}
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $image_src );
+	}
+	else if (count($category) > 0) {
+		$array_seo = array(
+			'title' => $this->config->item('site_title').' - '.$category['name'],
+			'array_meta' => array( ),
+			'array_link' => array( )
+		);
+		$array_seo['array_meta'][] = array( 'name' => 'Title', 'content' => 'Get cheaper and review price '.$category['name'].' at shopermarket.com' );
+		$array_seo['array_meta'][] = array( 'name' => 'Description', 'content' => $category['desc'] );
+		$array_seo['array_meta'][] = array( 'name' => 'Keywords', 'content' => $this->Category_model->get_meta(array( 'id' => $category['id'] )) );
+		
+		$array_seo['array_link'][] = array( 'rel' => 'canonical', 'href' => $category['link'] );
+		
+		// generate image
+		$image_src = '';
+		foreach ($array_item as $row) {
+			$image_src .= (empty($image_src)) ? $row['image_link'] : ', '.$row['image_link'];
+		}
+		$array_seo['array_link'][] = array( 'rel' => 'image_src', 'href' => $image_src );
+	}
+	else {
+		$array_seo = array();
+	}
 ?>
-<?php $this->load->view( 'website/common/meta' ); ?>
+<?php $this->load->view( 'website/common/meta', $array_seo ); ?>
 <body id="offcanvas-container" class="offcanvas-container layout-fullwidth fs12 page-product">
 <section id="page" class="offcanvas-pusher" role="main">
 	<?php $this->load->view( 'website/common/header' ); ?>
