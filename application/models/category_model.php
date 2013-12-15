@@ -135,7 +135,7 @@ class Category_model extends CI_Model {
 		$select_query = "
 			SELECT Brand.name
 			FROM ".ITEM." Item
-			LEFT JOIN ".BRAND." Brand ON Brand.id = item.brand_id
+			LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
 			WHERE CategorySub.category_id = '".$category['id']."'
 			GROUP BY Brand.name

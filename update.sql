@@ -19,3 +19,6 @@
 2013-12-09 :
 - ALTER TABLE `item` ADD `rating` FLOAT NOT NULL AFTER `store`;
 - CREATE TABLE IF NOT EXISTS `item_additional` ( `id` int(11) NOT NULL AUTO_INCREMENT, `item_id` int(11) NOT NULL, `desc_short` longtext NOT NULL, `desc_long_1` longtext NOT NULL, `desc_long_2` longtext NOT NULL, `link_aff` varchar(255) NOT NULL, `sign` varchar(255) NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+2013-12-15 :
+- ALTER TABLE `category_sub` ADD `force_link` VARCHAR( 255 ) NOT NULL AFTER `tag` ;

@@ -8,7 +8,7 @@ Ext.onReady(function() {
 	var main_store = Ext.create('Ext.data.Store', {
 		autoLoad: true, pageSize: 25, remoteSort: true,
         sorters: [{ property: 'name', direction: 'ASC' }],
-		fields: [ 'id', 'alias', 'name', 'desc', 'tag', 'category_id', 'category_name' ],
+		fields: [ 'id', 'alias', 'name', 'desc', 'tag', 'category_id', 'category_name', 'force_link' ],
 		proxy: {
 			type: 'ajax',
 			url : URLS.base + 'panel/master/category_sub/grid', actionMethods: { read: 'POST' },
@@ -25,6 +25,7 @@ Ext.onReady(function() {
 			}, {	header: 'Category', dataIndex: 'category_name', sortable: true, filter: true, width: 200
 			}, {	header: 'Description', dataIndex: 'desc', sortable: true, filter: true, width: 200, flex: 1
 			}, {	header: 'Tag', dataIndex: 'tag', sortable: true, filter: true, width: 200
+			}, {	header: 'URL', dataIndex: 'force_link', sortable: true, filter: true, width: 200
 		} ],
 		tbar: [ {
 				text: 'Tambah', iconCls: 'addIcon', tooltip: 'Tambah', handler: function() { main_win({ id: 0 }); }
@@ -108,7 +109,7 @@ Ext.onReady(function() {
 	
 	function main_win(param) {
 		var win = new Ext.Window({
-			layout: 'fit', width: 390, height: 248,
+			layout: 'fit', width: 710, height: 280,
 			closeAction: 'hide', plain: true, modal: true,
 			buttons: [ {
 						text: 'Save', handler: function() { win.save(); }
@@ -128,7 +129,7 @@ Ext.onReady(function() {
 							
 							win.id = param.id;
 							win.name = new Ext.form.TextField({
-								renderTo: 'nameED', width: 225, allowBlank: false, blankText: 'Masukkan Judul',
+								renderTo: 'nameED', width: 550, allowBlank: false, blankText: 'Masukkan Judul',
 								enableKeyEvents: true, listeners: {
 									keyup: function(me) {
 										var alias = Func.GetName(me.getValue());
@@ -136,16 +137,18 @@ Ext.onReady(function() {
 									}
 								}
 							});
-							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 225, readOnly: true });
-							win.category = Combo.Class.Category({ renderTo: 'categoryED', width: 225, allowBlank: false, blankText: 'Masukkan Category' });
-							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 225, height: 60 });
-							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 225 });
+							win.alias = new Ext.form.TextField({ renderTo: 'aliasED', width: 550, readOnly: true });
+							win.category = Combo.Class.Category({ renderTo: 'categoryED', width: 550, allowBlank: false, blankText: 'Masukkan Category' });
+							win.desc = new Ext.form.TextArea({ renderTo: 'descED', width: 550, height: 60 });
+							win.force_link = new Ext.form.TextField({ renderTo: 'force_linkED', width: 550 });
+							win.tag = new Ext.form.TextField({ renderTo: 'tagED', width: 550 });
 							
 							// Populate Record
 							if (param.id > 0) {
 								win.name.setValue(param.name);
 								win.alias.setValue(param.alias);
 								win.desc.setValue(param.desc);
+								win.force_link.setValue(param.force_link);
 								win.tag.setValue(param.tag);
 								win.category.setValue(param.category_id);
 							}
@@ -165,6 +168,7 @@ Ext.onReady(function() {
 				ajax.name = win.name.getValue();
 				ajax.alias = win.alias.getValue();
 				ajax.desc = win.desc.getValue();
+				ajax.force_link = win.force_link.getValue();
 				ajax.tag = win.tag.getValue();
 				
 				// Validation

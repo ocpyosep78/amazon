@@ -4,7 +4,7 @@ class Category_Sub_model extends CI_Model {
     function __construct() {
         parent::__construct();
 		
-        $this->field = array( 'id', 'category_id', 'name', 'alias', 'desc', 'tag' );
+        $this->field = array( 'id', 'category_id', 'name', 'alias', 'desc', 'tag', 'force_link' );
     }
 
     function update($param) {
@@ -110,7 +110,9 @@ class Category_Sub_model extends CI_Model {
 		$row = StripArray($row);
 		
 		// link
-		if (isset($row['category_alias'])) {
+		if (!empty($row['force_link'])) {
+			$row['link'] = $row['force_link'];
+		} else if (isset($row['category_alias'])) {
 			$row['link'] = base_url($row['category_alias'].'/'.$row['alias']);
 		}
 		
@@ -128,7 +130,7 @@ class Category_Sub_model extends CI_Model {
 		$select_query = "
 			SELECT Brand.name
 			FROM ".ITEM." Item
-			LEFT JOIN ".BRAND." Brand ON Brand.id = item.brand_id
+			LEFT JOIN ".BRAND." Brand ON Brand.id = Item.brand_id
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
 			WHERE CategorySub.id = '".$category_sub['id']."'
 			GROUP BY Brand.name
