@@ -92,14 +92,21 @@ class Brand_model extends CI_Model {
 		$string_limit = GetStringLimit($param);
 		
 		$select_query = "
-			SELECT COUNT(*) total, Brand.alias, Brand.name
-			FROM ".BRAND." Brand
-			LEFT JOIN ".ITEM." Item ON Brand.id = Item.brand_id
-			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
-			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
-			WHERE 1 $string_namelike $string_category $string_category_sub $string_item_status $string_filter
-			GROUP BY Brand.alias, Brand.name
+			SELECT *
+			FROM (
+				SELECT COUNT(*) total, Brand.alias, Brand.name
+				FROM ".BRAND." Brand
+				LEFT JOIN ".ITEM." Item ON Brand.id = Item.brand_id
+				LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Item.category_sub_id
+				LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
+				WHERE 1 $string_namelike $string_category $string_category_sub $string_item_status $string_filter
+				GROUP BY Brand.alias, Brand.name
+				ORDER BY total DESC
+				LIMIT 15
+			) table_brand
+			ORDER BY name ASC 
 		";
+		
         $select_result = mysql_query($select_query) or die(mysql_error());
 		while ( $row = mysql_fetch_assoc( $select_result ) ) {
 			$array[] = $this->sync($row, @$param['column']);
