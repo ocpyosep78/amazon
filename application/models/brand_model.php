@@ -37,9 +37,9 @@ class Brand_model extends CI_Model {
         } else if (isset($param['alias'])) {
             $select_query  = "SELECT * FROM ".BRAND." WHERE alias = '".$param['alias']."' LIMIT 1";
         } else if (isset($param['name'])) {
-			$param['name'] = trim($param['name']);
+			$param['name'] = preg_replace('/[^\x20-\x7E|\x0A]/i', '', trim($param['name']));
             $select_query  = "SELECT * FROM ".BRAND." WHERE name = '".mysql_real_escape_string($param['name'])."' LIMIT 1";
-        } 
+        }
 		
         $select_result = mysql_query($select_query) or die(mysql_error());
         if (false !== $row = mysql_fetch_assoc($select_result)) {

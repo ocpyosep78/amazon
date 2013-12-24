@@ -123,15 +123,29 @@ class amazon_coffee_tea {
 	}
 	
 	function get_name_item($content) {
+		// method #1
 		preg_match('/id="title" class="[^"]+">([^<]+)<\/h1>/i', $content, $match);
 		$result = (isset($match[1])) ? trim($match[1]) : '';
+		
+		// method #2
+		if (empty($result)) {
+			preg_match('/id="btAsinTitle" +>([^<]+)<\/span>/i', $content, $match);
+			$result = (isset($match[1])) ? trim($match[1]) : '';
+		}
 		
 		return $result;
 	}
 	
 	function get_brand_item($content) {
+		// method #1
 		preg_match('/id="brand" class="[^"]+" href="[^"]+">([^<]+)<\/a>/i', $content, $match);
 		$result = (isset($match[1])) ? $match[1] : '';
+		
+		// method #2
+		if (empty($result)) {
+			preg_match('/id="amsPopoverTrigger"><a href="[^\"]+">([^<]+)<\/a>/i', $content, $match);
+			$result = (isset($match[1])) ? trim($match[1]) : '';
+		}
 		
 		return $result;
 	}
