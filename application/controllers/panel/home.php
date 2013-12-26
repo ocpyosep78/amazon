@@ -10,7 +10,7 @@ class home extends CI_Controller {
 	}
 	
 	function check() {
-		$is_login = $this->User_model->is_login(true);
+		$is_login = $this->User_model->is_login();
 		$user = $this->User_model->get_session();
 		
 		$result['success'] = false;
