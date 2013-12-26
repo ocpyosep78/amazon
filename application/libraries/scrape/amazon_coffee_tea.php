@@ -181,6 +181,9 @@ class amazon_coffee_tea {
 		$temp_price = (isset($match[2])) ? $match[2] : '';
 		$temp_price = preg_replace('/\$/i', '', $temp_price);
 		
+		// remove ','
+		$temp_price = preg_replace('/[,]/i', '', $temp_price);
+		
 		$result['price_show'] = 0;
 		if (!empty($temp_price)) {
 			$result['price_show'] = $temp_price;
