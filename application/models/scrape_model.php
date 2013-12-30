@@ -57,6 +57,7 @@ class Scrape_model extends CI_Model {
         $array = array();
 		
 		$string_namelike = (!empty($param['namelike'])) ? "AND Scrape.name LIKE '%".$param['namelike']."%'" : '';
+		$string_active = (isset($param['is_active'])) ? "AND Scrape.is_active = '".$param['is_active']."'" : '';
 		$string_filter = GetStringFilter($param, @$param['column']);
 		$string_sorting = GetStringSorting($param, @$param['column'], 'name ASC');
 		$string_limit = GetStringLimit($param);
@@ -69,7 +70,7 @@ class Scrape_model extends CI_Model {
 			FROM ".SCRAPE." Scrape
 			LEFT JOIN ".CATEGORY_SUB." CategorySub ON CategorySub.id = Scrape.category_sub_id
 			LEFT JOIN ".CATEGORY." Category ON Category.id = CategorySub.category_id
-			WHERE 1 $string_namelike $string_filter
+			WHERE 1 $string_namelike $string_active $string_filter
 			ORDER BY $string_sorting
 			LIMIT $string_limit
 		";

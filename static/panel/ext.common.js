@@ -294,7 +294,7 @@ var Store = {
 		var Store = new Ext.create('Ext.data.Store', {
 			fields: ['id', 'name'],
 			autoLoad: true, proxy: {
-				type: 'ajax', extraParams: { action: 'scrape' },
+				type: 'ajax', extraParams: { action: 'scrape', is_active: 1 },
 				url: URLS.base + 'panel/combo',
 				reader: { type: 'json', root: 'res' },
 				actionMethods: { read: 'POST' }
