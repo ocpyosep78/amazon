@@ -3,6 +3,9 @@
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
 	$config['base_url']			= 'http://localhost/amazon/trunk';
 	$config['base_path']		= realpath(dirname(__FILE__) . '/../..');
+} else if ($_SERVER['SERVER_NAME'] == 'www.shopermarket.com') {
+	$config['base_url']			= 'http://www.shopermarket.com';
+	$config['base_path']		= realpath(dirname(__FILE__) . '/../..');
 } else {
 	$config['base_url']			= 'http://shopermarket.com';
 	$config['base_path']		= realpath(dirname(__FILE__) . '/../..');
